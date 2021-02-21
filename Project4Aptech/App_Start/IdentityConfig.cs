@@ -31,7 +31,7 @@ namespace Project4Aptech
             return Task.FromResult(0);
         }
     }
-
+    /*
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -105,5 +105,6 @@ namespace Project4Aptech
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
-    }
+    
+    }*/
 }
