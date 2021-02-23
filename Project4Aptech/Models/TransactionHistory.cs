@@ -21,5 +21,8 @@ namespace Project4Aptech.Models
         public string SendAccount { get; set; }
         public string ReceiveAccount { get; set; }
         public string Status { get; set; }
+        public Nullable<int> Bank_id { get; set; }
+    
+        public virtual Banks Banks { get; set; }
     }
 }

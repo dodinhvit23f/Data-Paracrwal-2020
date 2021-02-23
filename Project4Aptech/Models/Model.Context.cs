@@ -25,12 +25,13 @@ namespace Project4Aptech.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Crad> Crads { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Fee> Fees { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
-        public virtual DbSet<TransactionHistory> TransactionHistories { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Cards> Cards { get; set; }
+        public virtual DbSet<Customers> Customers { get; set; }
+        public virtual DbSet<Fees> Fees { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<TransactionHistory> TransactionHistory { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Banks> Banks { get; set; }
     }
 }

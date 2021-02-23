@@ -4,16 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="50f1e9ef9a274d4fad963b2a85eabd0d" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.Crad" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Customer" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Fee" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Role" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Staff" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.TransactionHistory" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseModel.FK__Users__Roll_id__3F466844" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK__Users__StaffId__47DBAE45" ManuallyRouted="false" />
+      <Diagram DiagramId="c30fce15e64941ba8c8a573123eb7b91" Name="Diagram1">
+        <EntityTypeShape EntityType="Project4AptechModel.Cards" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project4AptechModel.Customers" Width="1.5" PointX="2.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project4AptechModel.Fees" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project4AptechModel.Roles" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project4AptechModel.TransactionHistory" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project4AptechModel.Users" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Project4AptechModel.FK__Cards__CustomerI__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="Project4AptechModel.FK__Users__Roll_id__3F466844" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Project4AptechModel.Account" Width="1.5" PointX="5" PointY="12.625" />
+        <EntityTypeShape EntityType="Project4AptechModel.Banks" Width="1.5" PointX="5.5" PointY="9.25" />
+        <AssociationConnector Association="Project4AptechModel.FK__Account__Num_id__18EBB532" />
+        <AssociationConnector Association="Project4AptechModel.FK__Transacti__Bank___160F4887" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
