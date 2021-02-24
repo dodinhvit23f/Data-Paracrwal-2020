@@ -17,8 +17,8 @@ namespace Project4Aptech.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customers()
         {
-            this.Cards = new HashSet<Cards>();
             this.Account = new HashSet<Account>();
+            this.Cards = new HashSet<Cards>();
         }
     
         public string Id { get; set; }
@@ -26,10 +26,11 @@ namespace Project4Aptech.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> DOF { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cards> Cards { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Account { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cards> Cards { get; set; }
     }
 }

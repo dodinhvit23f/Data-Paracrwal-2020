@@ -18,10 +18,10 @@ namespace Project4Aptech.Models
         public Nullable<decimal> Amount { get; set; }
         public string Message { get; set; }
         public string Code { get; set; }
-        public string SendAccount { get; set; }
-        public string ReceiveAccount { get; set; }
         public string Status { get; set; }
         public Nullable<int> Bank_id { get; set; }
+        public Nullable<int> ReceiveAccount { get; set; }
+        public Nullable<int> SendAccount { get; set; }
     
         public virtual Banks Banks { get; set; }
     }
