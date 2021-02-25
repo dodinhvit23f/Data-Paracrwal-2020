@@ -8,7 +8,6 @@
     <Property Name="Num_id" Type="varchar" MaxLength="12" />
     <Property Name="Usn" Type="varchar" MaxLength="200" />
     <Property Name="Pwd" Type="varchar" MaxLength="500" />
-    <Property Name="Balance" Type="decimal" Precision="19" Scale="4" />
     <Property Name="A_Status" Type="int" />
   </EntityType>
   <EntityType Name="Banks">
@@ -19,22 +18,6 @@
     <Property Name="BName" Type="varchar" MaxLength="100" />
     <Property Name="Adress" Type="varchar" MaxLength="200" />
   </EntityType>
-  <EntityType Name="Cards">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CardNumber" Type="varchar" MaxLength="17" />
-    <Property Name="AccountNumber" Type="varchar" MaxLength="17" />
-    <Property Name="Password" Type="varchar" MaxLength="7" />
-    <Property Name="Amount" Type="money" />
-    <Property Name="CreateDate" Type="date" />
-    <Property Name="ExprirateDate" Type="date" />
-    <Property Name="Opt" Type="varchar" MaxLength="7" />
-    <Property Name="Status" Type="varchar" MaxLength="3" />
-    <Property Name="CreditLimmit" Type="money" />
-    <Property Name="CustomerID" Type="varchar" MaxLength="12" />
-  </EntityType>
   <EntityType Name="Customers">
     <Key>
       <PropertyRef Name="Id" />
@@ -44,15 +27,8 @@
     <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
     <Property Name="Address" Type="nchar" MaxLength="10" />
     <Property Name="DOF" Type="date" />
-    <Property Name="email" Type="varchar" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="Fees">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="30" />
-    <Property Name="Amount" Type="money" />
+    <Property Name="balance" Type="float" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -69,10 +45,12 @@
     <Property Name="Amount" Type="money" />
     <Property Name="Message" Type="varchar" MaxLength="500" />
     <Property Name="Code" Type="varchar" MaxLength="3" />
+    <Property Name="SendAccount" Type="varchar" MaxLength="12" />
+    <Property Name="ReceiveAccount" Type="varchar" MaxLength="12" />
     <Property Name="Status" Type="varchar" MaxLength="3" />
     <Property Name="Bank_id" Type="int" />
-    <Property Name="ReceiveAccount" Type="int" />
-    <Property Name="SendAccount" Type="int" />
+    <Property Name="tran_time" Type="varchar" MaxLength="50" />
+    <Property Name="fee" Type="float" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -92,18 +70,6 @@
       </Principal>
       <Dependent Role="Account">
         <PropertyRef Name="Num_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Cards__CustomerI__03F0984C">
-    <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
-    <End Role="Cards" Type="Self.Cards" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Cards">
-        <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -134,19 +100,13 @@
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Cards" EntityType="Self.Cards" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Fees" EntityType="Self.Fees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TransactionHistory" EntityType="Self.TransactionHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Account__Num_id__18EBB532" Association="Self.FK__Account__Num_id__18EBB532">
       <End Role="Customers" EntitySet="Customers" />
       <End Role="Account" EntitySet="Account" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Cards__CustomerI__03F0984C" Association="Self.FK__Cards__CustomerI__03F0984C">
-      <End Role="Customers" EntitySet="Customers" />
-      <End Role="Cards" EntitySet="Cards" />
     </AssociationSet>
     <AssociationSet Name="FK__Transacti__Bank___160F4887" Association="Self.FK__Transacti__Bank___160F4887">
       <End Role="Banks" EntitySet="Banks" />

@@ -23,22 +23,18 @@ namespace Project4Aptech.Controllers
             var account = db.Account.Include(a => a.Customers);
             return View(await account.ToListAsync());
         }
-        public ActionResult ChuyenTien(int id)
-        {
-            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).First();
+        public ActionResult ChuyenTien(int id) {
+            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
             OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(decimal money, int idSend, string idReceiver, string mess, string OTP)
-        {
+        public ActionResult ChuyenTien(double money,int idSend,string idReceiver,string mess, string OTP) {
             string Key = cache.Get("OTP").ToString();
             Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();
-
-            if (OTP == null)
-            {
-                ViewBag.id = idSend;
+            
+            if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
                 OTPGenerate(accountSend.Customers.email);
@@ -46,18 +42,17 @@ namespace Project4Aptech.Controllers
             }
             if (OTP == Key)
             {
-                if (money >= accountSend.Balance)
+                if (money >= accountSend.Customers.balance)
                 {
-                    ViewBag.id = idSend;
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
-                }
-                accountSend.Balance -= money;
+                }              
+                accountSend.Customers.balance -= money;
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
-                account.Balance = account.Balance + money;
+                account.Customers.balance = account.Customers.balance + money;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
                 SaveHistory(money, mess, "CT", accountSend.id, account.id);
@@ -67,7 +62,6 @@ namespace Project4Aptech.Controllers
             {
                 OTPGenerate(accountSend.Customers.email);
                 ViewBag.Mess = mess;
-                ViewBag.id = idSend;
                 ViewBag.statusOTP = "OTP khong dung";
                 return View();
             }
@@ -116,14 +110,18 @@ namespace Project4Aptech.Controllers
 
             return Json(Name, JsonRequestBehavior.AllowGet);
         }
-        public void SaveHistory(Decimal money,string Mess,string code,int idFrom,int idTo) {
+        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo) {
             TransactionHistory history = new TransactionHistory()
             {
-                Amount = money,
+                //Sua code o day di Hai\
+                //Nen de send accout va` receive account la` string
+                //neu ck cung` nh thi` receive acc la` id(int)
+                //Nhung ck lien ngan hang` thi` phai luu receive acc la` stk cua ng nhan,vi ng nhan k co tk o bank minh`
+                Amount =(decimal)money,
                 Message = Mess,
                 Code = code,
-                SendAccount = idFrom,
-                ReceiveAccount = idTo,
+                SendAccount = idFrom.ToString(),
+                ReceiveAccount = idTo.ToString(),
                 Bank_id = 1,
                 Status = "0"              
             };
@@ -157,7 +155,7 @@ namespace Project4Aptech.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,Balance,A_Status")] Account account)
+        public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,A_Status")] Account account)
         {
             if (ModelState.IsValid)
             {

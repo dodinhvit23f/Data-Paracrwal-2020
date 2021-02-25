@@ -18,7 +18,6 @@ namespace Project4Aptech.Models
         public string Num_id { get; set; }
         public string Usn { get; set; }
         public string Pwd { get; set; }
-        public Nullable<decimal> Balance { get; set; }
         public Nullable<int> A_Status { get; set; }
     
         public virtual Customers Customers { get; set; }

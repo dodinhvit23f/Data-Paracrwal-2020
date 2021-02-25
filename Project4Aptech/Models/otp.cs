@@ -12,10 +12,13 @@ namespace Project4Aptech.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Fees
+    public partial class otp
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<decimal> Amount { get; set; }
+        public int id { get; set; }
+        public string otp_num { get; set; }
+        public Nullable<System.DateTime> expr_time { get; set; }
+        public Nullable<int> acc_id { get; set; }
+    
+        public virtual Account Account { get; set; }
     }
 }

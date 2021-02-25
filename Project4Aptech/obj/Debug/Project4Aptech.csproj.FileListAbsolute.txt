@@ -77,7 +77,6 @@ C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.csprojAssemblyReference.cache
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.csproj.CopyComplete
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.dll
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.pdb

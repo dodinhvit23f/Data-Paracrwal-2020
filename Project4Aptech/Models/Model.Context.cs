@@ -27,9 +27,7 @@ namespace Project4Aptech.Models
     
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Banks> Banks { get; set; }
-        public virtual DbSet<Cards> Cards { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
-        public virtual DbSet<Fees> Fees { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<TransactionHistory> TransactionHistory { get; set; }
         public virtual DbSet<Users> Users { get; set; }

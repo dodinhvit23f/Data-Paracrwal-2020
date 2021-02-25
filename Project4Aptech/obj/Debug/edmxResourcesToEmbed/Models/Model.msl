@@ -8,7 +8,6 @@
           <ScalarProperty Name="Num_id" ColumnName="Num_id" />
           <ScalarProperty Name="Usn" ColumnName="Usn" />
           <ScalarProperty Name="Pwd" ColumnName="Pwd" />
-          <ScalarProperty Name="Balance" ColumnName="Balance" />
           <ScalarProperty Name="A_Status" ColumnName="A_Status" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -22,41 +21,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Cards">
-      <EntityTypeMapping TypeName="DatabaseModel.Cards">
-        <MappingFragment StoreEntitySet="Cards">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-          <ScalarProperty Name="ExprirateDate" ColumnName="ExprirateDate" />
-          <ScalarProperty Name="Opt" ColumnName="Opt" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="CreditLimmit" ColumnName="CreditLimmit" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="DatabaseModel.Customers">
         <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="DOF" ColumnName="DOF" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Fees">
-      <EntityTypeMapping TypeName="DatabaseModel.Fees">
-        <MappingFragment StoreEntitySet="Fees">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="email" ColumnName="email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -75,10 +49,12 @@
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="SendAccount" ColumnName="SendAccount" />
+          <ScalarProperty Name="ReceiveAccount" ColumnName="ReceiveAccount" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
-          <ScalarProperty Name="ReceiveAccount" ColumnName="ReceiveAccount" />
-          <ScalarProperty Name="SendAccount" ColumnName="SendAccount" />
+          <ScalarProperty Name="tran_time" ColumnName="tran_time" />
+          <ScalarProperty Name="fee" ColumnName="fee" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
