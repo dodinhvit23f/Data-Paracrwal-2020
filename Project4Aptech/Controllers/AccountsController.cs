@@ -23,18 +23,21 @@ namespace Project4Aptech.Controllers
             var account = db.Account.Include(a => a.Customers);
             return View(await account.ToListAsync());
         }
-        public ActionResult ChuyenTien(int id) {
+        public ActionResult ChuyenTien(int id)
+        {
             var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).First();
             OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(decimal money, int idSend, string idReceiver, string mess, string OTP) {
+        public ActionResult ChuyenTien(decimal money, int idSend, string idReceiver, string mess, string OTP)
+        {
             string Key = cache.Get("OTP").ToString();
             Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();
 
-            if (OTP == null) {
+            if (OTP == null)
+            {
                 ViewBag.id = idSend;
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
@@ -69,20 +72,20 @@ namespace Project4Aptech.Controllers
                 return View();
             }
         }
-        public void Send(string mailAdress, string OTP) {
+        public void Send(string mailAdress,string OTP) {
             var smtpClient = new SmtpClient();
             var msg = new MailMessage();
             msg.To.Add(mailAdress);
             msg.Subject = "Test";
-            msg.Body = "Your OTP is: " + OTP;
-            smtpClient.Send(msg);
+            msg.Body = "Your OTP is: "+OTP;
+            smtpClient.Send(msg);          
         }
         public void OTPGenerate(string mailAdress) {
             var stringChars = new char[6];
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
-            for (int i = 0; i < stringChars.Length; i++)
-            {
+            for(int i = 0; i < stringChars.Length; i++)
+{
                 stringChars[i] = chars[random.Next(chars.Length)];
             }
 
@@ -93,11 +96,11 @@ namespace Project4Aptech.Controllers
             }
             cache.Add("OTP", OTP, DateTimeOffset.Now.AddHours(1.0));
             Send(mailAdress, OTP);
-
+            
         }
-        public JsonResult getCustomer(string id) {
+        public JsonResult getCustomer(string id)
+        {
             string Name = "";
-            //
             try
             {
                 var Cus = db.Customers.Find(id);
@@ -107,10 +110,11 @@ namespace Project4Aptech.Controllers
                 }
 
             }
-            catch (Exception e) { 
+            catch (Exception e)
+            {
             }
-            
-           return Json(Name, JsonRequestBehavior.AllowGet);
+
+            return Json(Name, JsonRequestBehavior.AllowGet);
         }
         public void SaveHistory(Decimal money,string Mess,string code,int idFrom,int idTo) {
             TransactionHistory history = new TransactionHistory()
