@@ -97,6 +97,7 @@ namespace Project4Aptech.Controllers
         }
         public JsonResult getCustomer(string id) {
             string Name = "";
+            //
             try
             {
                 var Cus = db.Customers.Find(id);
