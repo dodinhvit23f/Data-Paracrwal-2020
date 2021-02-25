@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Project4AptechModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="Project4AptechModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="acc_num" ColumnName="acc_num" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DOF" ColumnName="DOF" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="Project4AptechModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionHistory">
+      <EntityTypeMapping TypeName="Project4AptechModel.TransactionHistory">
+        <MappingFragment StoreEntitySet="TransactionHistory">
+          <ScalarProperty Name="fee" ColumnName="fee" />
+          <ScalarProperty Name="tran_time" ColumnName="tran_time" />
+          <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="SendAccount" ColumnName="SendAccount" />
+          <ScalarProperty Name="ReceiveAccount" ColumnName="ReceiveAccount" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Project4AptechModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Roll_id" ColumnName="Roll_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="Project4AptechModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="A_Status" ColumnName="A_Status" />
+          <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+          <ScalarProperty Name="Usn" ColumnName="Usn" />
+          <ScalarProperty Name="Num_id" ColumnName="Num_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Banks">
+      <EntityTypeMapping TypeName="Project4AptechModel.Banks">
+        <MappingFragment StoreEntitySet="Banks">
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="BName" ColumnName="BName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="otp">
+      <EntityTypeMapping TypeName="Project4AptechModel.otp">
+        <MappingFragment StoreEntitySet="otp">
+          <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+          <ScalarProperty Name="expr_time" ColumnName="expr_time" />
+          <ScalarProperty Name="otp_num" ColumnName="otp_num" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

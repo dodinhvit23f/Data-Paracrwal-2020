@@ -14,13 +14,20 @@ namespace Project4Aptech.Models
     
     public partial class Account
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Account()
+        {
+            this.otp = new HashSet<otp>();
+        }
+    
         public int id { get; set; }
         public string Num_id { get; set; }
         public string Usn { get; set; }
         public string Pwd { get; set; }
-        public Nullable<decimal> Balance { get; set; }
         public Nullable<int> A_Status { get; set; }
     
         public virtual Customers Customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<otp> otp { get; set; }
     }
 }
