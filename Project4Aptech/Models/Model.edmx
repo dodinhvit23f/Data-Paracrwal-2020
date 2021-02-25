@@ -36,15 +36,6 @@
           <Property Name="balance" Type="float" />
           <Property Name="email" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="otp">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="otp_num" Type="varchar" MaxLength="6" />
-          <Property Name="expr_time" Type="datetime" />
-          <Property Name="acc_id" Type="int" />
-        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="id" />
@@ -88,18 +79,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__otp__acc_id__2BFE89A6">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="otp" Type="Self.otp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="otp">
-              <PropertyRef Name="acc_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Transacti__Bank___160F4887">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
           <End Role="TransactionHistory" Type="Self.TransactionHistory" Multiplicity="*" />
@@ -128,17 +107,12 @@
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="otp" EntityType="Self.otp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionHistory" EntityType="Self.TransactionHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Account__Num_id__18EBB532" Association="Self.FK__Account__Num_id__18EBB532">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
-          <AssociationSet Name="FK__otp__acc_id__2BFE89A6" Association="Self.FK__otp__acc_id__2BFE89A6">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="otp" EntitySet="otp" />
           </AssociationSet>
           <AssociationSet Name="FK__Transacti__Bank___160F4887" Association="Self.FK__Transacti__Bank___160F4887">
             <End Role="Banks" EntitySet="Banks" />
@@ -232,11 +206,6 @@
             <End Role="Banks" EntitySet="Banks" />
             <End Role="TransactionHistory" EntitySet="TransactionHistory" />
           </AssociationSet>
-          <EntitySet Name="otp" EntityType="Project4AptechModel.otp" />
-          <AssociationSet Name="FK__otp__acc_id__2BFE89A6" Association="Project4AptechModel.FK__otp__acc_id__2BFE89A6">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="otp" EntitySet="otp" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -248,7 +217,6 @@
           <Property Name="Pwd" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="A_Status" Type="Int32" />
           <NavigationProperty Name="Customers" Relationship="Project4AptechModel.FK__Account__Num_id__18EBB532" FromRole="Account" ToRole="Customers" />
-          <NavigationProperty Name="otp" Relationship="Project4AptechModel.FK__otp__acc_id__2BFE89A6" FromRole="Account" ToRole="otp" />
         </EntityType>
         <EntityType Name="Banks">
           <Key>
@@ -280,28 +248,6 @@
             </Principal>
             <Dependent Role="TransactionHistory">
               <PropertyRef Name="Bank_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="otp">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="otp_num" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="expr_time" Type="DateTime" Precision="3" />
-          <Property Name="acc_id" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Project4AptechModel.FK__otp__acc_id__2BFE89A6" FromRole="otp" ToRole="Account" />
-        </EntityType>
-        <Association Name="FK__otp__acc_id__2BFE89A6">
-          <End Type="Project4AptechModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="Project4AptechModel.otp" Role="otp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="otp">
-              <PropertyRef Name="acc_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -375,16 +321,6 @@
               <MappingFragment StoreEntitySet="Banks">
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="BName" ColumnName="BName" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="otp">
-            <EntityTypeMapping TypeName="Project4AptechModel.otp">
-              <MappingFragment StoreEntitySet="otp">
-                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
-                <ScalarProperty Name="expr_time" ColumnName="expr_time" />
-                <ScalarProperty Name="otp_num" ColumnName="otp_num" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

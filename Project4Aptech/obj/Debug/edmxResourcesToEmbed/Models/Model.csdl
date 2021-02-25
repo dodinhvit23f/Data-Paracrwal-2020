@@ -79,11 +79,6 @@
       <End Role="Banks" EntitySet="Banks" />
       <End Role="TransactionHistory" EntitySet="TransactionHistory" />
     </AssociationSet>
-    <EntitySet Name="otp" EntityType="Project4AptechModel.otp" />
-    <AssociationSet Name="FK__otp__acc_id__2BFE89A6" Association="Project4AptechModel.FK__otp__acc_id__2BFE89A6">
-      <End Role="Account" EntitySet="Account" />
-      <End Role="otp" EntitySet="otp" />
-    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Account">
     <Key>
@@ -95,7 +90,6 @@
     <Property Name="Pwd" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="A_Status" Type="Int32" />
     <NavigationProperty Name="Customers" Relationship="Project4AptechModel.FK__Account__Num_id__18EBB532" FromRole="Account" ToRole="Customers" />
-    <NavigationProperty Name="otp" Relationship="Project4AptechModel.FK__otp__acc_id__2BFE89A6" FromRole="Account" ToRole="otp" />
   </EntityType>
   <EntityType Name="Banks">
     <Key>
@@ -127,28 +121,6 @@
       </Principal>
       <Dependent Role="TransactionHistory">
         <PropertyRef Name="Bank_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="otp">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="otp_num" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="expr_time" Type="DateTime" Precision="3" />
-    <Property Name="acc_id" Type="Int32" />
-    <NavigationProperty Name="Account" Relationship="Project4AptechModel.FK__otp__acc_id__2BFE89A6" FromRole="otp" ToRole="Account" />
-  </EntityType>
-  <Association Name="FK__otp__acc_id__2BFE89A6">
-    <End Type="Project4AptechModel.Account" Role="Account" Multiplicity="0..1" />
-    <End Type="Project4AptechModel.otp" Role="otp" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Account">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="otp">
-        <PropertyRef Name="acc_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -1,4 +1,3 @@
-D:\Aptech\Eproject4\Project4Aptech\obj\Debug\Project4Aptech.csprojAssemblyReference.cache
 D:\Aptech\Eproject4\Project4Aptech\bin\ApplicationInsights.config
 D:\Aptech\Eproject4\Project4Aptech\bin\roslyn\csc.exe
 D:\Aptech\Eproject4\Project4Aptech\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

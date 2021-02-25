@@ -31,6 +31,5 @@ namespace Project4Aptech.Models
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Banks> Banks { get; set; }
-        public virtual DbSet<otp> otp { get; set; }
     }
 }

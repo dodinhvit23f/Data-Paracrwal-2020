@@ -14,8 +14,6 @@
         <EntityTypeShape EntityType="Project4AptechModel.Banks" Width="1.5" PointX="5.5" PointY="9.25" />
         <AssociationConnector Association="Project4AptechModel.FK__Account__Num_id__18EBB532" />
         <AssociationConnector Association="Project4AptechModel.FK__Transacti__Bank___160F4887" />
-        <EntityTypeShape EntityType="Project4AptechModel.otp" Width="1.5" PointX="7.375" PointY="4.75" />
-        <AssociationConnector Association="Project4AptechModel.FK__otp__acc_id__2BFE89A6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

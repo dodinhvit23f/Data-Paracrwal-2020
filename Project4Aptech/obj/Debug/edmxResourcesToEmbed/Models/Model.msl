@@ -69,15 +69,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="otp">
-      <EntityTypeMapping TypeName="Project4AptechModel.otp">
-        <MappingFragment StoreEntitySet="otp">
-          <ScalarProperty Name="acc_id" ColumnName="acc_id" />
-          <ScalarProperty Name="expr_time" ColumnName="expr_time" />
-          <ScalarProperty Name="otp_num" ColumnName="otp_num" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -28,7 +28,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
         public ActionResult Login(string usn,string pwd)
         {
             string hashed = r.HashPwd(pwd);
-            var isValid = db.Account.Where(p=>p.Usn==usn && p.Pwd== hashed).FirstOrDefault();
+            var isValid = db.Users.Where(p=>p.UserName == usn && p.Password == hashed).FirstOrDefault();
             if(isValid != null)
             {
                 Session["user"] = isValid;
