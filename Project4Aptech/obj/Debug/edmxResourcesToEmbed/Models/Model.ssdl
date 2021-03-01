@@ -30,6 +30,7 @@
     <Property Name="acc_num" Type="varchar" MaxLength="50" />
     <Property Name="balance" Type="float" />
     <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="Cs_status" Type="varchar" MaxLength="1" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>

@@ -1,31 +1,38 @@
-﻿@{
+﻿@using Project4Aptech.Models
+@{
     ViewBag.Title = "Home Page";
+    var logged = (Account)Session["logged"];
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    Your balance:
+<input type="password" readonly value="@logged.Customers.balance VND" id="myInput">
+<br>
+<br>
+<input type="checkbox" onclick="myFunction()">Show/Hide <ul>
+    <li>
+        <a>Deposit cash</a>
+    </li>
+    <li>
+        <a href="/WithDrawing/Index">Withdraw cash</a>
+    </li>
+    <li>
+        <a>Transaction history</a>
+    </li>
+</ul>
+@if (ViewBag.ss != null)
+{
+    <a>@ViewBag.ss </a>
+}
+@if (ViewBag.fl != null)
+{
+    <a>@ViewBag.fl </a>
+}
+<script>
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>

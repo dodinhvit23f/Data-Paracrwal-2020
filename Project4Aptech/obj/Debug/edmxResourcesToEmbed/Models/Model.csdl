@@ -13,6 +13,7 @@
     <Property Name="acc_num" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="balance" Type="Double" />
     <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cs_status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>

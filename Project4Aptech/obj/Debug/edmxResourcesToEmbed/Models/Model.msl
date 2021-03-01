@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="Project4AptechModel.Customers">
         <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Cs_status" ColumnName="Cs_status" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="balance" ColumnName="balance" />
           <ScalarProperty Name="acc_num" ColumnName="acc_num" />

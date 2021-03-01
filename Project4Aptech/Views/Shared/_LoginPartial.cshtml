@@ -19,25 +19,28 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+<ul class="nav navbar-nav navbar-right">
+    @if (Session["logged"] != null)
+    {
         <li>
-            @if (Session["logged"] != null)
-            {
-                <a>Hello @logged.Customers.Name</a>
-                <a href="/Home/Signout">Sign out</a>
-
-            }
-            else
-            {
-                <a href="/Home/Login">
-                    Login
-                </a>
-                <a href="/Home/Register">
-                    or Be our Customer
-                </a>
-            }
-
+            <a>Hello @logged.Customers.Name</a>
         </li>
-
-    </ul>
+        <li>
+            <a href="/Home/Signout">Sign out</a>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a href="/Home/Login">
+                Login
+            </a>
+        </li>
+        <li>
+            <a href="/Home/Register">
+                or Be our Customer
+            </a>
+        </li>
+    }
+</ul>
 }

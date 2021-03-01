@@ -207,6 +207,7 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WithDrawingController.cs" />
     <Compile Include="Data\ChuyenTien.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -342,9 +343,12 @@
     <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Accounts\ChuyenTien.cshtml" />
+    <Content Include="Views\WithDrawing\Index.cshtml" />
+    <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\Img\" />
     <Folder Include="SignalR\" />
   </ItemGroup>
   <ItemGroup>
