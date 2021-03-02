@@ -7,7 +7,8 @@
 <input type="password" readonly value="@logged.Customers.balance VND" id="myInput">
 <br>
 <br>
-<input type="checkbox" onclick="myFunction()">Show/Hide <ul>
+<input type="checkbox" onclick="myFunction()">Show/Hide 
+<ul>
     <li>
         <a>Deposit cash</a>
     </li>
@@ -18,10 +19,6 @@
         <a>Transaction history</a>
     </li>
 </ul>
-@if (ViewBag.ss != null)
-{
-    <a>@ViewBag.ss </a>
-}
 @if (ViewBag.fl != null)
 {
     <a>@ViewBag.fl </a>

@@ -1,11 +1,11 @@
 ﻿using Project4Aptech.Models;
 using Project4Aptech.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using Project4Aptech.Invoice;
 
 namespace Project4Aptech.Controllers
 {
@@ -124,6 +124,11 @@ namespace Project4Aptech.Controllers
             var isValid = db.TransactionHistory.Find(id);
             return View(isValid);
         }
-        
+        public ActionResult Print(int id,string cus_id)
+        {
+            InvoicePrepare invoice = new InvoicePrepare();
+            byte[] abytes = invoice.Prepare(db.TransactionHistory.Where(p=>p.Id==id).ToList(),cus_id);
+            return File(abytes, "application/pdf");
+        }
     }
 }
