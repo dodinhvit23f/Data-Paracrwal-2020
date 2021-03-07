@@ -28,6 +28,7 @@ namespace Project4Aptech.Models
         public string acc_num { get; set; }
         public Nullable<double> balance { get; set; }
         public string email { get; set; }
+        public string Cs_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Account { get; set; }

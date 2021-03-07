@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "CheckOtp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CheckOtp</h2>
+<form method="post" action="/WithDrawing/CheckOtp">
+    @if (Session["time"] != null &&  (int)Session["time"] >0 )
+    {
+        <a>Attempts tried: @Session["time"]</a> 
+    }
+    OTP code :<input type="text" name="otp_code" /></br>
+    <a style="color:red">@ViewBag.wrong</a>
+</form>
+

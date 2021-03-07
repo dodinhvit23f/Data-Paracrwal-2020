@@ -13,10 +13,20 @@ namespace Project4Aptech.Controllers
         Repository.Repo r = new Repository.Repo();
         public ActionResult Index()
         {
-            if (Session["logged"] == null)
+            var logged = (Account)Session["logged"];
+            if (logged == null)
             {
                 return RedirectToAction("Login");
             }
+            if (TempData["Suscces"] != null)
+            {
+                ViewBag.ss = TempData["Suscces"];
+            }
+            if (TempData["fail"] != null)
+            {
+                ViewBag.fl = TempData["fail"];
+            }
+            ViewBag.balance = db.Customers.Find(logged.Num_id).balance;
             return View();
         }
         public ActionResult Start()
