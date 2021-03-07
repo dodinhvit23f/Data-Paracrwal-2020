@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="Project4AptechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Account">
     <Key>
       <PropertyRef Name="id" />
@@ -27,6 +27,7 @@
     <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
     <Property Name="Address" Type="nchar" MaxLength="10" />
     <Property Name="DOF" Type="date" />
+    <Property Name="acc_num" Type="varchar" MaxLength="50" />
     <Property Name="balance" Type="float" />
     <Property Name="email" Type="varchar" MaxLength="50" />
     <Property Name="Cs_status" Type="varchar" MaxLength="1" />
@@ -98,7 +99,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="DatabaseModelStoreContainer">
+  <EntityContainer Name="Project4AptechModelStoreContainer">
     <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />

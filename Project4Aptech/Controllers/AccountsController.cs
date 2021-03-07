@@ -20,7 +20,7 @@ namespace Project4Aptech.Controllers
         // GET: Accounts
         public async Task<ActionResult> Index()
         {
-            var account = db.Account.Include(a => a.Customers);
+            var account = db.Account.Include(a=>a.Customers);
             return View(await account.ToListAsync());
         }
         public ActionResult ChuyenTien(int id) {

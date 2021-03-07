@@ -81,3 +81,10 @@ C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.dll
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.pdb
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\obj\Debug\Project4Aptech.csprojAssemblyReference.cache
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\BouncyCastle.Crypto.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\itextsharp.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\System.Collections.Immutable.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\System.Reflection.Metadata.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\itextsharp.xml
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\System.Collections.Immutable.xml
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\System.Reflection.Metadata.xml

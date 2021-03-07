@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Project4AptechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="id" />
@@ -104,7 +104,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Project4AptechModelStoreContainer">
+        <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
@@ -124,10 +124,31 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Project4AptechModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Num_id" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Usn" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Pwd" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="A_Status" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Account__Num_id__18EBB532" FromRole="Account" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Banks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TransactionHistory" Relationship="Self.FK__Transacti__Bank___160F4887" FromRole="Banks" ToRole="TransactionHistory" />
+        </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="Id" />
@@ -137,11 +158,11 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="DOF" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Account" Relationship="Project4AptechModel.FK__Account__Num_id__18EBB532" FromRole="Customers" ToRole="Account" />
           <Property Name="acc_num" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="balance" Type="Double" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cs_status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Account__Num_id__18EBB532" FromRole="Customers" ToRole="Account" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -163,9 +184,9 @@
           <Property Name="ReceiveAccount" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Bank_id" Type="Int32" />
-          <NavigationProperty Name="Banks" Relationship="Project4AptechModel.FK__Transacti__Bank___160F4887" FromRole="TransactionHistory" ToRole="Banks" />
           <Property Name="tran_time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fee" Type="Double" />
+          <NavigationProperty Name="Banks" Relationship="Self.FK__Transacti__Bank___160F4887" FromRole="TransactionHistory" ToRole="Banks" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -177,6 +198,30 @@
           <Property Name="Roll_id" Type="Int32" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__Roll_id__3F466844" FromRole="Users" ToRole="Roles" />
         </EntityType>
+        <Association Name="FK__Account__Num_id__18EBB532">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Num_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Bank___160F4887">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
+          <End Role="TransactionHistory" Type="Self.TransactionHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TransactionHistory">
+              <PropertyRef Name="Bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Users__Roll_id__3F466844">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -189,93 +234,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Banks" EntityType="Self.Banks" />
           <EntitySet Name="Customers" EntityType="Self.Customers" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="TransactionHistory" EntityType="Self.TransactionHistory" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Account__Num_id__18EBB532" Association="Self.FK__Account__Num_id__18EBB532">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Bank___160F4887" Association="Self.FK__Transacti__Bank___160F4887">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="TransactionHistory" EntitySet="TransactionHistory" />
+          </AssociationSet>
           <AssociationSet Name="FK__Users__Roll_id__3F466844" Association="Self.FK__Users__Roll_id__3F466844">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="Account" EntityType="Project4AptechModel.Account" />
-          <EntitySet Name="Banks" EntityType="Project4AptechModel.Banks" />
-          <AssociationSet Name="FK__Account__Num_id__18EBB532" Association="Project4AptechModel.FK__Account__Num_id__18EBB532">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Bank___160F4887" Association="Project4AptechModel.FK__Transacti__Bank___160F4887">
-            <End Role="Banks" EntitySet="Banks" />
-            <End Role="TransactionHistory" EntitySet="TransactionHistory" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Num_id" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="Usn" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Pwd" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="A_Status" Type="Int32" />
-          <NavigationProperty Name="Customers" Relationship="Project4AptechModel.FK__Account__Num_id__18EBB532" FromRole="Account" ToRole="Customers" />
-        </EntityType>
-        <EntityType Name="Banks">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Adress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TransactionHistory" Relationship="Project4AptechModel.FK__Transacti__Bank___160F4887" FromRole="Banks" ToRole="TransactionHistory" />
-        </EntityType>
-        <Association Name="FK__Account__Num_id__18EBB532">
-          <End Type="Project4AptechModel.Customers" Role="Customers" Multiplicity="0..1" />
-          <End Type="Project4AptechModel.Account" Role="Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="Num_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Transacti__Bank___160F4887">
-          <End Type="Project4AptechModel.Banks" Role="Banks" Multiplicity="0..1" />
-          <End Type="Project4AptechModel.TransactionHistory" Role="TransactionHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Banks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="TransactionHistory">
-              <PropertyRef Name="Bank_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Project4AptechModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities1">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="DatabaseModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Num_id" ColumnName="Num_id" />
+                <ScalarProperty Name="Usn" ColumnName="Usn" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="A_Status" ColumnName="A_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banks">
+            <EntityTypeMapping TypeName="DatabaseModel.Banks">
+              <MappingFragment StoreEntitySet="Banks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BName" ColumnName="BName" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="Project4AptechModel.Customers">
+            <EntityTypeMapping TypeName="DatabaseModel.Customers">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="Cs_status" ColumnName="Cs_status" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="balance" ColumnName="balance" />
-                <ScalarProperty Name="acc_num" ColumnName="acc_num" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="DOF" ColumnName="DOF" />
+                <ScalarProperty Name="acc_num" ColumnName="acc_num" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Cs_status" ColumnName="Cs_status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="Project4AptechModel.Roles">
+            <EntityTypeMapping TypeName="DatabaseModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -283,11 +304,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TransactionHistory">
-            <EntityTypeMapping TypeName="Project4AptechModel.TransactionHistory">
+            <EntityTypeMapping TypeName="DatabaseModel.TransactionHistory">
               <MappingFragment StoreEntitySet="TransactionHistory">
-                <ScalarProperty Name="fee" ColumnName="fee" />
-                <ScalarProperty Name="tran_time" ColumnName="tran_time" />
-                <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
@@ -295,36 +313,19 @@
                 <ScalarProperty Name="SendAccount" ColumnName="SendAccount" />
                 <ScalarProperty Name="ReceiveAccount" ColumnName="ReceiveAccount" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
+                <ScalarProperty Name="tran_time" ColumnName="tran_time" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Project4AptechModel.Users">
+            <EntityTypeMapping TypeName="DatabaseModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Roll_id" ColumnName="Roll_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Account">
-            <EntityTypeMapping TypeName="Project4AptechModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="A_Status" ColumnName="A_Status" />
-                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
-                <ScalarProperty Name="Usn" ColumnName="Usn" />
-                <ScalarProperty Name="Num_id" ColumnName="Num_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Banks">
-            <EntityTypeMapping TypeName="Project4AptechModel.Banks">
-              <MappingFragment StoreEntitySet="Banks">
-                <ScalarProperty Name="Adress" ColumnName="Adress" />
-                <ScalarProperty Name="BName" ColumnName="BName" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,6 +25,7 @@ namespace Project4Aptech.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> DOF { get; set; }
+        public string acc_num { get; set; }
         public Nullable<double> balance { get; set; }
         public string email { get; set; }
         public string Cs_status { get; set; }

@@ -16,7 +16,7 @@ namespace Project4Aptech.Models
     public partial class DatabaseEntities : DbContext
     {
         public DatabaseEntities()
-            : base("name=DatabaseEntities")
+            : base("name=DatabaseEntities1")
         {
         }
     
