@@ -8,6 +8,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Project4Aptech.Models;
+using System.Security.Cryptography;
+using System.Text;
+using System.Net.Mail;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
@@ -47,16 +50,70 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,PhoneNumber,Address,DOF,acc_num,balance,email")] Customers customers)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,PhoneNumber,Address,DOF,balance,email")] Customers customers)
         {
             if (ModelState.IsValid)
             {
+                customers.balance = 0;
                 db.Customers.Add(customers);
                 await db.SaveChangesAsync();
+                CreateAccount(customers.Id,customers.email,customers.Name);
                 return RedirectToAction("Index");
             }
 
             return View(customers);
+        }
+
+        private void CreateAccount(string id,string email,string Name)
+        {
+            string password = GeneratePass(Name, id);
+            Send(email, password);
+            Account account = new Account();
+            account.Num_id = id;
+            account.Usn = email;
+            account.Pwd = HashPwd(password);
+            account.A_Status = 0;
+            db.Account.Add(account);
+            db.SaveChanges();
+        }
+
+        public string HashPwd(string input)
+        {
+            System.Security.Cryptography.MD5 md5Hash = MD5.Create();
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
+        }
+        public void Send(string mailAdress, string pass)
+        {
+            var smtpClient = new SmtpClient();
+            var msg = new MailMessage();
+            msg.To.Add(mailAdress);
+            msg.Subject = "Test";
+            msg.Body = "Your Password is: " + pass;
+            smtpClient.Send(msg);
+        }
+
+        //EX: DAO NGOC HAI,id=123456789 -> pass = hai213634
+        private string GeneratePass(string name, string id)
+        {
+            var next = id.Substring(0, 6);
+            var stringChars = new char[6];
+            //split to get lastname
+            string pass = name.Split(null).Last().ToLower();
+            //Random from id
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = next[random.Next(next.Length)];
+            }
+            pass = pass + new String(stringChars);
+            return pass;
+
         }
 
         // GET: Admin/Customers/Edit/5

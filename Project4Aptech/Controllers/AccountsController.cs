@@ -113,10 +113,7 @@ namespace Project4Aptech.Controllers
         public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo) {
             TransactionHistory history = new TransactionHistory()
             {
-                //Sua code o day di Hai\
-                //Nen de send accout va` receive account la` string
-                //neu ck cung` nh thi` receive acc la` id(int)
-                //Nhung ck lien ngan hang` thi` phai luu receive acc la` stk cua ng nhan,vi ng nhan k co tk o bank minh`
+                
                 Amount =(decimal)money,
                 Message = Mess,
                 Code = code,
