@@ -32,8 +32,7 @@ namespace Project4Aptech.Controllers
         [HttpPost]
         public ActionResult ChuyenTien(double money,int idSend,string idReceiver,string mess, string OTP) {
             string Key = cache.Get("OTP").ToString();
-            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();
-            
+            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();            
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
@@ -76,7 +75,7 @@ namespace Project4Aptech.Controllers
         }
         public void OTPGenerate(string mailAdress) {
             var stringChars = new char[6];
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var chars = "0123456789";
             var random = new Random();
             for(int i = 0; i < stringChars.Length; i++)
 {
@@ -88,7 +87,7 @@ namespace Project4Aptech.Controllers
             {
                 cache.Remove("OTP");
             }
-            cache.Add("OTP", OTP, DateTimeOffset.Now.AddHours(1.0));
+            cache.Add("OTP", OTP, DateTimeOffset.Now.AddMinutes(15));
             Send(mailAdress, OTP);
             
         }
