@@ -54,14 +54,34 @@ namespace Project4Aptech.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                customers.balance = 0;
-                db.Customers.Add(customers);
-                await db.SaveChangesAsync();
-                CreateAccount(customers.Id,customers.email,customers.Name);
-                return RedirectToAction("Index");
+                Customers c = db.Customers.Where(m => m.Id == customers.Id).FirstOrDefault();
+                if (c == null)
+                {
+                    if (CheckEmailExist(customers.email))
+                    {
+                        customers.balance = 0;
+                        db.Customers.Add(customers);
+                        await db.SaveChangesAsync();
+                        CreateAccount(customers.Id, customers.email, customers.Name);
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.ErrorEmail = "Email already exist !";
+                    return View(customers);
+                }
+                ViewBag.ErrorCMTND = "CMTND already exist !";
+                return View(customers);
             }
 
             return View(customers);
+        }
+
+        private bool CheckEmailExist(string email)
+        {
+            Customers c = db.Customers.Where(m => m.email == email).FirstOrDefault();
+            if (c == null) {
+                return true;
+            }
+            return false;
         }
 
         private void CreateAccount(string id,string email,string Name)
