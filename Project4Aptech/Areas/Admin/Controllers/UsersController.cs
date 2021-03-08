@@ -49,13 +49,25 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Password,UserName,Roll_id")] Users users)
+        public async Task<ActionResult> Create([Bind(Include = "id,Password,UserName,Roll_id")] Users users,string repass)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(users);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (db.Users.Where(u => u.UserName == users.UserName).FirstOrDefault() == null)
+                {
+                    if (repass != users.Password)
+                    {
+                        ViewBag.Roll_id = new SelectList(db.Roles, "id", "name", users.Roll_id);
+                        ViewBag.Err = "Repassword not correct";
+                        return View(users);
+                    }
+                    db.Users.Add(users);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Roll_id = new SelectList(db.Roles, "id", "name", users.Roll_id);
+                ViewBag.ErrU = "Username already exists";
+                return View(users);
             }
 
             ViewBag.Roll_id = new SelectList(db.Roles, "id", "name", users.Roll_id);

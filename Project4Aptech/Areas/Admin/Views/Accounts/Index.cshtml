@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/Site.css" />
+<link rel="stylesheet" href="~/Content/switch.css" />
 <h2>Index</h2>
 
 <p>
@@ -19,9 +19,6 @@
             @Html.DisplayNameFor(model => model.Pwd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.A_Status)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Customers.Name)
         </th>
         <th>Active</th>
@@ -34,9 +31,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Pwd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.A_Status)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Customers.Name)
