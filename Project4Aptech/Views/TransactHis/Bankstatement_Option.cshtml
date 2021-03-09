@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Bankstatement_Option";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] months = new string[] {"January", "February", "March", "April", "May",
+  "June", "July", "August", "September", "October", "November", "December"};
+    int year = DateTime.Now.Year;
+}
+<style>
+    .opt{
+        display:none;
+    }
+</style>
+<p>Choose time range</p>
+<button onclick="myMonthly()">Monthly</button>
+<button onclick="myQuaterly()">Quaterly</button>
+<div class="opt" id="Monthly">
+    <form action="/TransactHis/ByMonth/">
+        <select name="month">
+            @for (int i = 1; i < 13; i++)
+            {
+                <option value="@i">
+                    @months[i - 1]
+                </option>
+            }
+        </select>
+        <select name="year">
+            @for (int i = 2000; i <= year; i++)
+            {
+                <option value="@i">
+                    @i
+                </option>
+            }
+        </select>
+        <button>Print</button>
+    </form>
+</div>
+<div class="opt" id="Quaterly">
+    <form action="/TransactHis/ByQuaterly/">
+        <select name="quater">
+            @for (int i = 1; i <= 4; i++)
+            {
+                <option value="@i">
+                    @i
+                </option>
+            }
+        </select>
+        <select name="year">
+            @for (int i = 2000; i <= year; i++)
+            {
+                <option value="@i">
+                    @i
+                </option>
+            }
+        </select>
+        <button>Print</button>
+    </form>
+</div>
+<script>
+    function myMonthly() {
+        var Monthly = document.getElementById("Monthly");
+        var Quaterly = document.getElementById("Quaterly");
+        if (Monthly.style.display === "none") {
+            Monthly.style.display = "block";
+            Quaterly.style.display = "none";
+        } else {
+            Monthly.style.display = "none";
+            Quaterly.style.display = "none";
+        }
+    }
+     function myQuaterly() {
+        var Monthly = document.getElementById("Monthly");
+        var Quaterly = document.getElementById("Quaterly");
+        if (Quaterly.style.display === "none") {
+            Quaterly.style.display = "block";
+            Monthly.style.display = "none";
+        } else {
+            Monthly.style.display = "none";
+            Quaterly.style.display = "none";
+        }
+    }
+
+</script>
+
