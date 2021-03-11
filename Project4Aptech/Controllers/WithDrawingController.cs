@@ -68,12 +68,12 @@ namespace Project4Aptech.Controllers
                 TransactionHistory t = new TransactionHistory()
                 {
                     Amount = (decimal)amount,
-                    Code = "W",
+                    Code = "W",//Withdraw 
                     fee = 0,
-                    Status = "P",
+                    Status = "P",//Pending
                     tran_time = DateTime.Now.ToString(),
-                    SendAccount = logged.id.ToString(),
-                    ReceiveAccount = logged.id.ToString(),                    
+                    SendAccount = logged.Customers.Id.ToString(),
+                    ReceiveAccount = logged.Customers.Id.ToString(),                    
                 };
                 db.TransactionHistory.Add(t);
                 db.SaveChanges();

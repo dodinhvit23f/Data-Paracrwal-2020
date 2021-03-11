@@ -14,7 +14,7 @@ namespace Project4Aptech.Invoice
         int col = 6;
         Document _doc;
         Font _fontStyle;
-        PdfPTable _table = new PdfPTable(col);
+        PdfPTable _table = new PdfPTable(6);
         PdfPCell _PdfPCell;
         MemoryStream stream = new MemoryStream();
         List<TransactionHistory> _trans = new List<TransactionHistory>();
