@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using Project4Aptech.Models;
+using System.Linq;
+using System.Web;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Project4Aptech.Models;
+
 namespace Project4Aptech.Invoice
 {
     public class InvoicePrepare
     {
-        static int col = 6;
+        int col = 6;
         Document _doc;
         Font _fontStyle;
-         PdfPTable _table = new PdfPTable(col);
+        PdfPTable _table = new PdfPTable(6);
         PdfPCell _PdfPCell;
         MemoryStream stream = new MemoryStream();
         List<TransactionHistory> _trans = new List<TransactionHistory>();

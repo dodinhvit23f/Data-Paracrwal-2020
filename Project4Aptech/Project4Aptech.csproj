@@ -219,6 +219,7 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransactHisController.cs" />
     <Compile Include="Controllers\WithDrawingController.cs" />
     <Compile Include="Data\ChuyenTien.cs" />
     <Compile Include="Global.asax.cs">
@@ -360,7 +361,6 @@
     <Content Include="Views\WithDrawing\Index.cshtml" />
     <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
     <Content Include="Views\WithDrawing\Detail.cshtml" />
-    <Content Include="Views\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

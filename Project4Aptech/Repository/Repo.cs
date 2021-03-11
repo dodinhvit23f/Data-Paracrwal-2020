@@ -25,6 +25,10 @@ namespace Project4Aptech.Repository
             }
             return rsl;
         }
+        public double toDouble(decimal _param)
+        {
+            return (double)_param;
+        }
         public string HashPwd(string input)
         {
             System.Security.Cryptography.MD5 md5Hash = MD5.Create();
@@ -35,6 +39,12 @@ namespace Project4Aptech.Repository
                 sBuilder.Append(data[i].ToString("x2"));
             }
             return sBuilder.ToString();
+        }
+        public DateTime stringToDate(string iDate)
+        {
+            DateTime oDate = Convert.ToDateTime(iDate);
+            string sDate = oDate.ToString("yyyy MMMM");
+            return oDate;
         }
         public  void OTPGenerate(string mailAdress)
         {
