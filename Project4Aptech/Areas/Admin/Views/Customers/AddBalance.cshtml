@@ -1,0 +1,69 @@
+﻿@model Project4Aptech.Models.Customers
+
+@{
+    ViewBag.Title = "AddBalance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     var id = ViewBag.id;
+}
+
+<h2>AddBalance</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Account</h4>
+    <hr />
+    <div class="form-group">
+        <label class="control-label col-md-2"> Nhap so tien: </label>
+        <div class="col-md-10">
+            <input type="text" name="money" class="form-control" min="1" step="any" required />
+            <strong style="color:red;">@ViewBag.statusBalance</strong>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">  Nhap tai khoan gui: </label>
+        <div class="col-md-10">
+            <input type="text" name="idSend" class="form-control" id="Send" autocomplete="off"  />
+            <span id="SendName" style="color:grey;"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">  Nhap tai khoan nhan: </label>
+        <div class="col-md-10">
+            <input type="text" name="idReceiver" class="form-control" id="Receive" autocomplete="off" required />
+            <span id="ReceiveName" style="color:grey;"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2"> Nhap message: </label>
+        <div class="col-md-10">
+            <input type="text" name="mess" class="form-control" autocomplete="off" value="@ViewBag.Mess" />
+        </div>
+    </div>  
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Chuyển Tiền" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+       $("#Receive").on('change',function () {
+           var idRecive = $("#Receive").val()
+           $.get("/Accounts/getCustomer/" + idRecive, function (data) {
+               console.log(data);
+               $("#ReceiveName").append(data);
+});
+       });
+    $("#Send").on('change',function () {
+           var idSend = $("#Send").val()
+           $.get("/Accounts/getCustomer/" + idSend, function (data) {
+               console.log(data);
+               $("#SendName").append(data);
+});
+       });
+
+</script>

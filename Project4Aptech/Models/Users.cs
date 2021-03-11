@@ -11,10 +11,12 @@ namespace Project4Aptech.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Users
     {
         public int id { get; set; }
+        [StringLength(1000, MinimumLength = 6, ErrorMessage = "Password must be atleast 6 characters")]
         public string Password { get; set; }
         public string UserName { get; set; }
         public Nullable<int> Roll_id { get; set; }

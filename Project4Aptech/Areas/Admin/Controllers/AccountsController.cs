@@ -21,7 +21,20 @@ namespace Project4Aptech.Areas.Admin.Controllers
             var account = db.Account.Include(a => a.Customers);
             return View(await account.ToListAsync());
         }
-
+        public ActionResult LockAccount(int id) {
+            Account account = db.Account.Find(id);
+            account.A_Status = 3;
+            db.Entry(account).State = EntityState.Modified;
+             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult UnlockAccount(int id) {
+            Account account = db.Account.Find(id);
+            account.A_Status = 1;
+            db.Entry(account).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Admin/Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
         {
