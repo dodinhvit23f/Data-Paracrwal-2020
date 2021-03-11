@@ -4,6 +4,7 @@
     ViewBag.Title = "ChuyenTien";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var id = ViewBag.id;
+
 }
 
 <h2>ChuyenTien</h2>
@@ -40,7 +41,7 @@
         <div class="form-group">
             <label class="control-label col-md-2"> Nhap OTP: </label>
             <div class="col-md-10">
-                <input type="text" name="OTP" class="form-control" required />
+                <input type="text" name="OTP" class="form-control" required /> <button type="button" id="ResendOTP">Resend</button>
             </div>
             <strong style="color:red;">@ViewBag.statusOTP</strong>
         </div>
@@ -53,12 +54,27 @@
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
-       $("#Receive").on('change',function () {
-           var idRecive = $("#Receive").val()
-           $.get("/Accounts/getCustomer/" + idRecive, function (data) {
-               console.log(data);
-               $("#ReceiveName").append(data);
-});
-       });
-
+    $(document).ready(function () {
+         $('#img').hide();
+        $("#Receive").on('change', function () {
+            var idRecive = $("#Receive").val()
+            $.get("/Accounts/getCustomer/" + idRecive, function (data) {
+                console.log(data);
+                $("#ReceiveName").append(data);
+            });
+        });
+        $("#ResendOTP").click(function () {
+            var email = '@ViewBag.email';
+            if (email != null) {
+                $.ajax({
+                url: "/Accounts/ResendOTP",
+                data: { mailAdress: email },
+                type: "Get",
+                success: function (html) {
+                }
+            });
+            }
+            
+        });
+    });
 </script>

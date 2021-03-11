@@ -27,6 +27,7 @@ namespace Project4Aptech.Controllers
             var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
             OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
+            ViewBag.email = accounts.Customers.email;
             return View();
         }
         [HttpPost]
@@ -47,14 +48,14 @@ namespace Project4Aptech.Controllers
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }              
-                accountSend.Customers.balance -= money;
+                accountSend.Customers.balance -= (money+20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
                 account.Customers.balance = account.Customers.balance + money;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                SaveHistory(money, mess, "CT", accountSend.id, account.id);
+                SaveHistory(money, mess, "CT", accountSend.id, account.id,20000);
                 return RedirectToAction("Index");
             }
             else
@@ -91,6 +92,10 @@ namespace Project4Aptech.Controllers
             Send(mailAdress, OTP);
             
         }
+        public ActionResult ResendOTP(string mailAdress) {
+            OTPGenerate(mailAdress);
+            return RedirectToAction("Index");
+        }
         public JsonResult getCustomer(string id)
         {
             string Name = "";
@@ -109,7 +114,7 @@ namespace Project4Aptech.Controllers
 
             return Json(Name, JsonRequestBehavior.AllowGet);
         }
-        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo) {
+        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
             TransactionHistory history = new TransactionHistory()
             {
                 
@@ -119,7 +124,9 @@ namespace Project4Aptech.Controllers
                 SendAccount = idFrom.ToString(),
                 ReceiveAccount = idTo.ToString(),
                 Bank_id = 1,
-                Status = "0"              
+                Status = "0",
+                fee = fee,
+                tran_time = DateTime.Now.ToString()
             };
             db.TransactionHistory.Add(history);
             db.SaveChanges();

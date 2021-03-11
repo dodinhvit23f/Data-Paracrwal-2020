@@ -135,7 +135,68 @@ namespace Project4Aptech.Areas.Admin.Controllers
             return pass;
 
         }
+        public ActionResult AddBalance() {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddBalance(double money, string idSend, string idReceiver, string mess) {
+            Customers Send = db.Customers.Find(idSend);
+            Customers Reciver = db.Customers.Find(idReceiver);
+            if (Send != null)
+            {            
+                Reciver.balance += money;
+                db.Entry(Reciver).State = EntityState.Modified;
+                db.SaveChanges();
+                Send.balance -= (money+20000);
+                db.Entry(Send).State = EntityState.Modified;
+                db.SaveChanges();
+                SaveHistory(money,mess,"CT",idSend,idReceiver,20000);
+                return RedirectToAction("Index");
+            }
+            else {             
+                Reciver.balance += money;
+                db.Entry(Reciver).State = EntityState.Modified;
+                db.SaveChanges();
+                SaveHistory(money, mess, "CT", "0", idReceiver,20000);
+                return RedirectToAction("Index");
+            }
+        }
+        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo,double fee)
+        {
+            TransactionHistory history = new TransactionHistory()
+            {
 
+                Amount = (decimal)money,
+                Message = Mess,
+                Code = code,
+                SendAccount = idFrom,
+                ReceiveAccount = idTo,
+                Bank_id = 1,
+                Status = "0",
+                fee=fee,
+                tran_time=DateTime.Now.ToString()
+            };
+            db.TransactionHistory.Add(history);
+            db.SaveChanges();
+        }
+        public JsonResult getCustomer(string id)
+        {
+            string Name = "";
+            try
+            {
+                var Cus = db.Customers.Find(id);
+                if (Cus != null)
+                {
+                    Name += Cus.Name;
+                }
+
+            }
+            catch (Exception e)
+            {
+            }
+
+            return Json(Name, JsonRequestBehavior.AllowGet);
+        }
         // GET: Admin/Customers/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
