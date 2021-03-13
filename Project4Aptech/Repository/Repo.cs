@@ -71,8 +71,35 @@ namespace Project4Aptech.Repository
             var msg = new MailMessage();
             msg.To.Add(mailAdress);
             msg.Subject = "TP Bank 247";
-            msg.Body = OTP;
+            msg.Body = "Your OTP is: " + OTP;
             smtpClient.Send(msg);
+        }
+        public void SendPass(string mailAdress, string pass)
+        {
+            var smtpClient = new SmtpClient();
+            var msg = new MailMessage();
+            msg.To.Add(mailAdress);
+            msg.Subject = "Test";
+            msg.Body = "Your Password is: " + pass;
+            smtpClient.Send(msg);
+        }
+
+        //EX: DAO NGOC HAI,id=123456789 -> pass = hai213634
+        public string GeneratePass(string name, string id)
+        {
+            var next = id.Substring(0, 6);
+            var stringChars = new char[6];
+            //split to get lastname
+            string pass = name.Split(null).Last().ToLower();
+            //Random from id
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = next[random.Next(next.Length)];
+            }
+            pass = pass + new String(stringChars);
+            return pass;
+
         }
     }
 }

@@ -8,13 +8,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Project4Aptech.Models;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
     public class UsersController : Controller
     {
         private DatabaseEntities db = new DatabaseEntities();
-
+        Repo r = new Repo();
         // GET: Admin/Users
         public async Task<ActionResult> Index()
         {
@@ -61,6 +62,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.Err = "Repassword not correct";
                         return View(users);
                     }
+                    users.Password = r.HashPwd(users.Password);
                     db.Users.Add(users);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");

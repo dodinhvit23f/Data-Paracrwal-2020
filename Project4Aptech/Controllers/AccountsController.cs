@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Project4Aptech.Models;
 using System.Net.Mail;
 using System.Runtime.Caching;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Controllers
 {
@@ -17,6 +18,7 @@ namespace Project4Aptech.Controllers
     {
         private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
+        Repo r = new Repo();
         // GET: Accounts
         public async Task<ActionResult> Index()
         {
@@ -25,7 +27,7 @@ namespace Project4Aptech.Controllers
         }
         public ActionResult ChuyenTien(int id) {
             var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
-            OTPGenerate(accounts.Customers.email);
+            r.OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
             ViewBag.email = accounts.Customers.email;
             return View();
@@ -37,7 +39,7 @@ namespace Project4Aptech.Controllers
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
-                OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.Customers.email);
                 return View();
             }
             if (OTP == Key)
@@ -60,40 +62,15 @@ namespace Project4Aptech.Controllers
             }
             else
             {
-                OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.Customers.email);
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
                 return View();
             }
         }
-        public void Send(string mailAdress,string OTP) {
-            var smtpClient = new SmtpClient();
-            var msg = new MailMessage();
-            msg.To.Add(mailAdress);
-            msg.Subject = "Test";
-            msg.Body = "Your OTP is: "+OTP;
-            smtpClient.Send(msg);          
-        }
-        public void OTPGenerate(string mailAdress) {
-            var stringChars = new char[6];
-            var chars = "0123456789";
-            var random = new Random();
-            for(int i = 0; i < stringChars.Length; i++)
-{
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var OTP = new String(stringChars);
-            if (cache.Get("OTP") != null)
-            {
-                cache.Remove("OTP");
-            }
-            cache.Add("OTP", OTP, DateTimeOffset.Now.AddMinutes(15));
-            Send(mailAdress, OTP);
-            
-        }
+       
         public ActionResult ResendOTP(string mailAdress) {
-            OTPGenerate(mailAdress);
+            r.OTPGenerate(mailAdress);
             return RedirectToAction("Index");
         }
         public JsonResult getCustomer(string id)

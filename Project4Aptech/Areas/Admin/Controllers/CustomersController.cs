@@ -11,12 +11,14 @@ using Project4Aptech.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
     public class CustomersController : Controller
     {
         private DatabaseEntities db = new DatabaseEntities();
+        Repo r = new Repo();
 
         // GET: Admin/Customers
         public async Task<ActionResult> Index()
@@ -86,55 +88,19 @@ namespace Project4Aptech.Areas.Admin.Controllers
 
         private void CreateAccount(string id,string email,string Name)
         {
-            string password = GeneratePass(Name, id);
-            Send(email, password);
+            string password = r.GeneratePass(Name, id);
+            r.SendPass(email, password);
             Account account = new Account();
             account.Num_id = id;
             account.Usn = email;
-            account.Pwd = HashPwd(password);
+            account.Pwd = r.HashPwd(password);
             account.A_Status = 0;
             db.Account.Add(account);
             db.SaveChanges();
         }
 
-        public string HashPwd(string input)
-        {
-            System.Security.Cryptography.MD5 md5Hash = MD5.Create();
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
-        }
-        public void Send(string mailAdress, string pass)
-        {
-            var smtpClient = new SmtpClient();
-            var msg = new MailMessage();
-            msg.To.Add(mailAdress);
-            msg.Subject = "Test";
-            msg.Body = "Your Password is: " + pass;
-            smtpClient.Send(msg);
-        }
-
-        //EX: DAO NGOC HAI,id=123456789 -> pass = hai213634
-        private string GeneratePass(string name, string id)
-        {
-            var next = id.Substring(0, 6);
-            var stringChars = new char[6];
-            //split to get lastname
-            string pass = name.Split(null).Last().ToLower();
-            //Random from id
-            var random = new Random();
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = next[random.Next(next.Length)];
-            }
-            pass = pass + new String(stringChars);
-            return pass;
-
-        }
+       
+        
         public ActionResult AddBalance() {
             return View();
         }
