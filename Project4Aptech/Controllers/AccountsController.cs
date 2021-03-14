@@ -11,6 +11,7 @@ using Project4Aptech.Models;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using Project4Aptech.Repository;
+using System.Web.Script.Serialization;
 
 namespace Project4Aptech.Controllers
 {
@@ -49,15 +50,18 @@ namespace Project4Aptech.Controllers
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
-                }              
+                }
+                string time = DateTime.Now.ToString();
                 accountSend.Customers.balance -= (money+20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
+                r.SendBalance(accountSend.Customers.email, accountSend.Customers.Id, "-" + (money + 20000).ToString("N"), mess,time);
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
                 account.Customers.balance = account.Customers.balance + money;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                SaveHistory(money, mess, "CT", accountSend.id, account.id,20000);
+                r.SendBalance(account.Customers.email, account.Customers.Id, "+" + money.ToString("N"), mess,time);
+                r.SaveHistory(money, mess, "CT", accountSend.Num_id, account.Num_id,20000,time);
                 return RedirectToAction("Index");
             }
             else
@@ -90,23 +94,6 @@ namespace Project4Aptech.Controllers
             }
 
             return Json(Name, JsonRequestBehavior.AllowGet);
-        }
-        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
-            TransactionHistory history = new TransactionHistory()
-            {
-                
-                Amount =(decimal)money,
-                Message = Mess,
-                Code = code,
-                SendAccount = idFrom.ToString(),
-                ReceiveAccount = idTo.ToString(),
-                Bank_id = 1,
-                Status = "0",
-                fee = fee,
-                tran_time = DateTime.Now.ToString()
-            };
-            db.TransactionHistory.Add(history);
-            db.SaveChanges();
         }
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)

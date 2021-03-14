@@ -19,29 +19,59 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Users
         public async Task<ActionResult> Index()
         {
-            var users = db.Users.Include(u => u.Roles);
-            return View(await users.ToListAsync());
+            Users us = (Users)Session["user"];
+            if (us == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            else
+            {
+                if (us.Roll_id == 3)
+                {
+                    var users = db.Users.Include(u => u.Roles);
+                    return View(await users.ToListAsync());
+                }
+                return Redirect("~/Home/Index");
+            }
         }
 
         // GET: Admin/Users/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            Users us = (Users)Session["user"];
+            if (us == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Users users = await db.Users.FindAsync(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
+                return Redirect("~/Admin/Home/Login");
+            }          
+                    if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Users users = await db.Users.FindAsync(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(users);
+            
         }
 
         // GET: Admin/Users/Create
         public ActionResult Create()
         {
-            ViewBag.Roll_id = new SelectList(db.Roles, "id", "name");
+            Users us = (Users)Session["user"];
+            if (us == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            else
+            {
+                if (us.Roll_id != 3)
+                {
+                    return Redirect("~/Home/Index");
+                }
+            }
+                ViewBag.Roll_id = new SelectList(db.Roles, "id", "name");
             return View();
         }
 
@@ -79,17 +109,31 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Users/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Users users = await db.Users.FindAsync(id);
-            if (users == null)
+            Users us = (Users)Session["user"];
+            if (us == null)
             {
-                return HttpNotFound();
+                return Redirect("~/Admin/Home/Login");
             }
-            ViewBag.Roll_id = new SelectList(db.Roles, "id", "name", users.Roll_id);
-            return View(users);
+            else
+            {
+                if (us.Roll_id != 3)
+                {
+                    return Redirect("~/Home/Index");
+                }
+
+                Users users = await db.Users.FindAsync(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Roll_id = new SelectList(db.Roles, "id", "name", users.Roll_id);
+                return View(users);
+            }
         }
 
         // POST: Admin/Users/Edit/5
@@ -116,12 +160,25 @@ namespace Project4Aptech.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Users users = await db.Users.FindAsync(id);
-            if (users == null)
+            Users us = (Users)Session["user"];
+            if (us == null)
             {
-                return HttpNotFound();
+                return Redirect("~/Admin/Home/Login");
             }
-            return View(users);
+            else
+            {
+                if (us.Roll_id != 3)
+                {
+                    return Redirect("~/Home/Index");
+                }
+
+                Users users = await db.Users.FindAsync(id);
+                if (users == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(users);
+            }
         }
 
         // POST: Admin/Users/Delete/5

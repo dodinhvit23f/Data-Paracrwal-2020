@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "AddBalance";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-     var id = ViewBag.id;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    var id = ViewBag.id;
 }
 
 <h2>AddBalance</h2>
@@ -18,21 +18,21 @@
     <div class="form-group">
         <label class="control-label col-md-2"> Nhap so tien: </label>
         <div class="col-md-10">
-            <input type="text" name="money" class="form-control" min="1" step="any" required />
+            <input type="number" name="money" class="form-control" min="1" step="any" required  style=" -moz-appearance: textfield;" autocomplete="off"/>
             <strong style="color:red;">@ViewBag.statusBalance</strong>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-md-2">  Nhap tai khoan gui: </label>
         <div class="col-md-10">
-            <input type="text" name="idSend" class="form-control" id="Send" autocomplete="off"  />
-            <span id="SendName" style="color:grey;"></span>
+            <input type="number" name="idSend" class="form-control" id="Send" autocomplete="off" style=" -moz-appearance: textfield;"  />
+            <span id="SendName" style="color:grey;">@ViewBag.Error</span>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-md-2">  Nhap tai khoan nhan: </label>
         <div class="col-md-10">
-            <input type="text" name="idReceiver" class="form-control" id="Receive" autocomplete="off" required />
+            <input type="number" name="idReceiver" class="form-control" id="Receive" autocomplete="off" required style=" -moz-appearance: textfield;" />
             <span id="ReceiveName" style="color:grey;"></span>
         </div>
     </div>
@@ -53,15 +53,14 @@
 <script>
        $("#Receive").on('change',function () {
            var idRecive = $("#Receive").val()
+
            $.get("/Accounts/getCustomer/" + idRecive, function (data) {
-               console.log(data);
                $("#ReceiveName").append(data);
 });
        });
     $("#Send").on('change',function () {
            var idSend = $("#Send").val()
-           $.get("/Accounts/getCustomer/" + idSend, function (data) {
-               console.log(data);
+        $.get("/Accounts/getCustomer/" + idSend, function (data) {
                $("#SendName").append(data);
 });
        });

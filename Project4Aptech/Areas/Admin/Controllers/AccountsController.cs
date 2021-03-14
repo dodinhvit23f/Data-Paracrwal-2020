@@ -18,10 +18,19 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Accounts
         public async Task<ActionResult> Index()
         {
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             var account = db.Account.Include(a => a.Customers);
             return View(await account.ToListAsync());
         }
         public ActionResult LockAccount(int id) {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             Account account = db.Account.Find(id);
             account.A_Status = 3;
             db.Entry(account).State = EntityState.Modified;
@@ -29,6 +38,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         public ActionResult UnlockAccount(int id) {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             Account account = db.Account.Find(id);
             account.A_Status = 1;
             db.Entry(account).State = EntityState.Modified;
@@ -38,6 +52,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -53,6 +72,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Accounts/Create
         public ActionResult Create()
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name");
             return View();
         }
@@ -78,6 +102,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Accounts/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -107,10 +136,15 @@ namespace Project4Aptech.Areas.Admin.Controllers
             ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name", account.Num_id);
             return View(account);
         }
-
+        
         // GET: Admin/Accounts/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

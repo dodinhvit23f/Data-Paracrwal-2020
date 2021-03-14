@@ -6,11 +6,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Runtime.Caching;
+using Project4Aptech.Models;
 
 namespace Project4Aptech.Repository
 {
     public class Repo
     {
+        private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
         public bool isNum(string _param)
         {
@@ -74,6 +76,18 @@ namespace Project4Aptech.Repository
             msg.Body = "Your OTP is: " + OTP;
             smtpClient.Send(msg);
         }
+        public void SendBalance(string mailAdress,string idReceive,string money,string message,string time)
+        {
+           
+           
+            var smtpClient = new SmtpClient();
+            var msg = new MailMessage();
+            msg.IsBodyHtml = true;
+            msg.To.Add(mailAdress);
+            msg.Subject = "TP Bank 247";
+            msg.Body = "TPBank:"+time+"</br>"+"TK:"+idReceive+"|</br>GD:"+money+"VND|</br>SDC:"+db.Customers.Find(idReceive).balance+"VND|"+"</br>ND:"+message;
+            smtpClient.Send(msg);
+        }
         public void SendPass(string mailAdress, string pass)
         {
             var smtpClient = new SmtpClient();
@@ -100,6 +114,45 @@ namespace Project4Aptech.Repository
             pass = pass + new String(stringChars);
             return pass;
 
+        }
+        public bool CheckEmailExist(string email)
+        {
+            Customers c = db.Customers.Where(m => m.email == email).FirstOrDefault();
+            if (c == null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public void CreateAccount(string id, string email, string Name)
+        {
+            string password = GeneratePass(Name, id);
+            SendPass(email, password);
+            Account account = new Account();
+            account.Num_id = id;
+            account.Usn = email;
+            account.Pwd = HashPwd(password);
+            account.A_Status = 0;
+            db.Account.Add(account);
+            db.SaveChanges();
+        }
+        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo, double fee,string time)
+        {
+            TransactionHistory history = new TransactionHistory()
+            {
+
+                Amount = (decimal)money,
+                Message = Mess,
+                Code = code,
+                SendAccount = idFrom,
+                ReceiveAccount = idTo,
+                Bank_id = 1,
+                Status = "0",
+                fee = fee,
+                tran_time = time
+            };
+            db.TransactionHistory.Add(history);
+            db.SaveChanges();
         }
     }
 }

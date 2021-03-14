@@ -23,12 +23,22 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers
         public async Task<ActionResult> Index()
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View(await db.Customers.ToListAsync());
         }
 
         // GET: Admin/Customers/Details/5
         public async Task<ActionResult> Details(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -44,6 +54,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Create
         public ActionResult Create()
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View();
         }
 
@@ -59,12 +74,12 @@ namespace Project4Aptech.Areas.Admin.Controllers
                 Customers c = db.Customers.Where(m => m.Id == customers.Id).FirstOrDefault();
                 if (c == null)
                 {
-                    if (CheckEmailExist(customers.email))
+                    if (r.CheckEmailExist(customers.email))
                     {
                         customers.balance = 0;
                         db.Customers.Add(customers);
                         await db.SaveChangesAsync();
-                        CreateAccount(customers.Id, customers.email, customers.Name);
+                        r.CreateAccount(customers.Id, customers.email, customers.Name);
                         return RedirectToAction("Index");
                     }
                     ViewBag.ErrorEmail = "Email already exist !";
@@ -76,75 +91,52 @@ namespace Project4Aptech.Areas.Admin.Controllers
 
             return View(customers);
         }
-
-        private bool CheckEmailExist(string email)
-        {
-            Customers c = db.Customers.Where(m => m.email == email).FirstOrDefault();
-            if (c == null) {
-                return true;
-            }
-            return false;
-        }
-
-        private void CreateAccount(string id,string email,string Name)
-        {
-            string password = r.GeneratePass(Name, id);
-            r.SendPass(email, password);
-            Account account = new Account();
-            account.Num_id = id;
-            account.Usn = email;
-            account.Pwd = r.HashPwd(password);
-            account.A_Status = 0;
-            db.Account.Add(account);
-            db.SaveChanges();
-        }
-
-       
-        
+      
         public ActionResult AddBalance() {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View();
         }
         [HttpPost]
         public ActionResult AddBalance(double money, string idSend, string idReceiver, string mess) {
-            Customers Send = db.Customers.Find(idSend);
+            Customers Send = null;
             Customers Reciver = db.Customers.Find(idReceiver);
-            if (Send != null)
-            {            
+            string time="";
+            if (idSend != "") {
+                Send = db.Customers.Find(idSend);
+                if (Send != null)
+                {
+                  
+                    Reciver.balance += money;
+                    db.Entry(Reciver).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString(), mess, time);
+                    Send.balance -= (money + 20000);
+                    db.Entry(Send).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Send.email, Send.Id, "-" + (money + 20000).ToString("N"), mess, time);
+                    r.SaveHistory(money, mess, "CT", idSend, idReceiver, 20000,time);
+                    return RedirectToAction("Index");
+                }
+                else {
+                    ViewBag.Error = "Send Customer not exist!";
+                    return View();
+                }
+            }
+            else {
+                time = DateTime.Now.ToString();
                 Reciver.balance += money;
                 db.Entry(Reciver).State = EntityState.Modified;
                 db.SaveChanges();
-                Send.balance -= (money+20000);
-                db.Entry(Send).State = EntityState.Modified;
-                db.SaveChanges();
-                SaveHistory(money,mess,"CT",idSend,idReceiver,20000);
-                return RedirectToAction("Index");
-            }
-            else {             
-                Reciver.balance += money;
-                db.Entry(Reciver).State = EntityState.Modified;
-                db.SaveChanges();
-                SaveHistory(money, mess, "CT", "0", idReceiver,20000);
+                r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString("N"), mess, time);
+                r.SaveHistory(money, mess, "CT", "0", idReceiver,20000,time);
                 return RedirectToAction("Index");
             }
         }
-        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo,double fee)
-        {
-            TransactionHistory history = new TransactionHistory()
-            {
-
-                Amount = (decimal)money,
-                Message = Mess,
-                Code = code,
-                SendAccount = idFrom,
-                ReceiveAccount = idTo,
-                Bank_id = 1,
-                Status = "0",
-                fee=fee,
-                tran_time=DateTime.Now.ToString()
-            };
-            db.TransactionHistory.Add(history);
-            db.SaveChanges();
-        }
+        
         public JsonResult getCustomer(string id)
         {
             string Name = "";
@@ -166,6 +158,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -197,6 +194,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
