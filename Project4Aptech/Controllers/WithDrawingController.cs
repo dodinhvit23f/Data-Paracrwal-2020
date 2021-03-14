@@ -85,6 +85,10 @@ namespace Project4Aptech.Controllers
                 Session["time"] = 0;
                 //r.SendEmail(logged.Customers.email, "heheh");
                 r.OTPGenerate(logged.Customers.email);
+                if (logged.A_Status == 0)
+                {
+                    return RedirectToAction("Signout","Home");
+                }
                 return RedirectToAction("CheckOtp");
             }            
             return View();

@@ -11,11 +11,13 @@ using Project4Aptech.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
     public class CustomersController : Controller
     {
+        Repo r = new Repo();
         private DatabaseEntities db = new DatabaseEntities();
 
         // GET: Admin/Customers
@@ -91,23 +93,13 @@ namespace Project4Aptech.Areas.Admin.Controllers
             Account account = new Account();
             account.Num_id = id;
             account.Usn = email;
-            account.Pwd = HashPwd(password);
+            account.Pwd = r.HashPwd(password);
             account.A_Status = 0;
             db.Account.Add(account);
             db.SaveChanges();
         }
+        //Viet trong repo roi viet lai lam` chi?
 
-        public string HashPwd(string input)
-        {
-            System.Security.Cryptography.MD5 md5Hash = MD5.Create();
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
-        }
         public void Send(string mailAdress, string pass)
         {
             var smtpClient = new SmtpClient();

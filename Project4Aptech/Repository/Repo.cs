@@ -48,7 +48,7 @@ namespace Project4Aptech.Repository
         }
         public  void OTPGenerate(string mailAdress)
         {
-            var stringChars = new char[4];
+            var stringChars = new char[6];
             var chars = "0123456789";
             var random = new Random();
             for (int i = 0; i < stringChars.Length; i++)

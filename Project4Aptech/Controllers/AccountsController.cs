@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Project4Aptech.Models;
 using System.Net.Mail;
 using System.Runtime.Caching;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Controllers
 {
@@ -17,6 +18,7 @@ namespace Project4Aptech.Controllers
     {
         private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
+        Repo r = new Repo();
         // GET: Accounts
         public async Task<ActionResult> Index()
         {
@@ -55,7 +57,7 @@ namespace Project4Aptech.Controllers
                 account.Customers.balance = account.Customers.balance + money;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                SaveHistory(money, mess, "CT", accountSend.id, account.id,20000);
+                SaveHistory(money, mess, "CT", int.Parse(accountSend.Customers.Id), int.Parse(account.Customers.Id),20000);
                 return RedirectToAction("Index");
             }
             else
@@ -128,8 +130,15 @@ namespace Project4Aptech.Controllers
                 fee = fee,
                 tran_time = DateTime.Now.ToString()
             };
+            var sender = db.Customers.Find(history.SendAccount);
+            var receiver = db.Customers.Find(history.ReceiveAccount);
             db.TransactionHistory.Add(history);
             db.SaveChanges();
+            string message4Sender = string.Format("Account - {0},balance:{1},at {2} :", money, sender.balance, history.tran_time);
+            string message4Receiver = string.Format("Account + {0},balance:{1},at {2} :", money, receiver.balance, history.tran_time);
+            r.SendEmail(sender.email, message4Sender);
+            r.SendEmail(receiver.email, message4Receiver);
+
         }
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
