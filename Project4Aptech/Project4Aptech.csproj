@@ -282,7 +282,6 @@
     <Content Include="Content\AdminStyle\images\icons\favicon.ico" />
     <Content Include="Content\AdminStyle\images\img-01.png" />
     <Content Include="Content\AdminStyle\images\tpb.jpg" />
-    <Content Include="Content\AdminStyle\js\index.js" />
     <Content Include="Content\AdminStyle\js\main.js" />
     <Content Include="Content\AdminStyle\vendor\animate\animate.css" />
     <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-grid.css" />
@@ -454,6 +453,7 @@
     <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.eot" />
     <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="Areas\Admin\Views\Accounts\ResetPass.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
