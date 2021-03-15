@@ -15,6 +15,10 @@ namespace Project4Aptech.Controllers
         Repo r = new Repo();
         public ActionResult Index(string id)
         {
+            if (db.Customers.Find(id).Account.FirstOrDefault().A_Status == 0)
+            {
+                return RedirectToAction("Signout", "Home");
+            }
             //var logged = (Account)Session["logged"];
             ViewBag.cus_id = id;
             var isValid=db.TransactionHistory.Where(p=>p.ReceiveAccount==id|| p.SendAccount==id);
@@ -28,6 +32,10 @@ namespace Project4Aptech.Controllers
         {
             List<TransactionHistory> isValid = new List<TransactionHistory>();
             var logged = (Account)Session["logged"];
+            if (logged.A_Status == 0)
+            {
+                return RedirectToAction("Signout", "Home");
+            }
             int[] quater1 = { 1, 2, 3 };
             int[] quater2 = { 4, 5, 6 };
             int[] quater3 = { 7, 8, 9 };
@@ -57,6 +65,10 @@ namespace Project4Aptech.Controllers
         public ActionResult ByMonth(int month,int year)
         {
             var logged = (Account)Session["logged"];
+            if (logged.A_Status == 0)
+            {
+                return RedirectToAction("Signout", "Home");
+            }
             var isValid = db.TransactionHistory.ToList().Where(p => r.stringToDate(p.tran_time).Month == month && r.stringToDate(p.tran_time).Year==year).ToList();
             //TransactionHistory tran = new TransactionHistory() {
             //    Message ="Print invoice fee",

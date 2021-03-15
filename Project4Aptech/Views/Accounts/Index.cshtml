@@ -19,9 +19,6 @@
             @Html.DisplayNameFor(model => model.Pwd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Balance)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.A_Status)
         </th>
         <th>
@@ -30,33 +27,26 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pwd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Balance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.A_Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customers.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-                @Html.ActionLink("ChuyenTien", "ChuyenTien", new { id = item.id })
-
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pwd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.A_Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customers.Name)
+        </td>
+        <td>
+            @Html.ActionLink("ChuyenTien", "ChuyenTien", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
 
 </table>
-

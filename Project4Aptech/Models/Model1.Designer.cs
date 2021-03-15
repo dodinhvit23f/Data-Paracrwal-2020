@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Aptech\Eproject4\Project4Aptech\Models\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\Models\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

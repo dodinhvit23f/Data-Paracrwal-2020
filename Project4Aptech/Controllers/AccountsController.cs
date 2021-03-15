@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Project4Aptech.Models;
 using System.Net.Mail;
 using System.Runtime.Caching;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Controllers
 {
@@ -17,16 +18,18 @@ namespace Project4Aptech.Controllers
     {
         private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
+        Repo r = new Repo();
         // GET: Accounts
         public async Task<ActionResult> Index()
         {
-            var account = db.Account.Include(a => a.Customers);
+            var account = db.Account.Include(a=>a.Customers);
             return View(await account.ToListAsync());
         }
         public ActionResult ChuyenTien(int id) {
-            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id==id).First();
+            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
             OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
+            ViewBag.email = accounts.Customers.email;
             return View();
         }
         [HttpPost]
@@ -47,14 +50,14 @@ namespace Project4Aptech.Controllers
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }              
-                accountSend.Customers.balance -= money;
+                accountSend.Customers.balance -= (money+20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
                 account.Customers.balance = account.Customers.balance + money;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                SaveHistory(money, mess, "CT", accountSend.id, account.id);
+                SaveHistory(money, mess, "CT", int.Parse(accountSend.Customers.Id), int.Parse(account.Customers.Id),20000);
                 return RedirectToAction("Index");
             }
             else
@@ -91,23 +94,51 @@ namespace Project4Aptech.Controllers
             Send(mailAdress, OTP);
             
         }
-        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo) {
+        public ActionResult ResendOTP(string mailAdress) {
+            OTPGenerate(mailAdress);
+            return RedirectToAction("Index");
+        }
+        public JsonResult getCustomer(string id)
+        {
+            string Name = "";
+            try
+            {
+                var Cus = db.Customers.Find(id);
+                if (Cus != null)
+                {
+                    Name += Cus.Name;
+                }
+
+            }
+            catch (Exception e)
+            {
+            }
+
+            return Json(Name, JsonRequestBehavior.AllowGet);
+        }
+        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
             TransactionHistory history = new TransactionHistory()
             {
-                //Sua code o day di Hai\
-                //Nen de send accout va` receive account la` string
-                //neu ck cung` nh thi` receive acc la` id(int)
-                //Nhung ck lien ngan hang` thi` phai luu receive acc la` stk cua ng nhan,vi ng nhan k co tk o bank minh`
+                
                 Amount =(decimal)money,
                 Message = Mess,
                 Code = code,
                 SendAccount = idFrom.ToString(),
                 ReceiveAccount = idTo.ToString(),
                 Bank_id = 1,
-                Status = "0"              
+                Status = "0",
+                fee = fee,
+                tran_time = DateTime.Now.ToString()
             };
+            var sender = db.Customers.Find(history.SendAccount);
+            var receiver = db.Customers.Find(history.ReceiveAccount);
             db.TransactionHistory.Add(history);
             db.SaveChanges();
+            string message4Sender = string.Format("Account - {0},balance:{1},at {2} :", money, sender.balance, history.tran_time);
+            string message4Receiver = string.Format("Account + {0},balance:{1},at {2} :", money, receiver.balance, history.tran_time);
+            r.SendEmail(sender.email, message4Sender);
+            r.SendEmail(receiver.email, message4Receiver);
+
         }
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -136,7 +167,7 @@ namespace Project4Aptech.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,Balance,A_Status")] Account account)
+        public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,A_Status")] Account account)
         {
             if (ModelState.IsValid)
             {

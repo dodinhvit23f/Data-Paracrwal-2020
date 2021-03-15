@@ -16,7 +16,7 @@ namespace Project4Aptech.Models
     public partial class DatabaseEntities : DbContext
     {
         public DatabaseEntities()
-            : base("name=DatabaseEntities")
+            : base("name=DatabaseEntities1")
         {
         }
     
@@ -25,11 +25,11 @@ namespace Project4Aptech.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Banks> Banks { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<TransactionHistory> TransactionHistory { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Account> Account { get; set; }
-        public virtual DbSet<Banks> Banks { get; set; }
     }
 }
