@@ -34,8 +34,9 @@ namespace Project4Aptech.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(double money,int idSend,string idReceiver,string mess, string OTP) {
+        public ActionResult ChuyenTien(string money,int idSend,string idReceiver,string mess, string OTP) {
             string Key = cache.Get("OTP").ToString();
+            double cash = Double.Parse(money);
             Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();            
             if (OTP == null) {
                 ViewBag.Mess = mess;
@@ -45,23 +46,24 @@ namespace Project4Aptech.Controllers
             }
             if (OTP == Key)
             {
-                if (money >= accountSend.Customers.balance)
+                
+                if (cash + 20000 >= accountSend.Customers.balance)
                 {
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }
                 string time = DateTime.Now.ToString();
-                accountSend.Customers.balance -= (money+20000);
+                accountSend.Customers.balance -= (cash + 20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(accountSend.Customers.email, accountSend.Customers.Id, "-" + (money + 20000).ToString("N"), mess,time);
+                r.SendBalance(accountSend.Customers.email, accountSend.Customers.Id, "-" + (cash + 20000).ToString("N"), mess,time);
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
-                account.Customers.balance = account.Customers.balance + money;
+                account.Customers.balance = account.Customers.balance + cash;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(account.Customers.email, account.Customers.Id, "+" + money.ToString("N"), mess,time);
-                r.SaveHistory(money, mess, "CT", accountSend.Num_id, account.Num_id,20000,time);
+                r.SendBalance(account.Customers.email, account.Customers.Id, "+" + cash.ToString("N"), mess,time);
+                r.SaveHistory(cash, mess, "CT", accountSend.Num_id, account.Num_id,20000,time);
                 return RedirectToAction("Index");
             }
             else
@@ -95,30 +97,7 @@ namespace Project4Aptech.Controllers
 
             return Json(Name, JsonRequestBehavior.AllowGet);
         }
-        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
-            TransactionHistory history = new TransactionHistory()
-            {
-                
-                Amount =(decimal)money,
-                Message = Mess,
-                Code = code,
-                SendAccount = idFrom.ToString(),
-                ReceiveAccount = idTo.ToString(),
-                Bank_id = 1,
-                Status = "0",
-                fee = fee,
-                tran_time = DateTime.Now.ToString()
-            };
-            var sender = db.Customers.Find(history.SendAccount);
-            var receiver = db.Customers.Find(history.ReceiveAccount);
-            db.TransactionHistory.Add(history);
-            db.SaveChanges();
-            string message4Sender = string.Format("Account - {0},balance:{1},at {2} :", money, sender.balance, history.tran_time);
-            string message4Receiver = string.Format("Account + {0},balance:{1},at {2} :", money, receiver.balance, history.tran_time);
-            r.SendEmail(sender.email, message4Sender);
-            r.SendEmail(receiver.email, message4Receiver);
-
-        }
+       
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
         {

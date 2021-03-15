@@ -101,39 +101,54 @@ namespace Project4Aptech.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddBalance(double money, string idSend, string idReceiver, string mess) {
+        public ActionResult AddBalance(string money, string idSend, string idReceiver, string mess) {
             Customers Send = null;
+            double cash = Double.Parse(money);
             Customers Reciver = db.Customers.Find(idReceiver);
             string time="";
             if (idSend != "") {
                 Send = db.Customers.Find(idSend);
                 if (Send != null)
                 {
-                  
-                    Reciver.balance += money;
+                    if (cash + 20000 >=Send.balance)
+                    {
+                        ViewBag.idSend = idSend;
+                        ViewBag.idReceiver = idReceiver;
+                        ViewBag.Mess = mess;
+                        ViewBag.statusBalance = "So tien khong du";
+                        return View();
+                    }
+                    Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
                     r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString(), mess, time);
-                    Send.balance -= (money + 20000);
+                    Send.balance -= (cash + 20000);
                     db.Entry(Send).State = EntityState.Modified;
                     db.SaveChanges();
-                    r.SendBalance(Send.email, Send.Id, "-" + (money + 20000).ToString("N"), mess, time);
-                    r.SaveHistory(money, mess, "CT", idSend, idReceiver, 20000,time);
+                    r.SendBalance(Send.email, Send.Id, "-" + (cash + 20000).ToString("N"), mess, time);
+                    r.SaveHistory(cash, mess, "CT", idSend, idReceiver, 20000,time);
                     return RedirectToAction("Index");
                 }
                 else {
+                        
                     ViewBag.Error = "Send Customer not exist!";
                     return View();
                 }
             }
             else {
-                time = DateTime.Now.ToString();
-                Reciver.balance += money;
-                db.Entry(Reciver).State = EntityState.Modified;
-                db.SaveChanges();
-                r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString("N"), mess, time);
-                r.SaveHistory(money, mess, "CT", "0", idReceiver,20000,time);
-                return RedirectToAction("Index");
+                if (Reciver != null)
+                {
+                    time = DateTime.Now.ToString();
+                    Reciver.balance += cash;
+                    db.Entry(Reciver).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Reciver.email, Reciver.Id, "+" + cash.ToString("N"), mess, time);
+                    r.SaveHistory(cash, mess, "CT", "0", idReceiver, 20000, time);
+                    return RedirectToAction("Index");
+                }
+                ViewBag.idReceiver = idReceiver;
+                ViewBag.Mess = mess;
+                return View();
             }
         }
         
