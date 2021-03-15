@@ -95,6 +95,30 @@ namespace Project4Aptech.Controllers
 
             return Json(Name, JsonRequestBehavior.AllowGet);
         }
+        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
+            TransactionHistory history = new TransactionHistory()
+            {
+                
+                Amount =(decimal)money,
+                Message = Mess,
+                Code = code,
+                SendAccount = idFrom.ToString(),
+                ReceiveAccount = idTo.ToString(),
+                Bank_id = 1,
+                Status = "0",
+                fee = fee,
+                tran_time = DateTime.Now.ToString()
+            };
+            var sender = db.Customers.Find(history.SendAccount);
+            var receiver = db.Customers.Find(history.ReceiveAccount);
+            db.TransactionHistory.Add(history);
+            db.SaveChanges();
+            string message4Sender = string.Format("Account - {0},balance:{1},at {2} :", money, sender.balance, history.tran_time);
+            string message4Receiver = string.Format("Account + {0},balance:{1},at {2} :", money, receiver.balance, history.tran_time);
+            r.SendEmail(sender.email, message4Sender);
+            r.SendEmail(receiver.email, message4Receiver);
+
+        }
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
         {

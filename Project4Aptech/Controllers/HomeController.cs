@@ -57,6 +57,11 @@ namespace Project4Aptech.Controllers
         {
             string hashed = r.HashPwd(pwd);
             var isValid = db.Account.Where(p => p.Usn == usn && p.Pwd == hashed).FirstOrDefault();
+            if (isValid.A_Status == 0)
+            {
+                ViewBag.err = "Your account has been locked due to some reasons,please contact our staff for more information";
+                return View();
+            }
             if (isValid != null)
             {
                 Session["logged"] = isValid;
