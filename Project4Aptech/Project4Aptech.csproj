@@ -84,6 +84,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.10.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
@@ -281,6 +287,7 @@
     <Content Include="Content\AdminStyle\images\hanoi-top-10-attractions.jpg" />
     <Content Include="Content\AdminStyle\images\icons\favicon.ico" />
     <Content Include="Content\AdminStyle\images\img-01.png" />
+    <Content Include="Content\AdminStyle\images\Logo-TPB.png" />
     <Content Include="Content\AdminStyle\images\tpb.jpg" />
     <Content Include="Content\AdminStyle\js\main.js" />
     <Content Include="Content\AdminStyle\vendor\animate\animate.css" />

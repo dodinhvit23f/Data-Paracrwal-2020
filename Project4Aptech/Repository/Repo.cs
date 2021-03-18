@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Runtime.Caching;
 using Project4Aptech.Models;
+using Serilog;
 
 namespace Project4Aptech.Repository
 {
@@ -22,7 +23,7 @@ namespace Project4Aptech.Repository
                 if (!char.IsDigit(i))
                 {
                     rsl = false;
-                    break;                    
+                    break;
                 }
             }
             return rsl;
@@ -48,7 +49,7 @@ namespace Project4Aptech.Repository
             string sDate = oDate.ToString("yyyy MMMM");
             return oDate;
         }
-        public  void OTPGenerate(string mailAdress)
+        public void OTPGenerate(string mailAdress)
         {
             var stringChars = new char[6];
             var chars = "0123456789";
@@ -76,16 +77,16 @@ namespace Project4Aptech.Repository
             msg.Body = "Your OTP is: " + OTP;
             smtpClient.Send(msg);
         }
-        public void SendBalance(string mailAdress,string idReceive,string money,string message,string time)
+        public void SendBalance(string mailAdress, string idReceive, string money, string message, string time)
         {
-           
-           
+
+
             var smtpClient = new SmtpClient();
             var msg = new MailMessage();
             msg.IsBodyHtml = true;
             msg.To.Add(mailAdress);
             msg.Subject = "TP Bank 247";
-            msg.Body = "TPBank:"+time+"</br>"+"TK:"+idReceive+"|</br>GD:"+money+"VND|</br>SDC:"+db.Customers.Find(idReceive).balance+"VND|"+"</br>ND:"+message;
+            msg.Body = "TPBank:" + time + "</br>" + "TK:" + idReceive + "|</br>GD:" + money + "VND|</br>SDC:" + db.Customers.Find(idReceive).balance + "VND|" + "</br>ND:" + message;
             smtpClient.Send(msg);
         }
         public void SendPass(string mailAdress, string pass)
@@ -136,7 +137,7 @@ namespace Project4Aptech.Repository
             db.Account.Add(account);
             db.SaveChanges();
         }
-        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo, double fee,string time)
+        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo, double fee, string time)
         {
             TransactionHistory history = new TransactionHistory()
             {
@@ -153,6 +154,13 @@ namespace Project4Aptech.Repository
             };
             db.TransactionHistory.Add(history);
             db.SaveChanges();
+        }
+        public void Logging(string idSend,string idReciver,string type,string cashflow) {
+            var log = new LoggerConfiguration()
+              .MinimumLevel.Debug()
+              .WriteTo.File(@"c:\log\log.txt")
+              .CreateLogger();
+            log.Information("Người dùng:"+idSend+"|đã thực hiện giáo dịch:"+type+"|Số tiền:"+cashflow+"|Người nhận:"+idReciver);
         }
     }
 }

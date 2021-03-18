@@ -127,6 +127,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                     db.SaveChanges();
                     r.SendBalance(Send.email, Send.Id, "-" + (cash + 20000).ToString("N"), mess, time);
                     r.SaveHistory(cash, mess, "CT", idSend, idReceiver, 20000,time);
+                    r.Logging(Send.Id, Reciver.Id, "CT",cash.ToString());
                     return RedirectToAction("Index");
                 }
                 else {
@@ -144,6 +145,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                     db.SaveChanges();
                     r.SendBalance(Reciver.email, Reciver.Id, "+" + cash.ToString("N"), mess, time);
                     r.SaveHistory(cash, mess, "CT", "0", idReceiver, 20000, time);
+                    r.Logging("NH", Reciver.Id, "CT", cash.ToString());
                     return RedirectToAction("Index");
                 }
                 ViewBag.idReceiver = idReceiver;

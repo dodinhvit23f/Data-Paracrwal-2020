@@ -178,3 +178,8 @@ D:\Aptech\Eproject4\Project4Aptech\obj\Debug\Project4Aptech.csprojAssemblyRefere
 D:\Aptech\Eproject4\Project4Aptech\obj\Debug\Project4Aptech.csproj.CopyComplete
 D:\Aptech\Eproject4\Project4Aptech\obj\Debug\Project4Aptech.dll
 D:\Aptech\Eproject4\Project4Aptech\obj\Debug\Project4Aptech.pdb
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.Sinks.File.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.xml
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.Sinks.File.pdb
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.Sinks.File.xml
