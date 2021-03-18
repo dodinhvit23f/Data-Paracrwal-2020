@@ -4,13 +4,13 @@
     var logged = (Account)Session["logged"];
 }
     Your balance:
-<input type="password" readonly value="@logged.Customers.balance VND" id="myInput">
+<input type="password" readonly value="@ViewBag.balance VND" id="myInput">
 <br>
 <br>
 <input type="checkbox" onclick="myFunction()">Show/Hide 
 <ul>
     <li>
-        <a>Deposit cash</a>
+        <a href="/Accounts/ChuyenTien/@logged.id">Deposit cash</a>
     </li>
     <li>
         <a href="/WithDrawing/Index">Withdraw cash</a>

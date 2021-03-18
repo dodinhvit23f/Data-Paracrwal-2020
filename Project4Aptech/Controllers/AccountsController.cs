@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using Project4Aptech.Models;
 using System.Net.Mail;
 using System.Runtime.Caching;
+using Project4Aptech.Repository;
+using System.Web.Script.Serialization;
 
 namespace Project4Aptech.Controllers
 {
@@ -17,6 +19,7 @@ namespace Project4Aptech.Controllers
     {
         private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
+        Repo r = new Repo();
         // GET: Accounts
         public async Task<ActionResult> Index()
         {
@@ -25,75 +28,56 @@ namespace Project4Aptech.Controllers
         }
         public ActionResult ChuyenTien(int id) {
             var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
-            OTPGenerate(accounts.Customers.email);
+            r.OTPGenerate(accounts.Customers.email);
             ViewBag.id = accounts.id;
             ViewBag.email = accounts.Customers.email;
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(double money,int idSend,string idReceiver,string mess, string OTP) {
+        public ActionResult ChuyenTien(string money,int idSend,string idReceiver,string mess, string OTP) {
             string Key = cache.Get("OTP").ToString();
+            double cash = Double.Parse(money);
             Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();            
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
-                OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.Customers.email);
                 return View();
             }
             if (OTP == Key)
             {
-                if (money >= accountSend.Customers.balance)
+                
+                if (cash + 20000 >= accountSend.Customers.balance)
                 {
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
-                }              
-                accountSend.Customers.balance -= (money+20000);
+                }
+                string time = DateTime.Now.ToString();
+                accountSend.Customers.balance -= (cash + 20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
+                r.SendBalance(accountSend.Customers.email, accountSend.Customers.Id, "-" + (cash + 20000).ToString("N"), mess,time);
                 Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
-                account.Customers.balance = account.Customers.balance + money;
+                account.Customers.balance = account.Customers.balance + cash;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                SaveHistory(money, mess, "CT", accountSend.id, account.id,20000);
+                r.SendBalance(account.Customers.email, account.Customers.Id, "+" + cash.ToString("N"), mess,time);
+                r.SaveHistory(cash, mess, "CT", accountSend.Num_id, account.Num_id,20000,time);
+                r.Logging(accountSend.Customers.Id, account.Customers.Id, "CT", cash.ToString());
                 return RedirectToAction("Index");
             }
             else
             {
-                OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.Customers.email);
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
                 return View();
             }
         }
-        public void Send(string mailAdress,string OTP) {
-            var smtpClient = new SmtpClient();
-            var msg = new MailMessage();
-            msg.To.Add(mailAdress);
-            msg.Subject = "Test";
-            msg.Body = "Your OTP is: "+OTP;
-            smtpClient.Send(msg);          
-        }
-        public void OTPGenerate(string mailAdress) {
-            var stringChars = new char[6];
-            var chars = "0123456789";
-            var random = new Random();
-            for(int i = 0; i < stringChars.Length; i++)
-{
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var OTP = new String(stringChars);
-            if (cache.Get("OTP") != null)
-            {
-                cache.Remove("OTP");
-            }
-            cache.Add("OTP", OTP, DateTimeOffset.Now.AddMinutes(15));
-            Send(mailAdress, OTP);
-            
-        }
+       
         public ActionResult ResendOTP(string mailAdress) {
-            OTPGenerate(mailAdress);
+            r.OTPGenerate(mailAdress);
             return RedirectToAction("Index");
         }
         public JsonResult getCustomer(string id)
@@ -114,23 +98,7 @@ namespace Project4Aptech.Controllers
 
             return Json(Name, JsonRequestBehavior.AllowGet);
         }
-        public void SaveHistory(double money,string Mess,string code,int idFrom,int idTo, double fee) {
-            TransactionHistory history = new TransactionHistory()
-            {
-                
-                Amount =(decimal)money,
-                Message = Mess,
-                Code = code,
-                SendAccount = idFrom.ToString(),
-                ReceiveAccount = idTo.ToString(),
-                Bank_id = 1,
-                Status = "0",
-                fee = fee,
-                tran_time = DateTime.Now.ToString()
-            };
-            db.TransactionHistory.Add(history);
-            db.SaveChanges();
-        }
+       
         // GET: Accounts/Details/5
         public async Task<ActionResult> Details(int? id)
         {

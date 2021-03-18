@@ -53,7 +53,11 @@ namespace Project4Aptech.Controllers
             if (amount > 5000000)
             {
                 ViewBag.err = "You only can withdraw 5 million VND a time";
-            }else if (amount % 20000 != 0 || amount % 50000 != 0)
+            }else if (amount <0)
+            {
+                ViewBag.err = "Please enter a positive number";
+            }
+            else if (amount % 20000 != 0 && amount % 50000 != 0)
             {
                 ViewBag.err = "You only can withdraw an amount that is divided by 20.000 VND or 50.000VND";
             }else if (amt > 100000000)
@@ -81,6 +85,10 @@ namespace Project4Aptech.Controllers
                 Session["time"] = 0;
                 //r.SendEmail(logged.Customers.email, "heheh");
                 r.OTPGenerate(logged.Customers.email);
+                if (logged.A_Status == 0)
+                {
+                    return RedirectToAction("Signout","Home");
+                }
                 return RedirectToAction("CheckOtp");
             }            
             return View();

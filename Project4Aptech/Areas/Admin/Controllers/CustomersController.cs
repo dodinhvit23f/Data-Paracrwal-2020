@@ -11,22 +11,34 @@ using Project4Aptech.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
+using Project4Aptech.Repository;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
     public class CustomersController : Controller
     {
         private DatabaseEntities db = new DatabaseEntities();
+        Repo r = new Repo();
 
         // GET: Admin/Customers
         public async Task<ActionResult> Index()
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View(await db.Customers.ToListAsync());
         }
 
         // GET: Admin/Customers/Details/5
         public async Task<ActionResult> Details(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -42,6 +54,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Create
         public ActionResult Create()
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View();
         }
 
@@ -57,12 +74,12 @@ namespace Project4Aptech.Areas.Admin.Controllers
                 Customers c = db.Customers.Where(m => m.Id == customers.Id).FirstOrDefault();
                 if (c == null)
                 {
-                    if (CheckEmailExist(customers.email))
+                    if (r.CheckEmailExist(customers.email))
                     {
                         customers.balance = 0;
                         db.Customers.Add(customers);
                         await db.SaveChangesAsync();
-                        CreateAccount(customers.Id, customers.email, customers.Name);
+                        r.CreateAccount(customers.Id, customers.email, customers.Name);
                         return RedirectToAction("Index");
                     }
                     ViewBag.ErrorEmail = "Email already exist !";
@@ -74,111 +91,69 @@ namespace Project4Aptech.Areas.Admin.Controllers
 
             return View(customers);
         }
-
-        private bool CheckEmailExist(string email)
-        {
-            Customers c = db.Customers.Where(m => m.email == email).FirstOrDefault();
-            if (c == null) {
-                return true;
-            }
-            return false;
-        }
-
-        private void CreateAccount(string id,string email,string Name)
-        {
-            string password = GeneratePass(Name, id);
-            Send(email, password);
-            Account account = new Account();
-            account.Num_id = id;
-            account.Usn = email;
-            account.Pwd = HashPwd(password);
-            account.A_Status = 0;
-            db.Account.Add(account);
-            db.SaveChanges();
-        }
-
-        public string HashPwd(string input)
-        {
-            System.Security.Cryptography.MD5 md5Hash = MD5.Create();
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
-        }
-        public void Send(string mailAdress, string pass)
-        {
-            var smtpClient = new SmtpClient();
-            var msg = new MailMessage();
-            msg.To.Add(mailAdress);
-            msg.Subject = "Test";
-            msg.Body = "Your Password is: " + pass;
-            smtpClient.Send(msg);
-        }
-
-        //EX: DAO NGOC HAI,id=123456789 -> pass = hai213634
-        private string GeneratePass(string name, string id)
-        {
-            var next = id.Substring(0, 6);
-            var stringChars = new char[6];
-            //split to get lastname
-            string pass = name.Split(null).Last().ToLower();
-            //Random from id
-            var random = new Random();
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = next[random.Next(next.Length)];
-            }
-            pass = pass + new String(stringChars);
-            return pass;
-
-        }
+      
         public ActionResult AddBalance() {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             return View();
         }
         [HttpPost]
-        public ActionResult AddBalance(double money, string idSend, string idReceiver, string mess) {
-            Customers Send = db.Customers.Find(idSend);
+        public ActionResult AddBalance(string money, string idSend, string idReceiver, string mess) {
+            Customers Send = null;
+            double cash = Double.Parse(money);
             Customers Reciver = db.Customers.Find(idReceiver);
-            if (Send != null)
-            {            
-                Reciver.balance += money;
-                db.Entry(Reciver).State = EntityState.Modified;
-                db.SaveChanges();
-                Send.balance -= (money+20000);
-                db.Entry(Send).State = EntityState.Modified;
-                db.SaveChanges();
-                SaveHistory(money,mess,"CT",idSend,idReceiver,20000);
-                return RedirectToAction("Index");
+            string time="";
+            if (idSend != "") {
+                Send = db.Customers.Find(idSend);
+                if (Send != null)
+                {
+                    if (cash + 20000 >=Send.balance)
+                    {
+                        ViewBag.idSend = idSend;
+                        ViewBag.idReceiver = idReceiver;
+                        ViewBag.Mess = mess;
+                        ViewBag.statusBalance = "So tien khong du";
+                        return View();
+                    }
+                    Reciver.balance += cash;
+                    db.Entry(Reciver).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString(), mess, time);
+                    Send.balance -= (cash + 20000);
+                    db.Entry(Send).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Send.email, Send.Id, "-" + (cash + 20000).ToString("N"), mess, time);
+                    r.SaveHistory(cash, mess, "CT", idSend, idReceiver, 20000,time);
+                    r.Logging(Send.Id, Reciver.Id, "CT",cash.ToString());
+                    return RedirectToAction("Index");
+                }
+                else {
+                        
+                    ViewBag.Error = "Send Customer not exist!";
+                    return View();
+                }
             }
-            else {             
-                Reciver.balance += money;
-                db.Entry(Reciver).State = EntityState.Modified;
-                db.SaveChanges();
-                SaveHistory(money, mess, "CT", "0", idReceiver,20000);
-                return RedirectToAction("Index");
+            else {
+                if (Reciver != null)
+                {
+                    time = DateTime.Now.ToString();
+                    Reciver.balance += cash;
+                    db.Entry(Reciver).State = EntityState.Modified;
+                    db.SaveChanges();
+                    r.SendBalance(Reciver.email, Reciver.Id, "+" + cash.ToString("N"), mess, time);
+                    r.SaveHistory(cash, mess, "CT", "0", idReceiver, 20000, time);
+                    r.Logging("NH", Reciver.Id, "CT", cash.ToString());
+                    return RedirectToAction("Index");
+                }
+                ViewBag.idReceiver = idReceiver;
+                ViewBag.Mess = mess;
+                return View();
             }
         }
-        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo,double fee)
-        {
-            TransactionHistory history = new TransactionHistory()
-            {
-
-                Amount = (decimal)money,
-                Message = Mess,
-                Code = code,
-                SendAccount = idFrom,
-                ReceiveAccount = idTo,
-                Bank_id = 1,
-                Status = "0",
-                fee=fee,
-                tran_time=DateTime.Now.ToString()
-            };
-            db.TransactionHistory.Add(history);
-            db.SaveChanges();
-        }
+        
         public JsonResult getCustomer(string id)
         {
             string Name = "";
@@ -200,6 +175,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -231,6 +211,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
         // GET: Admin/Customers/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -1,0 +1,30 @@
+﻿@model Project4Aptech.Models.Account
+
+@{
+    ViewBag.Title = "ResetPass";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ResetPass</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2"> Nhập CMTND </label>
+        <div class="col-md-10">
+            <input type="text" name="id" class="form-control" autocomplete="off" value="@ViewBag.id" />
+            <span style="color:red;">@ViewBag.Error</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Tiến hành" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+
