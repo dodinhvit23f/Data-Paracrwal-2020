@@ -66,6 +66,22 @@
                     @Html.ActionLink("Details", "Details", new { id = item.Id })
                  
                 </td>
+                <td>
+                    @if (item.Cs_status == "0")
+                    {
+                        <label class="switch">
+                            <input type="checkbox" id="@item.Id" class="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="switch">
+                            <input type="checkbox" checked id="@item.Id" class="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    }
+                </td>
             </tr>
         }
     </tbody>
@@ -76,5 +92,16 @@
 <script>
     $(document).ready(function () {
         $('#myTable').DataTable();
+        $(".checkbox").change(function () {
+        var id = $(this).attr('id');
+        console.log($(this).prop("checked"));
+        if ($(this).prop("checked") == false) {
+            $.post("/Admin/Customers/Lock/" + id, function (data) {
+            });
+        } else {
+            $.post("/Admin/Customers/Unlock/" + id, function (data) {
+            });
+        }
+    });
     });
  </script>

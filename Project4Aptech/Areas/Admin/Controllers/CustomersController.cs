@@ -50,6 +50,32 @@ namespace Project4Aptech.Areas.Admin.Controllers
             }
             return View(customers);
         }
+        public ActionResult LockAccount(int id)
+        {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            Customers cus = db.Customers.Find(id);
+            cus.Cs_status = "0";
+            db.Entry(cus).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult UnlockAccount(int id)
+        {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            Customers cus = db.Customers.Find(id);
+            cus.Cs_status = "1";
+            db.Entry(cus).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         // GET: Admin/Customers/Create
         public ActionResult Create()
@@ -108,6 +134,13 @@ namespace Project4Aptech.Areas.Admin.Controllers
             string time="";
             if (idSend != "") {
                 Send = db.Customers.Find(idSend);
+                if (Send.Cs_status == "0"||Reciver.Cs_status=="0") { 
+                    ViewBag.idSend = idSend;
+                    ViewBag.idReceiver = idReceiver;
+                    ViewBag.Mess = mess;
+                    ViewBag.Error = "Tài khoản gửi đã bị khóa";
+                    return View();
+                }
                 if (Send != null)
                 {
                     if (cash + 20000 >=Send.balance)
@@ -139,6 +172,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
             else {
                 if (Reciver != null)
                 {
+                    if(Reciver)
                     time = DateTime.Now.ToString();
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
