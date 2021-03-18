@@ -172,7 +172,13 @@ namespace Project4Aptech.Areas.Admin.Controllers
             else {
                 if (Reciver != null)
                 {
-                    if(Reciver)
+                    if (Reciver.Cs_status == "0") {
+                        ViewBag.idSend = idSend;
+                        ViewBag.idReceiver = idReceiver;
+                        ViewBag.Mess = mess;
+                        ViewBag.Error = "Tài khoản gửi đã bị khóa";
+                        return View();
+                    }
                     time = DateTime.Now.ToString();
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;

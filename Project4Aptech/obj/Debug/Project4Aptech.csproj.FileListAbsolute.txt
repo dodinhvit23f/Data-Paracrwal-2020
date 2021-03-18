@@ -183,3 +183,8 @@ C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.xml
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.Sinks.File.pdb
 C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Serilog.Sinks.File.xml
+D:\Aptech\Eproject4\Project4Aptech\bin\Serilog.dll
+D:\Aptech\Eproject4\Project4Aptech\bin\Serilog.Sinks.File.dll
+D:\Aptech\Eproject4\Project4Aptech\bin\Serilog.xml
+D:\Aptech\Eproject4\Project4Aptech\bin\Serilog.Sinks.File.pdb
+D:\Aptech\Eproject4\Project4Aptech\bin\Serilog.Sinks.File.xml

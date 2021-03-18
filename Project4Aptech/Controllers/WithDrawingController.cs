@@ -74,6 +74,7 @@ namespace Project4Aptech.Controllers
                     Amount = (decimal)amount,
                     Code = "W",//Withdraw 
                     fee = 0,
+                    Bank_id = 2,
                     Status = "P",//Pending
                     tran_time = DateTime.Now.ToString(),
                     SendAccount = logged.Customers.Id.ToString(),

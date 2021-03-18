@@ -122,13 +122,24 @@ namespace Project4Aptech.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,A_Status")] Account account)
         {
+            var isvalid = db.Customers.Find(account.Num_id);
+            var acc = db.Account.Where(p=>p.Usn== account.Usn);
             if (ModelState.IsValid)
             {
+                if (isvalid != null)
+                {
+                    ViewBag.err = "One account per customer";
+                    return View(account);
+                }else if (acc.Count() >0)
+                {
+                    ViewBag.err = "Username existed";
+                    return View(account);
+                }
+                account.A_Status = 0;
                 db.Account.Add(account);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
             ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name", account.Num_id);
             return View(account);
         }
