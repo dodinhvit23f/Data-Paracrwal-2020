@@ -6,11 +6,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Runtime.Caching;
+using Project4Aptech.Models;
+using Serilog;
 
 namespace Project4Aptech.Repository
 {
     public class Repo
     {
+        private DatabaseEntities db = new DatabaseEntities();
         private MemoryCache cache = MemoryCache.Default;
         public bool isNum(string _param)
         {
@@ -20,7 +23,7 @@ namespace Project4Aptech.Repository
                 if (!char.IsDigit(i))
                 {
                     rsl = false;
-                    break;                    
+                    break;
                 }
             }
             return rsl;
@@ -46,7 +49,7 @@ namespace Project4Aptech.Repository
             string sDate = oDate.ToString("yyyy MMMM");
             return oDate;
         }
-        public  void OTPGenerate(string mailAdress)
+        public void OTPGenerate(string mailAdress)
         {
             var stringChars = new char[6];
             var chars = "0123456789";
@@ -71,8 +74,93 @@ namespace Project4Aptech.Repository
             var msg = new MailMessage();
             msg.To.Add(mailAdress);
             msg.Subject = "TP Bank 247";
-            msg.Body = OTP;
+            msg.Body = "Your OTP is: " + OTP;
             smtpClient.Send(msg);
+        }
+        public void SendBalance(string mailAdress, string idReceive, string money, string message, string time)
+        {
+
+
+            var smtpClient = new SmtpClient();
+            var msg = new MailMessage();
+            msg.IsBodyHtml = true;
+            msg.To.Add(mailAdress);
+            msg.Subject = "TP Bank 247";
+            msg.Body = "TPBank:" + time + "</br>" + "TK:" + idReceive + "|</br>GD:" + money + "VND|</br>SDC:" + db.Customers.Find(idReceive).balance + "VND|" + "</br>ND:" + message;
+            smtpClient.Send(msg);
+        }
+        public void SendPass(string mailAdress, string pass)
+        {
+            var smtpClient = new SmtpClient();
+            var msg = new MailMessage();
+            msg.To.Add(mailAdress);
+            msg.Subject = "Test";
+            msg.Body = "Your Password is: " + pass;
+            smtpClient.Send(msg);
+        }
+
+        //EX: DAO NGOC HAI,id=123456789 -> pass = hai213634
+        public string GeneratePass(string name, string id)
+        {
+            var next = id.Substring(0, 6);
+            var stringChars = new char[6];
+            //split to get lastname
+            string pass = name.Split(null).Last().ToLower();
+            //Random from id
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = next[random.Next(next.Length)];
+            }
+            pass = pass + new String(stringChars);
+            return pass;
+
+        }
+        public bool CheckEmailExist(string email)
+        {
+            Customers c = db.Customers.Where(m => m.email == email).FirstOrDefault();
+            if (c == null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public void CreateAccount(string id, string email, string Name)
+        {
+            string password = GeneratePass(Name, id);
+            SendPass(email, password);
+            Account account = new Account();
+            account.Num_id = id;
+            account.Usn = email;
+            account.Pwd = HashPwd(password);
+            account.A_Status = 0;
+            db.Account.Add(account);
+            db.SaveChanges();
+        }
+        public void SaveHistory(double money, string Mess, string code, string idFrom, string idTo, double fee, string time)
+        {
+            TransactionHistory history = new TransactionHistory()
+            {
+
+                Amount = (decimal)money,
+                Message = Mess,
+                Code = code,
+                SendAccount = idFrom,
+                ReceiveAccount = idTo,
+                Bank_id = 1,
+                Status = "0",
+                fee = fee,
+                tran_time = time
+            };
+            db.TransactionHistory.Add(history);
+            db.SaveChanges();
+        }
+        public void Logging(string idSend,string idReciver,string type,string cashflow) {
+            var log = new LoggerConfiguration()
+              .MinimumLevel.Debug()
+              .WriteTo.File(@"c:\log\log.txt")
+              .CreateLogger();
+            log.Information("Người dùng:"+idSend+"|đã thực hiện giáo dịch:"+type+"|Số tiền:"+cashflow+"|Người nhận:"+idReciver);
         }
     }
 }

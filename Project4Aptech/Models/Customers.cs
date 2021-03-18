@@ -11,7 +11,8 @@ namespace Project4Aptech.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Customers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +23,18 @@ namespace Project4Aptech.Models
     
         public string Id { get; set; }
         public string Name { get; set; }
+        [StringLength(10, ErrorMessage = "Phone number is not valid")]
+
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Phone number is not valid")]
+        
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DOF { get; set; }
         public string acc_num { get; set; }
+        [DataType(DataType.Currency)]
         public Nullable<double> balance { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid format")]
         public string email { get; set; }
         public string Cs_status { get; set; }
     
