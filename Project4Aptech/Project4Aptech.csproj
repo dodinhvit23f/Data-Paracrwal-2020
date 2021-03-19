@@ -500,6 +500,8 @@
     <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
     <Content Include="Views\WithDrawing\Detail.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Start.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
