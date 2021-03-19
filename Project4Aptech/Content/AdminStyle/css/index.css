@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
+.info {
+    background: none repeat scroll 0 0 #692e80;
+    
+}
+.contactinfo ul li:first-child {
+    margin-left: -15px;
+    
+}
+
+
+.contactinfo ul li a {
+    font-size: 12px;
+    color: #f8f8f8;
+    font-family: "Titillium Web",sans-serif;
+}
+
+.contactinfo ul li a:hover {
+    background: inherit;
+}
+
+.social-icons ul li a {
+    border: 0 none;
+    border-radius: 0;
+    color: #f8f8f8;
+    padding: 0px;
+}
+
+.social-icons ul li {
+    display: inline-block;
+}
+
+.social-icons ul li a i {
+    padding: 11px 15px;
+    transition: all 0.9s ease 0s;
+    -moz-transition: all 0.9s ease 0s;
+    -webkit-transition: all 0.9s ease 0s;
+    -o-transition: all 0.9s ease 0s;
+}
+
+.social-icons ul li a i:hover {
+    color: #fff;
+    transition: all 0.9s ease 0s;
+    -moz-transition: all 0.9s ease 0s;
+    -webkit-transition: all 0.9s ease 0s;
+    -o-transition: all 0.9s ease 0s;
+}
+
+.fa-facebook-f:hover {
+    background: #0083C9;
+}
+
+.fa-twitter:hover {
+    background: #5BBCEC;
+}
+
+.fa-linkedin:hover {
+    background: #FF4518;
+}
+
+.fa-instagram:hover {
+    background: #c21e34;
+}
+
+.fa-reddit:hover {
+    background: #ce7b2d;
+}
+
+ul li a span {
+    font-size: 20px;
+    text-decoration: none;  
+    font-weight: bold;
+    color: black;
+   font: "Titillium Web",sans-serif;
+}
+span{
+    margin-left:3px;
+}
+#login-header{
+height: 100%;
+
+}
+
+#menu-header{
+   height: 100%;
+}
+
+.menu-nav{
+margin-top: 2%;
+margin-bottom: 2%;
+
+}
+
+#logo{
+  
+    height: 100%;
+    width: 100%;
+   
+}
+a:hover, a:visited, a:active{
+    color: black;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+  }
+  .slide {
+    position: relative;
+  }
+.mySlides {
+    display: none;
+  }
+  .mySlides > a > img{
+        vertical-align: middle;
+        width: 100%;
+        height: 480px;    
+  }
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  /*Chuyen mui ten sang ben phai*/
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  } 
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .content{
+      margin-top: 5px;
+      border-top: 2px solid #ccc;
+      
+  }
+  .QA{
+    display: flex;
+  }
+  .content-right{
+    background-color: rgb(245, 233, 233);
+    border-bottom: 2px solid rgb(245, 233, 233);
+    margin-top: 5px;
+    display: flex;
+   
+ 
+  }
+  .right{
+      float:right;
+   
+  }
+  .content-left{
+    text-align: center;
+    border-bottom: 2px solid rgb(245, 233, 233);
+    margin-top: 5px;
+   height: 100%;
+  
+    
+    
+  }
+
+  .support:hover{
+      color:#692e80;
+  }
+  .fa-info-circle{
+    font-size: large;
+    font-size:36px;
+
+  }
+  .logo-right{
+      margin: 0 auto;
+      margin-top: 5%;
+      margin-right: 0%;
+  }
+  .fa-info-circle:hover{
+      color: #692e80;
+  }
+  .fa-location-arrow{
+    font-size: large;
+    font-size:36px;
+  }
+  .fa-location-arrow:hover{
+    color: #692e80;
+  }
+.infoweather {
+    background-color: lavender;
+    background-image: url("../images/hanoi-top-10-attractions.jpg");
+    color: #fff;
+    padding-bottom: 5%;
+    margin-right: 5px;
+}
+  #location{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  #temp{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  #feel{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  #description{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  #min_max{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  #wind{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  .advertisement{
+      margin-top: 5px;
+  }
+  .email{
+      margin-top: 10px;
+      background-color:  #692e80;
+      font-weight: bold;
+      font-size: 1.3em;
+      border-radius: 2px;
+      color: #fff;
+      height: 60px;
+      
+  }
+  .email > span{
+      
+      margin-top:10px;
+  }
+  .input{
+    float:right;
+    margin-top: 1%;
+   
+    align-items: center;
+  }
+  .text{
+      float:left ;
+      text-align: center;
+     
+  }
+  .footer{
+      border-top: 5px solid orange;
+      border-radius: 5px;
+    margin-top: 10px;
+    background: none repeat scroll 0 0 #692e80;
+  }
+  
+  
