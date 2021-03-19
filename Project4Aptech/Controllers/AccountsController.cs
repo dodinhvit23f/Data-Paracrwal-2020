@@ -37,7 +37,12 @@ namespace Project4Aptech.Controllers
         public ActionResult ChuyenTien(string money,int idSend,string idReceiver,string mess, string OTP) {
             string Key = cache.Get("OTP").ToString();
             double cash = Double.Parse(money);
-            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();            
+            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();
+            if (idReceiver == accountSend.Customers.Id) {
+                ViewBag.Re = "Tài khoản nhận trùng với tài khoản gửi!!";
+                ViewBag.Mess = mess;
+                return View();
+            }
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
@@ -65,7 +70,7 @@ namespace Project4Aptech.Controllers
                 r.SendBalance(account.Customers.email, account.Customers.Id, "+" + cash.ToString("N"), mess,time);
                 r.SaveHistory(cash, mess, "T", accountSend.Num_id, account.Num_id,20000,time);
                 r.Logging(accountSend.Customers.Id, account.Customers.Id, "Chuyển tiền", cash.ToString());
-                return RedirectToAction("Index");
+                return Redirect("~/Home/Index");
             }
             else
             {

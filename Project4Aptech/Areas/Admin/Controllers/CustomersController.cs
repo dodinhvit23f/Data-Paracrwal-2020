@@ -103,6 +103,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                     if (r.CheckEmailExist(customers.email))
                     {
                         customers.balance = 0;
+                        customers.Cs_status = "1";
                         db.Customers.Add(customers);
                         await db.SaveChangesAsync();
                         r.CreateAccount(customers.Id, customers.email, customers.Name);
