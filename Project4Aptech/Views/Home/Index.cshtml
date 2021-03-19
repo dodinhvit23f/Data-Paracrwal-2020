@@ -3,11 +3,30 @@
     ViewBag.Title = "Home Page";
     var logged = (Account)Session["logged"];
 }
+
+<div class="ulockd-home-slider">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pogoSlider" id="js-main-slider">
+                <div class="pogoSlider-slide" style="        background-image: url(../../Images/slide_img.png);">
+
+                </div>
+                <div class="pogoSlider-slide" style="        background-image: url(../../Images/slide_img_1.png);">
+                    <div class="container">
+
+                    </div>
+                </div>
+            </div>
+            <!-- .pogoSlider -->
+        </div>
+    </div>
+</div>
+
     Your balance:
 <input type="password" readonly value="@ViewBag.balance VND" id="myInput">
 <br>
 <br>
-<input type="checkbox" onclick="myFunction()">Show/Hide 
+<input type="checkbox" onclick="myFunction()">Show/Hide
 <ul>
     <li>
         <a href="/Accounts/ChuyenTien/@logged.id">Deposit cash</a>
