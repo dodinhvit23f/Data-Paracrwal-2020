@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .field input{
+        background-color:white;
+        color:black;
+    }
+
+    .field div::after {
+        border-bottom: solid 10px #ff880e;
+        transform: skew( -30deg );
+        display:block;
+        content : "";
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Login Now</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form action="/Home/Login" method="post" class="contact_form_inner">
+        <div class="container">
+
+            <div class="field">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" value="@ViewBag.usn" name="usn" required>
+                <div></div>
+            </div>
+            <div class="field">
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" value="@ViewBag.pwd" name="pwd" required>
+                <div></div>
+            </div>
+            <div class="field">
+                <button type="submit">Login</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+
+            @ViewBag.err
+        </div>
+    </form>
+
+</div>

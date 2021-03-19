@@ -1,0 +1,59 @@
+﻿@model Project4Aptech.Models.Account
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pwd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pwd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.A_Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.A_Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customers.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customers.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

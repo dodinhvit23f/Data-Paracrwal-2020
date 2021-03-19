@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Project4Aptech.Models.TransactionHistory>
+@using Project4Aptech.Repository
+@{
+    Repo r = new Repo();
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string cus_id = (string)ViewBag.cus_id;
+}
+
+<div class="full paddding_left_15">
+    <div class="heading_main text_align_left">
+        <h2>Transaction History</h2>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Transaction day
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Message
+        </th>
+        <th>
+            WithDraw/Debit/Credit
+        </th>
+        <th>
+            Sender-Account
+        </th>
+        <th>
+            Receiver-Account
+        </th>
+        <th>
+            Fee
+        </th>
+        <th>
+            Destination Bank(if transaction between banks)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tran_time)
+            </td>
+            <td>
+                @r.toDouble(item.Amount.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            @if (item.Code == "W")
+            {
+                <td>WithDraw</td>
+                <td>
+                </td>
+                <td>
+                </td>
+            }
+            else if (item.SendAccount == cus_id)
+            {
+                <td>Debit</td>
+                <td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveAccount)
+                </td>
+            }
+            else if (item.ReceiveAccount == cus_id)
+            {
+                <td>Credit</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SendAccount)
+                </td>
+                <td>
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.fee)
+            </td>
+            @if (item.Bank_id != null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Banks.BName)/@Html.DisplayFor(modelItem => item.Banks.Adress)
+                </td>
+            }
+            else
+            {
+                <td>
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>

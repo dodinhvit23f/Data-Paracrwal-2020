@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Check Otp</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" action="/WithDrawing/CheckOtp">
+
+    
+    <div class="section base_form" style="height:300px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12 offset-lg-3">
+                    <div class="full" style="margin-left:100px;">
+                        @if (Session["time"] != null && (int)Session["time"] > 0)
+                        {
+                            <a>Attempts tried: @Session["time"]</a>
+                        }
+                        <div class="newsletter_form">
+                            
+                                <input type="text" name="otp_code" placeholder="OTP Code" required/>
+                              
+                                <button>Submit</button>
+                    
+                        </div>
+                        
+                        <a style="color:red">@ViewBag.wrong</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

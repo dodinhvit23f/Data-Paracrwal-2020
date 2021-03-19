@@ -1,4 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Project4Aptech.Models
+@{ 
+    var logged = (Account)Session["logged"];
+}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -15,8 +19,23 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    @if (Session["logged"] != null)
+    {
+        <li>
+            <a>Hello @logged.Customers.Name</a>
+        </li>
+        <li>
+            <a href="/Home/Signout">Sign out</a>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a href="/Home/Login">
+                Login
+            </a>
+        </li>
+    }
+</ul>
 }

@@ -1,0 +1,47 @@
+﻿@model Project4Aptech.Models.TransactionHistory
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>Customers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Transaction time
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tran_time)
+        </dd>
+
+        <dt>
+            Amount
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt>
+            Fee
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fee) VND
+        </dd>
+        <dt>
+            Status
+        </dt>
+
+        <dd>
+            Success
+        </dd>
+    </dl>
+</div>
+<p>
+    <a href="/WithDrawing/Print?id=@Model.Id&cus_id=@Model.SendAccount">Save Invoice</a>
+</p>

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .field input {
+        background-color: white;
+        color: black;
+    }
+
+    .section {
+        height:600px;
+    }
+</style>
+
+<div class="section layout_padding about_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="full paddding_left_15">
+                    <div class="heading_main text_align_left">
+                        <h2>Withdraw</h2>
+                    </div>
+                    <form action="/WithDrawing/Index" method="post">
+                        <div class="field">
+                            <input value="@ViewBag.amout" type="text" placeholder="Enter amount of cash you wish to withdraw" name="str_amount" />
+
+                            <button>Confirm</button>
+                        </div>
+                        
+                        
+                        @ViewBag.err
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
