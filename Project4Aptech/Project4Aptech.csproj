@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -79,10 +85,25 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.10.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reflection.Metadata, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.5.0.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -196,11 +217,56 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransactHisController.cs" />
+    <Compile Include="Controllers\WithDrawingController.cs" />
+    <Compile Include="Data\ChuyenTien.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Invoice\InvoicePrepare.cs" />
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Banks.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customers.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransactionHistory.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Repo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,12 +274,63 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\AdminStyle\css\index.css" />
+    <Content Include="Content\AdminStyle\css\main.css" />
+    <Content Include="Content\AdminStyle\css\util.css" />
+    <Content Include="Content\AdminStyle\fonts\fa-solid-900.svg" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.svg" />
+    <Content Include="Content\AdminStyle\images\hanoi-top-10-attractions.jpg" />
+    <Content Include="Content\AdminStyle\images\icons\favicon.ico" />
+    <Content Include="Content\AdminStyle\images\img-01.png" />
+    <Content Include="Content\AdminStyle\images\Logo-TPB.png" />
+    <Content Include="Content\AdminStyle\images\tpb.jpg" />
+    <Content Include="Content\AdminStyle\js\main.js" />
+    <Content Include="Content\AdminStyle\vendor\animate\animate.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\AdminStyle\vendor\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\AdminStyle\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\AdminStyle\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\AdminStyle\vendor\select2\select2.css" />
+    <Content Include="Content\AdminStyle\vendor\select2\select2.js" />
+    <Content Include="Content\AdminStyle\vendor\select2\select2.min.css" />
+    <Content Include="Content\AdminStyle\vendor\select2\select2.min.js" />
+    <Content Include="Content\AdminStyle\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\AdminStyle\css\layout.css" />
+    <Content Include="Content\switch.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -221,6 +338,129 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Admin\Views\Accounts\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Customers\AddBalance.cshtml" />
+    <Content Include="fonts\fa-solid-900.eot" />
+    <Content Include="fonts\fa-solid-900.ttf" />
+    <Content Include="fonts\fa-solid-900.woff" />
+    <Content Include="fonts\fa-solid-900.woff2" />
+    <Content Include="fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\AdminStyle\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="Content\AdminStyle\fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\AdminStyle\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\AdminStyle\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\AdminStyle\fonts\fa-solid-900.eot" />
+    <Content Include="Content\AdminStyle\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\AdminStyle\fonts\fa-solid-900.woff" />
+    <Content Include="Content\AdminStyle\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="Areas\Admin\Views\Accounts\ResetPass.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -229,9 +469,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\simple.money.format.js" />
+    <Content Include="Scripts\User.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -249,9 +492,20 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
+    <Content Include="Views\Accounts\Delete.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
+    <Content Include="Views\Accounts\Edit.cshtml" />
+    <Content Include="Views\Accounts\ChuyenTien.cshtml" />
+    <Content Include="Views\WithDrawing\Index.cshtml" />
+    <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
+    <Content Include="Views\WithDrawing\Detail.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\Img\" />
+    <Folder Include="SignalR\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -260,6 +514,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
