@@ -3,41 +3,45 @@
     ViewBag.Title = "Home Page";
     var logged = (Account)Session["logged"];
 }
+<style>
+    .heading_main h2::after {
+        width: auto;
+        transform:none;
+    }
+</style>
 
-<div class="ulockd-home-slider">
-    <div class="container-fluid">
+<div class="section layout_padding about_bg">
+    <div class="container">
         <div class="row">
-            <div class="pogoSlider" id="js-main-slider">
-                <div class="pogoSlider-slide" style="        background-image: url(../../Images/slide_img.png);">
+            <div class="col-md-8">
+                <div class="full paddding_left_15">
+                    <div class="heading_main text_align_left">
+                        <h2>Service</h2>
+                    </div>
+                    <!--<input type="checkbox" onclick="myFunction()">Show/Hide-->
 
-                </div>
-                <div class="pogoSlider-slide" style="        background-image: url(../../Images/slide_img_1.png);">
-                    <div class="container">
+                    <div class="heading_main text_align_left">
+                        <h2><a href="/Accounts/ChuyenTien/@logged.id">Deposit cash</a></h2>
+                    </div>
+                    <div class="heading_main text_align_left">
+                        <h2><a href="/WithDrawing/Index">Withdraw cash</a></h2>
+                    </div>
+                    <div class="heading_main text_align_left">
+                        <h2><a href="~/TransactHis/Index/@logged.Customers.Id">Transaction history</a></h2>
+                    </div>
 
+                    <div class="heading_main text_align_left">
+                        <h2>
+                            Your balance:
+                            <span id="myInput">@ViewBag.balance </span> VND
+                        </h2>
                     </div>
                 </div>
             </div>
-            <!-- .pogoSlider -->
         </div>
     </div>
 </div>
 
-    Your balance:
-<input type="password" readonly value="@ViewBag.balance VND" id="myInput">
-<br>
-<br>
-<input type="checkbox" onclick="myFunction()">Show/Hide
-<ul>
-    <li>
-        <a href="/Accounts/ChuyenTien/@logged.id">Deposit cash</a>
-    </li>
-    <li>
-        <a href="/WithDrawing/Index">Withdraw cash</a>
-    </li>
-    <li>
-        <a href="~/TransactHis/Index/@logged.Customers.Id">Transaction history</a>
-    </li>
-</ul>
 @if (ViewBag.fl != null)
 {
     <a>@ViewBag.fl </a>
