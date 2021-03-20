@@ -491,10 +491,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Accounts\Create.cshtml" />
-    <Content Include="Views\Accounts\Delete.cshtml" />
     <Content Include="Views\Accounts\Details.cshtml" />
-    <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\ChuyenTien.cshtml" />
     <Content Include="Views\WithDrawing\Index.cshtml" />
     <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
