@@ -148,7 +148,7 @@ namespace Project4Aptech.Repository
                 SendAccount = idFrom,
                 ReceiveAccount = idTo,
                 Bank_id = 1,
-                Status = "0",
+                Status = "S",
                 fee = fee,
                 tran_time = time
             };

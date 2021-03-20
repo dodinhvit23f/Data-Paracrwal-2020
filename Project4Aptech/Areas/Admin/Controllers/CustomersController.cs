@@ -50,6 +50,32 @@ namespace Project4Aptech.Areas.Admin.Controllers
             }
             return View(customers);
         }
+        public ActionResult Lock(string id)
+        {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            Customers cus = db.Customers.Find(id);
+            cus.Cs_status = "0";
+            db.Entry(cus).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult Unlock(string id)
+        {
+
+            if (Session["user"] == null)
+            {
+                return Redirect("~/Admin/Home/Login");
+            }
+            Customers cus = db.Customers.Find(id);
+            cus.Cs_status = "1";
+            db.Entry(cus).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         // GET: Admin/Customers/Create
         public ActionResult Create()
@@ -102,12 +128,34 @@ namespace Project4Aptech.Areas.Admin.Controllers
         }
         [HttpPost]
         public ActionResult AddBalance(string money, string idSend, string idReceiver, string mess) {
+            if (idReceiver == idSend) {
+                ViewBag.idSend = idSend;
+                ViewBag.idReceiver = idReceiver;
+                ViewBag.Mess = mess;
+                ViewBag.Error = "Trùng tài khoản nhận và gửi";
+                return View();
+            }
             Customers Send = null;
             double cash = Double.Parse(money);
             Customers Reciver = db.Customers.Find(idReceiver);
             string time="";
             if (idSend != "") {
                 Send = db.Customers.Find(idSend);
+                if (Send.Cs_status == "0") { 
+                    ViewBag.idSend = idSend;
+                    ViewBag.idReceiver = idReceiver;
+                    ViewBag.Mess = mess;
+                    ViewBag.Error = "Tài khoản gửi đã bị khóa";
+                    return View();
+                }
+                 if (Reciver.Cs_status == "0")
+                {
+                    ViewBag.idSend = idSend;
+                    ViewBag.idReceiver = idReceiver;
+                    ViewBag.Mess = mess;
+                    ViewBag.Error1 = "Tài khoản nhận đã bị khóa";
+                    return View();
+                }
                 if (Send != null)
                 {
                     if (cash + 20000 >=Send.balance)
@@ -118,6 +166,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.statusBalance = "So tien khong du";
                         return View();
                     }
+                    time = DateTime.Now.ToString();
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
@@ -126,8 +175,8 @@ namespace Project4Aptech.Areas.Admin.Controllers
                     db.Entry(Send).State = EntityState.Modified;
                     db.SaveChanges();
                     r.SendBalance(Send.email, Send.Id, "-" + (cash + 20000).ToString("N"), mess, time);
-                    r.SaveHistory(cash, mess, "CT", idSend, idReceiver, 20000,time);
-                    r.Logging(Send.Id, Reciver.Id, "CT",cash.ToString());
+                    r.SaveHistory(cash, mess, "T", idSend, idReceiver, 20000,time);
+                    r.Logging(Send.Id, Reciver.Id, "Chuyển tiền",cash.ToString());
                     return RedirectToAction("Index");
                 }
                 else {
@@ -139,13 +188,20 @@ namespace Project4Aptech.Areas.Admin.Controllers
             else {
                 if (Reciver != null)
                 {
+                    if (Reciver.Cs_status == "0") {
+                        ViewBag.idSend = idSend;
+                        ViewBag.idReceiver = idReceiver;
+                        ViewBag.Mess = mess;
+                        ViewBag.Error = "Tài khoản gửi đã bị khóa";
+                        return View();
+                    }
                     time = DateTime.Now.ToString();
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
                     r.SendBalance(Reciver.email, Reciver.Id, "+" + cash.ToString("N"), mess, time);
-                    r.SaveHistory(cash, mess, "CT", "0", idReceiver, 20000, time);
-                    r.Logging("NH", Reciver.Id, "CT", cash.ToString());
+                    r.SaveHistory(cash, mess, "T", "0", idReceiver, 20000, time);
+                    r.Logging("NH", Reciver.Id, "Chuyển tiền", cash.ToString());
                     return RedirectToAction("Index");
                 }
                 ViewBag.idReceiver = idReceiver;

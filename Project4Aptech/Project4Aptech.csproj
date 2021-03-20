@@ -227,7 +227,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TransactHisController.cs" />
     <Compile Include="Controllers\WithDrawingController.cs" />
-    <Compile Include="Data\ChuyenTien.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -501,10 +500,13 @@
     <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
     <Content Include="Views\WithDrawing\Detail.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Start.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Content\Img\" />
+    <Folder Include="Data\" />
     <Folder Include="SignalR\" />
   </ItemGroup>
   <ItemGroup>
