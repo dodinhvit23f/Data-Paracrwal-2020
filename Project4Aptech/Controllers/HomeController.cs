@@ -56,14 +56,18 @@ namespace Project4Aptech.Controllers
         public ActionResult Login(string usn,string pwd)
         {
             string hashed = r.HashPwd(pwd);
-            var isValid = db.Account.Where(p => p.Usn == usn && p.Pwd == hashed).FirstOrDefault();
-            if (isValid.A_Status == 3)
-            {
-                ViewBag.err = "Your account has been locked due to some reasons,please contact our staff for more information";
-                return View();
-            }
+            var isValid = db.Account.Where(p => p.Usn == usn && p.Pwd == hashed).FirstOrDefault();          
             if (isValid != null)
             {
+                if (isValid.Customers.Cs_status == "0")
+                {
+                    ViewBag.err = "Your account has been locked due to some reasons,please contact our staff for more information";
+                    return View();
+                }else if (isValid.A_Status==0)
+                {
+                    ViewBag.err = "You are logging for the 1st time,pls change your password for security purpose ";
+                    return View();
+                }
                 Session["logged"] = isValid;
                 return RedirectToAction("Index");
             }
