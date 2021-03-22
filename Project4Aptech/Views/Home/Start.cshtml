@@ -1,8 +1,84 @@
-﻿
+﻿@using Project4Aptech.Models
 @{
     ViewBag.Title = "Start";
+    Account logged = new Account();
+    string send = "/Home/Login";
+    string his = "/Home/Login";
+    string withdraw = "/Home/Login";
+    if (Session["logged"] != null)
+    {
+        logged = (Account)Session["logged"];
+        send = "/Accounts/ChuyenTien/"+logged.Customers.Id;
+        his = "~/TransactHis/Index/"+logged.Customers.Id;
+        withdraw = "/WithDrawing/Index";
+    }
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Start</h2>
-CHo 1 cai slide show o day
+<div class="ulockd-home-slider">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pogoSlider" id="js-main-slider">
+                <div class="pogoSlider-slide" style="  object-fit:cover;      height: 850px;    background-image: url(../../Images/slide_img.png);">
+
+                </div>
+                <div class="pogoSlider-slide" style="  object-fit: cover;       height: 850px;   background-image: url(../../Images/slide_img_1.png);">
+                    <div class="container">
+
+                    </div>
+                </div>
+            </div>
+            <!-- .pogoSlider -->
+        </div>
+    </div>
+    <div class="section layout_padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <div class="heading_main text_align_center">
+                            <h2><span class="theme_color"></span>Services</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="@send">
+                                <img class="img-responsive" src="~/Images/s1.png" alt="#" />
+                            </a>
+                            <h4>Send Money</h4>
+                        </div>
+                    </div>
+               
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="~@his">
+                                <img class="img-responsive" src="~/Images/s2.png" alt="#" />
+                            </a>
+                            <h4>Transaction History</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="/Home/Index">
+                                <img class="img-responsive" src="~/Images/s3.png" alt="#" />
+                            </a>
+                            <h4>Wallet</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="@withdraw">
+                                <img class="img-responsive" src="~/Images/s4.png" alt="#" />
+                            </a>
+                            <h4>Withdrawal</h4>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

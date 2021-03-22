@@ -26,11 +26,11 @@ namespace Project4Aptech.Controllers
             var account = db.Account.Include(a=>a.Customers);
             return View(await account.ToListAsync());
         }
-        public ActionResult ChuyenTien(int id) {
-            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
-            r.OTPGenerate(accounts.Customers.email);
-            ViewBag.id = accounts.id;
-            ViewBag.email = accounts.Customers.email;
+        public ActionResult ChuyenTien(string id) {
+            var cus = db.Customers.Find(id);
+            r.OTPGenerate(cus.email);
+            ViewBag.id = cus.Id;
+            ViewBag.email = cus.email;
             return View();
         }
         [HttpPost]
