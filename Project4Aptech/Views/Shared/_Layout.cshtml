@@ -32,7 +32,12 @@
     @Styles.Render("~/Content/style.css")
     @Scripts.Render("~/bundles/modernizr")
 
+<style>
+    .search-btn {
+        background: none;
+    }
 
+</style>
 </head>
 <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98">
 
@@ -51,7 +56,7 @@
             <div class="container">
                 <div class="row">
                     <div class="logo_section">
-                        <a class="navbar-brand" href="index.html"><img src="~/Images//logo.png" alt="image"></a>
+                        <a class="navbar-brand" href="/Home/"><img src="~/Images//logo.png" alt="image"></a>
                     </div>
                     <div class="site_information">
                         @if (Session["logged"] != null)
@@ -90,8 +95,8 @@
                                 <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
                                     <ul class="navbar-nav">
                                         <li><a class="nav-link active" href="/Home/">Home</a></li>
-                                        <li><a class="nav-link" href="about.html">About</a></li>
-                                        <li><a class="nav-link" href="contact.html">Contact</a></li>
+                                        <li><a class="nav-link" href="/Home/About">About</a></li>
+                                        <li><a class="nav-link" href="/Home/Contact">Contact</a></li>
                                         <li><a class="nav-link" href="@send">Send Money</a></li>
                                         <li><a class="nav-link" href="@withdraw">Withdrawal</a></li>
                                     </ul>
@@ -131,8 +136,8 @@
                         <div class="col-sm-6 col-md-6 col-lg-3">
                             <div class="full">
                                 <div class="footer_blog full white_fonts">
-                                    <h3>Newsletter</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+                                    <h3>Register</h3>
+                                    <p>Our policy changes information, promotions, customer support services</p>
                                     <div class="newsletter_form">
                                         <form action="index.html">
                                             <input type="email" placeholder="Your Email" name="#" required="">
@@ -147,9 +152,9 @@
                                 <div class="footer_blog full white_fonts">
                                     <h3>Contact us</h3>
                                     <ul class="full">
-                                        <li><img src="~/Images//i5.png"><span>London 145<br>United Kingdom</span></li>
-                                        <li><img src="~/Images//i6.png"><span>demo@gmail.com</span></li>
-                                        <li><img src="~/Images//i7.png"><span>+12586954775</span></li>
+                                        <li><img src="~/Images//i5.png"><span>54 - 56 Lê Thanh Nghị, Bách Khoa,<br> Q. Hai Bà Trưng, Hà Nội</span></li>
+                                        <li><img src="~/Images//i6.png"><span>ngochaidao1999@gmail.com</span></li>
+                                        <li><img src="~/Images//i7.png"><span>1800 1147</span></li>
                                     </ul>
                                 </div>
                             </div>
