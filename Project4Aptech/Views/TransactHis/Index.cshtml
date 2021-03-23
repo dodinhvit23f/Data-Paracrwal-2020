@@ -6,8 +6,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string cus_id = (string)ViewBag.cus_id;
 }
-<h2>Index</h2>
-<button><a href="/TransactHis/Bankstatement_Option">Print bank statement</a></button>
+
+<div class="full paddding_left_15">
+    <div class="heading_main text_align_left">
+        <h2>Transaction History</h2>
+    </div>
+</div>
+
+
+
 <table class="table">
     <tr>
         <th>
@@ -36,60 +43,60 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.tran_time)
-    </td>
-    <td>
-        @r.toDouble(item.Amount.Value)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Message)
-    </td>
-    @if (item.Code == "W")
+    @foreach (var item in Model)
     {
-        <td>WithDraw</td>
-        <td>
-        </td>
-        <td>
-        </td>
-    }
-    else if (item.SendAccount == cus_id)
-    {
-        <td>Debit</td>
-        <td>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceiveAccount)
-        </td>
-    }
-    else if (item.ReceiveAccount == cus_id)
-    {
-        <td>Credit</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SendAccount)
-        </td>
-        <td>
-        </td>
-    }
-    <td>
-        @Html.DisplayFor(modelItem => item.fee)
-    </td>
-    @if (item.Bank_id != null)
-    {
-        <td>
-            @Html.DisplayFor(modelItem => item.Banks.BName)/@Html.DisplayFor(modelItem => item.Banks.Adress)
-        </td>
-    }
-    else
-    {
-        <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tran_time)
+            </td>
+            <td>
+                @r.toDouble(item.Amount.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            @if (item.Code == "W")
+            {
+                <td>WithDraw</td>
+                <td>
+                </td>
+                <td>
+                </td>
+            }
+            else if (item.SendAccount == cus_id)
+            {
+                <td>Debit</td>
+                <td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveAccount)
+                </td>
+            }
+            else if (item.ReceiveAccount == cus_id)
+            {
+                <td>Credit</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SendAccount)
+                </td>
+                <td>
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.fee)
+            </td>
+            @if (item.Bank_id != null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Banks.BName)/@Html.DisplayFor(modelItem => item.Banks.Adress)
+                </td>
+            }
+            else
+            {
+                <td>
+                </td>
+            }
 
-        </td>
+        </tr>
     }
-
-</tr>
-}
 
 </table>

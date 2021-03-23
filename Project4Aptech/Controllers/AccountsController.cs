@@ -26,11 +26,11 @@ namespace Project4Aptech.Controllers
             var account = db.Account.Include(a=>a.Customers);
             return View(await account.ToListAsync());
         }
-        public ActionResult ChuyenTien(int id) {
-            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
-            r.OTPGenerate(accounts.Customers.email);
-            ViewBag.id = accounts.id;
-            ViewBag.email = accounts.Customers.email;
+        public ActionResult ChuyenTien(string id) {
+            var cus = db.Customers.Find(id);
+            r.OTPGenerate(cus.email);
+            ViewBag.id = cus.Id;
+            ViewBag.email = cus.email;
             return View();
         }
         [HttpPost]
@@ -63,8 +63,8 @@ namespace Project4Aptech.Controllers
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
                 r.SendBalance(account.Customers.email, account.Customers.Id, "+" + cash.ToString("N"), mess,time);
-                r.SaveHistory(cash, mess, "CT", accountSend.Num_id, account.Num_id,20000,time);
-                r.Logging(accountSend.Customers.Id, account.Customers.Id, "CT", cash.ToString());
+                r.SaveHistory(cash, mess, "T", accountSend.Num_id, account.Num_id,20000,time);
+                r.Logging(accountSend.Customers.Id, account.Customers.Id, "Chuyển tiền", cash.ToString());
                 return RedirectToAction("Index");
             }
             else

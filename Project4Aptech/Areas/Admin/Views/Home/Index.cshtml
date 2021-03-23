@@ -1,6 +1,160 @@
-﻿
+﻿@using Project4Aptech.Models;
 @{
     ViewBag.Title = "Index";
-}
+    Users u = (Users)Session["user"];
 
-Admin Index
+}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Khách hàng</h5>
+                <table class="mb-0 table">
+                    <thead>
+                        <tr>
+
+                            <th>Họ và tên</th>
+                            <th>Sđt</th>
+                            <th>Địa chỉ</th>
+                            <th>Số dư</th>
+                            <th>Email</th>
+                            <th>Tình trạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.c)
+                        {
+                            <tr>
+
+                                <td>@item.Name</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Address</td>
+                                <td>@item.balance</td>
+                                <td>@item.email</td>
+                                @if (item.Cs_status == "0")
+                                {
+                                    <td>Bị khóa</td>
+                                }
+                                else
+                                {
+                                    <td>Hoạt động</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Tài khoản</h5>
+                <table class="mb-0 table">
+                    <thead>
+                        <tr>
+
+                            <th>Tên đăng nhập</th>
+                            <th>Tình trạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.a)
+                        {
+                            <tr>
+
+                                <td>@item.Usn</td>
+                                @if (item.A_Status == 0)
+                                {
+                                    <td>Chưa đăng nhập lần đầu</td>
+                                }
+                                @if (item.A_Status == 1)
+                                {
+                                    <td>Đã kích hoạt</td>
+                                }
+                                @if (item.A_Status == 3)
+                                {
+                                    <td>Đã bị khóa</td>
+                                }
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @if (u.Roll_id == 3)
+    {
+        <div class="col-lg-6">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Nhân viên</h5>
+                    <table class="mb-0 table">
+                        <thead>
+                            <tr>
+
+                                <th>Tên đăng nhập</th>
+                                <th>Vai trò</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.u)
+                            {
+                                <tr>
+
+                                    <td>@item.UserName</td>
+                                    <td>@item.Roles.name</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-lg-6 col-xl-4">
+        <div class="card mb-3 widget-content">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="widget-heading">Số lượng khách hàng</div>
+                    <div class="widget-subheading">Số lượng khách đang hoạt động</div>
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-success"><span>@ViewBag.active</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+        <div class="card mb-3 widget-content">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="widget-heading">Số lượng khách</div>
+                    <div class="widget-subheading">Số lượng khách bị khóa</div>
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-danger"><span>@ViewBag.banned</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+        <div class="card mb-3 widget-content">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="widget-heading">Số lượng giao dịch</div>
+                    <div class="widget-subheading">số lượng giao dịch đã được thực hiện</div>
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-warning"><span>@ViewBag.trans</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

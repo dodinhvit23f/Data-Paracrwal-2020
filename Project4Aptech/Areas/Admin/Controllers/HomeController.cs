@@ -18,6 +18,15 @@ namespace Project4Aptech.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login");
             }
+            ViewBag.active = db.Customers.Where(cu => cu.Cs_status == "1").Count();
+            ViewBag.banned = db.Customers.Where(cu => cu.Cs_status == "0").Count();
+            ViewBag.trans = db.TransactionHistory.Count();
+            List<Customers> c = db.Customers.ToList();
+            ViewBag.c = c;
+            List<Account> a = db.Account.ToList();
+            ViewBag.a = a;
+            List<Users> u = db.Users.ToList();
+            ViewBag.u = u;
             return View();
         }
         public ActionResult Login()
