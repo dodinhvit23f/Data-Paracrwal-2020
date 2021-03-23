@@ -32,7 +32,7 @@ namespace Project4Aptech.Controllers
         {
             List<TransactionHistory> isValid = new List<TransactionHistory>();
             var logged = (Account)Session["logged"];
-            if (logged.A_Status == 0)
+            if (logged.Customers.Cs_status == "0")
             {
                 return RedirectToAction("Signout", "Home");
             }
@@ -65,7 +65,7 @@ namespace Project4Aptech.Controllers
         public ActionResult ByMonth(int month,int year)
         {
             var logged = (Account)Session["logged"];
-            if (logged.A_Status == 0)
+            if (logged.Customers.Cs_status =="0")
             {
                 return RedirectToAction("Signout", "Home");
             }
