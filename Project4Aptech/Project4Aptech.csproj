@@ -312,6 +312,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\AdminStyle\css\layout.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\switch.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fa-solid-900.svg" />
@@ -499,6 +500,9 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Start.cshtml" />
+    <Content Include="Views\Home\ChangePwd.cshtml" />
+    <Content Include="Views\TransactHis\Bankstatement_Option.cshtml" />
+    <Content Include="Views\TransactHis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

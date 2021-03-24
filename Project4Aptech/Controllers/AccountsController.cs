@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using Project4Aptech.Repository;
 using System.Web.Script.Serialization;
+using System.Globalization;
 
 namespace Project4Aptech.Controllers
 {
@@ -26,29 +27,30 @@ namespace Project4Aptech.Controllers
             var account = db.Account.Include(a=>a.Customers);
             return View(await account.ToListAsync());
         }
-        public ActionResult ChuyenTien(int id) {
-            if (Session["logged"] != null)
+        public ActionResult ChuyenTien(string id) {
+            if (Session["logged"] == null)
             {
                 return Redirect("~/Home/Login");
             }
-            var accounts = db.Account.Include(a => a.Customers).Where(m => m.id == id).FirstOrDefault();
-            r.OTPGenerate(accounts.Customers.email);
-            ViewBag.id = accounts.id;
-            ViewBag.email = accounts.Customers.email;
+            var accounts = db.Customers.Find(id);
+            r.OTPGenerate(accounts.email);
+            ViewBag.id = accounts.Id;
+            ViewBag.email = accounts.email;
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(string money,int idSend,string idReceiver,string mess, string OTP) {
+        public ActionResult ChuyenTien(string money,string idSend,string idReceiver,string mess, string OTP) {
+            CultureInfo culture = new CultureInfo("vi-VN");
             string Key = cache.Get("OTP").ToString();
-            double cash = Double.Parse(money);
-            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();
-            Account account = db.Account.Include(a => a.Customers).Where(m => m.Customers.acc_num == idReceiver).First();
+            double cash = Double.Parse(money,culture);
+            Customers accountSend = db.Customers.Find(idSend);
+            Customers account = db.Customers.Where(a=>a.acc_num==idReceiver).FirstOrDefault();
             if (account == null) {
                 ViewBag.Re = "Người nhận không tồn tại";
                 ViewBag.Mess = mess;
                 return View();
             }
-            if (idReceiver == accountSend.Customers.acc_num) {
+            if (idReceiver == accountSend.acc_num) {
                 ViewBag.Re = "Tài khoản nhận trùng với tài khoản gửi!!";
                 ViewBag.Mess = mess;
                 return View();
@@ -56,35 +58,35 @@ namespace Project4Aptech.Controllers
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
-               r.OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.email);
                 return View();
             }
             if (OTP == Key)
             {
                 
-                if (cash + 20000 >= accountSend.Customers.balance)
+                if (cash + 20000 >= accountSend.balance)
                 {
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }
-                string time = DateTime.Now.ToString();
+                string time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
                
-                accountSend.Customers.balance -= (cash + 20000);
+                accountSend.balance -= (cash + 20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(accountSend.Customers.email, accountSend.Customers.acc_num, "-" + (cash + 20000).ToString("N"), mess,time);           
-                account.Customers.balance = account.Customers.balance + cash;
+                r.SendBalance(accountSend.email, accountSend.acc_num, "-" + (cash + 20000).ToString("N"), mess,time);           
+                account.balance = account.balance + cash;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(account.Customers.email, account.Customers.acc_num, "+" + cash.ToString("N"), mess,time);
-                r.SaveHistory(cash, mess, "T", accountSend.Customers.acc_num, account.Customers.acc_num,20000,time);
-                r.Logging(accountSend.Customers.acc_num, account.Customers.acc_num, "Chuyển tiền", cash.ToString());
+                r.SendBalance(account.email, account.acc_num, "+" + cash.ToString("N"), mess,time);
+                r.SaveHistory(cash, mess, "T", accountSend.acc_num, account.acc_num,20000,time);
+                r.Logging(accountSend.acc_num, account.acc_num, "Chuyển tiền", cash.ToString());
                 return Redirect("~/Home/Index");
             }
             else
             {
-               r.OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.email);
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
                 return View();

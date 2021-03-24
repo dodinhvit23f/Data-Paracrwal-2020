@@ -24,6 +24,7 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="#" type="image/x-icon" />
     <link rel="apple-touch-icon" href="#" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/bootstrap.min.css")
     @Styles.Render("~/Content/custom.css")
@@ -47,18 +48,17 @@
     <!-- Start header -->
     <header class="top-header">
         <div class="header_top">
-
             <div class="container">
                 <div class="row">
                     <div class="logo_section">
-                        <a class="navbar-brand" href="index.html"><img src="~/Images//logo.png" alt="image"></a>
+                        <a class="navbar-brand" href="/Home/"><img src="~/Images//logo.png" alt="image"></a>
                     </div>
                     <div class="site_information">
                         @if (Session["logged"] != null)
                         {
-                            <ul>
-                                <li><a href="mailto:ngochai.dao1999@gmail.com"><img src="~/Images/mail_icon.png" alt="#" />@logged.Customers.email</a></li>
-                                <li><a href="tel:ngochai.dao1999@gmail.com"><img src="~/Images/phone_icon.png" alt="#" />@logged.Customers.PhoneNumber</a></li>
+                            <ul class="nav nav-pills">
+                                <li><a href="mailto:ngochai.dao1999@gmail.com"><i class="fa fa-envelope"></i>@logged.Customers.email</a></li>
+                                <li><a href="tel:ngochai.dao1999@gmail.com"><i class="fa fa-phone"></i>@logged.Customers.PhoneNumber</a></li>
                                 <!-- Đưa đường dẫn logout vào đây -->
                                 <li><a class="join_bt" href="/Home/Signout">Logout</a></li>
                             </ul>

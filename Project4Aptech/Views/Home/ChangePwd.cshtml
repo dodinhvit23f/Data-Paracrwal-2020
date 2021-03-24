@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "ChangePwd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .field input {
+        background-color: white;
+        color: black;
+    }
+
+    .field div::after {
+        border-bottom: solid 10px #ff880e;
+        transform: skew( -30deg );
+        display: block;
+        content: "";
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Changing Password</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <form action="/Home/ChangePwd" method="post" class="contact_form_inner">
+        <div class="container">
+            <input type="text" readonly value="@ViewBag.usnid"  name="usnId" />
+            <div class="field">
+                <label style="color:blue"><b>@ViewBag.err</b></label></br>
+                <label for="uname"><b>New pass</b></label>
+                <input type="password" placeholder="Enter Password" value="@ViewBag.pass" name="newpass" required>
+                <div></div>
+            </div>
+            <div class="field">
+                <label for="psw"><b>Re-enter</b></label>
+                <input type="password" placeholder="Re-Enter Password" value="@ViewBag.re" name="repass" required>
+                <div></div>
+            </div>
+            <div class="field">
+                <button type="submit">Change</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
