@@ -69,12 +69,13 @@ namespace Project4Aptech.Controllers
                 fee = 0,
                 Code = "T",
                 Status = "S",
+                Bank_id =2
             };
             db.TransactionHistory.Add(tran);
             db.Customers.Find(logged.Customers.Id).balance -=20000;
             db.SaveChanges();
             InvoicePrepare invoice = new InvoicePrepare();
-            byte[] abytes = invoice.Prepare(isValid, logged.Customers.Id);
+            byte[] abytes = invoice.Prepare(isValid, logged.Customers.acc_num);
             return File(abytes, "application/pdf");
         }
         
@@ -95,7 +96,8 @@ namespace Project4Aptech.Controllers
                 tran_time = DateTime.Now.ToString(new CultureInfo("en-US")),
                 fee = 0,
                 Code = "T",
-                Status = "S",                
+                Status = "S",
+                Bank_id = 2
             };
             db.TransactionHistory.Add(tran);
             db.Customers.Find(logged.Customers.Id).balance -= 10000;
