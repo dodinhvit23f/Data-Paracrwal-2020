@@ -7,13 +7,13 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="main-card mb-3 card">
-            <div class="card-body">
+            <div class="card-body table-responsive table-body">
                 <h5 class="card-title">Khách hàng</h5>
                 <table class="mb-0 table">
                     <thead>
                         <tr>
 
-                            <th>Họ và tên</th>
+                            <th scope="row">Họ và tên</th>
                             <th>Sđt</th>
                             <th>Địa chỉ</th>
                             <th>Số dư</th>
@@ -26,10 +26,10 @@
                         {
                             <tr>
 
-                                <td>@item.Name</td>
+                                <td >@item.Name</td>
                                 <td>@item.PhoneNumber</td>
                                 <td>@item.Address</td>
-                                <td>@item.balance</td>
+                                <td>@item.balance</td> 
                                 <td>@item.email</td>
                                 @if (item.Cs_status == "0")
                                 {
@@ -63,7 +63,7 @@
                         {
                             <tr>
 
-                                <td>@item.Usn</td>
+                                <td >@item.Usn</td>
                                 @if (item.A_Status == 0)
                                 {
                                     <td>Chưa đăng nhập lần đầu</td>
@@ -76,7 +76,7 @@
                                 {
                                     <td>Đã bị khóa</td>
                                 }
-                                <td></td>
+                              
                             </tr>
                         }
                     </tbody>

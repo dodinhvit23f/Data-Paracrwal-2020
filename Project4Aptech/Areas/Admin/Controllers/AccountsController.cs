@@ -73,6 +73,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
             {
                 string newpass = r.GeneratePass(acc.Customers.Name, acc.Customers.Id);
                 acc.Pwd = r.HashPwd(newpass);
+                acc.A_Status = 0;
                 db.Entry(acc).State = EntityState.Modified;
                 db.SaveChanges();
                 r.SendPass(acc.Customers.email, newpass);

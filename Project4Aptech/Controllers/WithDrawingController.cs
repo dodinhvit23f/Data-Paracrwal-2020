@@ -6,6 +6,7 @@ using System.Runtime.Caching;
 using System.Web.Mvc;
 using System.IO;
 using Project4Aptech.Invoice;
+using System.Globalization;
 
 namespace Project4Aptech.Controllers
 {
@@ -32,7 +33,7 @@ namespace Project4Aptech.Controllers
             //rut toi da 5 cu?
             //moi ngay rut toi da 100 cu
             //So tien phai chia het cho 20000 hoac 50000
-            var histories = db.TransactionHistory.Where(p=>p.SendAccount==logged.Customers.Id && p.Code=="W" && p.Status=="S");
+            var histories = db.TransactionHistory.Where(p=>p.SendAccount==logged.Customers.acc_num && p.Code=="W" && p.Status=="S");
             double amt = 0;
             foreach (var item in histories)
             {
@@ -76,9 +77,9 @@ namespace Project4Aptech.Controllers
                     fee = 0,
                     Bank_id = 2,
                     Status = "P",//Pending
-                    tran_time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt"),
-                    SendAccount = logged.Customers.Id.ToString(),
-                    ReceiveAccount = logged.Customers.Id.ToString(),                    
+                    tran_time = DateTime.Now.ToString(new CultureInfo("en-US")),
+                    SendAccount = logged.Customers.acc_num.ToString(),
+                    ReceiveAccount = logged.Customers.acc_num.ToString(),                    
                 };
                 db.TransactionHistory.Add(t);
                 db.SaveChanges();
