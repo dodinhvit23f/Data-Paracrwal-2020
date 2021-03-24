@@ -2,17 +2,10 @@
 @{
     ViewBag.Title = "Start";
     Account logged = new Account();
-    string send = "/Home/Login";
-    string his = "/Home/Login";
-    string withdraw = "/Home/Login";
     if (Session["logged"] != null)
     {
         logged = (Account)Session["logged"];
-        send = "/Accounts/ChuyenTien/"+logged.Customers.Id;
-        his = "~/TransactHis/Index/"+logged.Customers.Id;
-        withdraw = "/WithDrawing/Index";
-    }
-    
+    }   
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -44,19 +37,19 @@
                 </div>
             </div>
             <div class="row">
-                
+                @if (Session["logged"] != null)
+                {
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="full services_blog">
-                            <a href="@send">
+                            <a href="/Accounts/ChuyenTien/@logged.Customers.Id">
                                 <img class="img-responsive" src="~/Images/s1.png" alt="#" />
                             </a>
                             <h4>Send Money</h4>
                         </div>
                     </div>
-               
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="full services_blog">
-                            <a href="~@his">
+                            <a href="/TransactHis/Index/@logged.Customers.Id">
                                 <img class="img-responsive" src="~/Images/s2.png" alt="#" />
                             </a>
                             <h4>Transaction History</h4>
@@ -72,12 +65,48 @@
                     </div>
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="full services_blog">
-                            <a href="@withdraw">
+                            <a href="/WithDrawing/Index">
                                 <img class="img-responsive" src="~/Images/s4.png" alt="#" />
                             </a>
                             <h4>Withdrawal</h4>
                         </div>
                     </div>
+                }
+                else
+                {
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="/Home/Login">
+                                <img class="img-responsive" src="~/Images/s1.png" alt="#" />
+                            </a>
+                            <h4>Send Money</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="/Home/Login">
+                                <img class="img-responsive" src="~/Images/s2.png" alt="#" />
+                            </a>
+                            <h4>Transaction History</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="/Home/Index">
+                                <img class="img-responsive" src="~/Images/s3.png" alt="#" />
+                            </a>
+                            <h4>Wallet</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="full services_blog">
+                            <a href="/Home/Login">
+                                <img class="img-responsive" src="~/Images/s4.png" alt="#" />
+                            </a>
+                            <h4>Withdrawal</h4>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

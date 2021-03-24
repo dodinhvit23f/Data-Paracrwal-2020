@@ -502,6 +502,9 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Start.cshtml" />
+    <Content Include="Views\Home\ChangePwd.cshtml" />
+    <Content Include="Views\TransactHis\Bankstatement_Option.cshtml" />
+    <Content Include="Views\TransactHis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

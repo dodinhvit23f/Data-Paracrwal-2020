@@ -76,7 +76,7 @@ namespace Project4Aptech.Controllers
                     fee = 0,
                     Bank_id = 2,
                     Status = "P",//Pending
-                    tran_time = DateTime.Now.ToString(),
+                    tran_time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt"),
                     SendAccount = logged.Customers.Id.ToString(),
                     ReceiveAccount = logged.Customers.Id.ToString(),                    
                 };

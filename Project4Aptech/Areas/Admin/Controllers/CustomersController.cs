@@ -166,7 +166,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.statusBalance = "So tien khong du";
                         return View();
                     }
-                    time = DateTime.Now.ToString();
+                    time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
@@ -195,7 +195,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.Error = "Tài khoản gửi đã bị khóa";
                         return View();
                     }
-                    time = DateTime.Now.ToString();
+                    time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
