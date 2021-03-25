@@ -169,7 +169,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.statusBalance = "So tien khong du";
                         return View();
                     }
-                    time = DateTime.Now.ToString(new CultureInfo("en-US"));
+                    time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();

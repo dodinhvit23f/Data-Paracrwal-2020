@@ -8,6 +8,7 @@ using System.Web;
 using System.Runtime.Caching;
 using Project4Aptech.Models;
 using Serilog;
+using System.Globalization;
 
 namespace Project4Aptech.Repository
 {
@@ -45,8 +46,8 @@ namespace Project4Aptech.Repository
         }
         public DateTime stringToDate(string iDate)
         {
-            DateTime oDate = Convert.ToDateTime(iDate);
-            string sDate = oDate.ToString("yyyy MMMM");
+            DateTime oDate = DateTime.ParseExact(iDate, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+            //string sDate = oDate.ToString("yyyy MMMM");
             return oDate;
         }
         public void OTPGenerate(string mailAdress)
