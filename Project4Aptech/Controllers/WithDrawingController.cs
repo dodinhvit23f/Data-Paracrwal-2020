@@ -27,8 +27,9 @@ namespace Project4Aptech.Controllers
         [HttpPost]
         public ActionResult Index(string str_amount)
         {
+
             double amount =  0;
-            TempData["amout"] = amount;
+            ViewBag.amout = amount;
             var logged = (Account)Session["logged"];
             //rut toi da 5 cu?
             //moi ngay rut toi da 100 cu

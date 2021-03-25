@@ -88,7 +88,7 @@
         });
         $("#money").on('change', function () {
             var money = $(this).val() ;
-              var input = money.replaceAll(',','');
+            var input = money.replaceAll(',','');
              console.log(input);
             if (isNaN(input)) {
                   $("#error").empty();
@@ -101,7 +101,7 @@
                     $("#go").attr('disabled', 'true');
                     $("#error").append("Nhập tối thiểu 10,000 VND");
 
-                } else {
+                }else {
                    $(this).val(money.replaceAll(',','.'));
                     $("#go").removeAttr('disabled');
                     $("#error").empty();
