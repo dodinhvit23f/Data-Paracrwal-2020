@@ -198,7 +198,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.Error1 = "Tài khoản nhận đã bị khóa";
                         return View();
                     }
-                    time = DateTime.Now.ToString(new CultureInfo("en-US"));
+                    time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
