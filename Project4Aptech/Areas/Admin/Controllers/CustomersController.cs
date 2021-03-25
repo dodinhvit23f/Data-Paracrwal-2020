@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
 using Project4Aptech.Repository;
+using System.Globalization;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
@@ -168,7 +169,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.statusBalance = "So tien khong du";
                         return View();
                     }
-                    time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+                    time = DateTime.Now.ToString(new CultureInfo("en-US"));
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
@@ -197,7 +198,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.Error1 = "Tài khoản nhận đã bị khóa";
                         return View();
                     }
-                    time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+                    time = DateTime.Now.ToString(new CultureInfo("en-US"));
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();

@@ -70,7 +70,7 @@ namespace Project4Aptech.Controllers
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }
-                string time = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+                string time = DateTime.Now.ToString(new CultureInfo("en-US"));
                
                 accountSend.balance -= (cash + 20000);
                 db.Entry(accountSend).State = EntityState.Modified;

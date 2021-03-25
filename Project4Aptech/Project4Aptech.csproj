@@ -313,6 +313,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\AdminStyle\css\layout.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\custom.css" />
+    <Content Include="Content\pogo-slider.min.css" />
+    <Content Include="Content\responsive.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\switch.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fa-solid-900.svg" />
