@@ -48,7 +48,7 @@ namespace Project4Aptech.Controllers
             if (amount > 5000000)
             {
                 ViewBag.err = "You only can withdraw 5 million VND a time";
-            }else if (amount <0)
+            }else if (amount <=0)
             {
                 ViewBag.err = "Please enter a positive number";
             }
