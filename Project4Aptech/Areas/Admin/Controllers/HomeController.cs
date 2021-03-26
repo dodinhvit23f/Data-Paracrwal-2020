@@ -21,11 +21,11 @@ namespace Project4Aptech.Areas.Admin.Controllers
             ViewBag.active = db.Customers.Where(cu => cu.Cs_status == "1").Count();
             ViewBag.banned = db.Customers.Where(cu => cu.Cs_status == "0").Count();
             ViewBag.trans = db.TransactionHistory.Count();
-            List<Customers> c = db.Customers.ToList();
+            List<Customers> c = db.Customers.Take(5).ToList();
             ViewBag.c = c;
-            List<Account> a = db.Account.ToList();
+            List<Account> a = db.Account.Take(5).ToList();
             ViewBag.a = a;
-            List<Users> u = db.Users.ToList();
+            List<Users> u = db.Users.Take(5).ToList();
             ViewBag.u = u;
             return View();
         }

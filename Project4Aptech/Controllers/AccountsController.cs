@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using Project4Aptech.Repository;
 using System.Web.Script.Serialization;
+using System.Globalization;
 
 namespace Project4Aptech.Controllers
 {
@@ -27,49 +28,65 @@ namespace Project4Aptech.Controllers
             return View(await account.ToListAsync());
         }
         public ActionResult ChuyenTien(string id) {
-            var cus = db.Customers.Find(id);
-            r.OTPGenerate(cus.email);
-            ViewBag.id = cus.Id;
-            ViewBag.email = cus.email;
+            if (Session["logged"] == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+            var accounts = db.Customers.Find(id);
+            r.OTPGenerate(accounts.email);
+            ViewBag.id = accounts.Id;
+            ViewBag.email = accounts.email;
             return View();
         }
         [HttpPost]
-        public ActionResult ChuyenTien(string money,int idSend,string idReceiver,string mess, string OTP) {
+        public ActionResult ChuyenTien(string money,string idSend,string idReceiver,string mess, string OTP) {
+            CultureInfo culture = new CultureInfo("vi-VN");
             string Key = cache.Get("OTP").ToString();
-            double cash = Double.Parse(money);
-            Account accountSend = db.Account.Include(a => a.Customers).Where(m => m.id == idSend).FirstOrDefault();            
+            double cash = Double.Parse(money,culture);
+            Customers accountSend = db.Customers.Find(idSend);
+            Customers account = db.Customers.Where(a=>a.acc_num==idReceiver).FirstOrDefault();
+            if (account == null) {
+                ViewBag.Re = "Người nhận không tồn tại";
+                ViewBag.Mess = mess;
+                return View();
+            }
+            if (idReceiver == accountSend.acc_num) {
+                ViewBag.Re = "Tài khoản nhận trùng với tài khoản gửi!!";
+                ViewBag.Mess = mess;
+                return View();
+            }
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
-               r.OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.email);
                 return View();
             }
             if (OTP == Key)
             {
                 
-                if (cash + 20000 >= accountSend.Customers.balance)
+                if (cash + 20000 >= accountSend.balance)
                 {
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
                     return View();
                 }
-                string time = DateTime.Now.ToString();
-                accountSend.Customers.balance -= (cash + 20000);
+                string time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+               
+                accountSend.balance -= (cash + 20000);
                 db.Entry(accountSend).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(accountSend.Customers.email, accountSend.Customers.Id, "-" + (cash + 20000).ToString("N"), mess,time);
-                Account account = db.Account.Include(a => a.Customers).Where(m => m.Num_id == idReceiver).First();
-                account.Customers.balance = account.Customers.balance + cash;
+                r.SendBalance(accountSend.email, accountSend.acc_num, "-" + (cash + 20000).ToString("N"), mess,time);           
+                account.balance = account.balance + cash;
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                r.SendBalance(account.Customers.email, account.Customers.Id, "+" + cash.ToString("N"), mess,time);
-                r.SaveHistory(cash, mess, "T", accountSend.Num_id, account.Num_id,20000,time);
-                r.Logging(accountSend.Customers.Id, account.Customers.Id, "Chuyển tiền", cash.ToString());
-                return RedirectToAction("Index");
+                r.SendBalance(account.email, account.acc_num, "+" + cash.ToString("N"), mess,time);
+                r.SaveHistory(cash, mess, "T", accountSend.acc_num, account.acc_num,20000,time);
+                r.Logging(accountSend.acc_num, account.acc_num, "Chuyển tiền", cash.ToString());
+                return Redirect("~/Home/Index");
             }
             else
             {
-               r.OTPGenerate(accountSend.Customers.email);
+               r.OTPGenerate(accountSend.email);
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
                 return View();
@@ -85,7 +102,7 @@ namespace Project4Aptech.Controllers
             string Name = "";
             try
             {
-                var Cus = db.Customers.Find(id);
+                var Cus = db.Customers.Where(cus=>cus.acc_num==id).FirstOrDefault();
                 if (Cus != null)
                 {
                     Name += Cus.Name;
@@ -115,88 +132,7 @@ namespace Project4Aptech.Controllers
         }
 
         // GET: Accounts/Create
-        public ActionResult Create()
-        {
-            ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name");
-            return View();
-        }
-
-        // POST: Accounts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Num_id,Usn,Pwd,A_Status")] Account account)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Account.Add(account);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name", account.Num_id);
-            return View(account);
-        }
-
-        // GET: Accounts/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = await db.Account.FindAsync(id);
-            if (account == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name", account.Num_id);
-            return View(account);
-        }
-
-        // POST: Accounts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Num_id,Usn,Pwd,Balance,A_Status")] Account account)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(account).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Num_id = new SelectList(db.Customers, "Id", "Name", account.Num_id);
-            return View(account);
-        }
-
-        // GET: Accounts/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = await db.Account.FindAsync(id);
-            if (account == null)
-            {
-                return HttpNotFound();
-            }
-            return View(account);
-        }
-
-        // POST: Accounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Account account = await db.Account.FindAsync(id);
-            db.Account.Remove(account);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        
 
         protected override void Dispose(bool disposing)
         {
