@@ -27,7 +27,7 @@ namespace Project4Aptech.Controllers
         [HttpPost]
         public ActionResult Index(string str_amount)
         {
-
+            CultureInfo culture = new CultureInfo("vi-VN");
             double amount =  0;
             ViewBag.amout = amount;
             var logged = (Account)Session["logged"];
@@ -43,7 +43,7 @@ namespace Project4Aptech.Controllers
                     amt += (double)item.Amount;
                 }
             }           
-                 amount = Double.Parse(str_amount);
+                 amount = Double.Parse(str_amount,culture);
             
             if (amount > 5000000)
             {

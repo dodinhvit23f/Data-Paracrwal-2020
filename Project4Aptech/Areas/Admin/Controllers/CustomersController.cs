@@ -131,6 +131,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
         }
         [HttpPost]
         public ActionResult AddBalance(string money, string idSend, string idReceiver, string mess) {
+            CultureInfo culture = new CultureInfo("vi-VN");
             if (idReceiver == idSend) {
                 ViewBag.idSend = idSend;
                 ViewBag.idReceiver = idReceiver;
@@ -139,7 +140,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
                 return View();
             }
             Customers Send = null;
-            double cash = Double.Parse(money);
+            double cash = Double.Parse(money, culture);
             Customers Reciver = db.Customers.Where(re=>re.acc_num == idReceiver).FirstOrDefault();
             string time="";
             if (idSend != "") {
