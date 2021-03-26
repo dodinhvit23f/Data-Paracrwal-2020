@@ -66,16 +66,16 @@ namespace Project4Aptech.Repository
                 cache.Remove("OTP");
             }
             cache.Add("OTP", OTP, DateTimeOffset.Now.AddMinutes(15));
-            SendEmail(mailAdress, OTP);
+            SendEmail(mailAdress, "Your OTP is: " + OTP);
 
         }
-        public void SendEmail(string mailAdress, string OTP)
+        public void SendEmail(string mailAdress, string mess)
         {
             var smtpClient = new SmtpClient();
             var msg = new MailMessage();
             msg.To.Add(mailAdress);
             msg.Subject = "TP Bank 247";
-            msg.Body = "Your OTP is: " + OTP;
+            msg.Body = mess;
             smtpClient.Send(msg);
         }
         public void SendBalance(string mailAdress, string idReceive, string money, string message, string time)

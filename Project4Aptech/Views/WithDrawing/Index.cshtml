@@ -10,7 +10,7 @@
     }
 
     .section {
-        height:600px;
+        height: 600px;
     }
 </style>
 
@@ -24,12 +24,12 @@
                     </div>
                     <form action="/WithDrawing/Index" method="post">
                         <div class="field">
-                            <input value="@ViewBag.amout" type="text" placeholder="Enter amount of cash you wish to withdraw" name="str_amount" />
-
-                            <button>Confirm</button>
+                            <input id="money" autocomplete="off" value="@ViewBag.amout" type="text" placeholder="Enter amount of cash you wish to withdraw" name="str_amount" />
+                            <strong style="color:red;" id="error"></strong>
+                                <button class="btn btn-light" id="go">Confirm</button>
                         </div>
-                        
-                        
+
+
                         @ViewBag.err
                     </form>
                 </div>
@@ -37,4 +37,19 @@
         </div>
     </div>
 </div>
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $("#money").on('input', function () {
+        var value = $(this).val().replaceAll('.', '');
+        if (isNaN(value)) {
+            $("#error").empty();
+            $("#go").attr('disabled', 'true');
+            $("#error").append("Chỉ được nhập số");
+        } else {
+            var money = new Number(value).toLocaleString("vi-VN");
+            console.log(money);
+            $(this).val(money);
+        }
+        
+    });
+</script>

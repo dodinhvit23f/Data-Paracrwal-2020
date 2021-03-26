@@ -27,8 +27,9 @@ namespace Project4Aptech.Controllers
         [HttpPost]
         public ActionResult Index(string str_amount)
         {
+
             double amount =  0;
-            TempData["amout"] = amount;
+            ViewBag.amout = amount;
             var logged = (Account)Session["logged"];
             //rut toi da 5 cu?
             //moi ngay rut toi da 100 cu
@@ -37,20 +38,13 @@ namespace Project4Aptech.Controllers
             double amt = 0;
             foreach (var item in histories)
             {
-                if (DateTime.Compare(DateTime.Parse(item.tran_time),DateTime.Today)==0)
+                if (DateTime.Compare(DateTime.ParseExact(item.tran_time, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture),DateTime.Today)==0)
                 {
                     amt += (double)item.Amount;
                 }
-            }
-            if (!r.isNum(str_amount.ToString()))
-            {
-                ViewBag.err = "Please enter a correct number";
-                return View();
-            }
-            else
-            {
-                 amount = (double)int.Parse(str_amount);
-            }
+            }           
+                 amount = Double.Parse(str_amount);
+            
             if (amount > 5000000)
             {
                 ViewBag.err = "You only can withdraw 5 million VND a time";
