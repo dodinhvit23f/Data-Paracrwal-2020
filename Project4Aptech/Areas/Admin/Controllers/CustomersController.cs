@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net.Mail;
 using Project4Aptech.Repository;
+using System.Globalization;
 
 namespace Project4Aptech.Areas.Admin.Controllers
 {
@@ -103,6 +104,8 @@ namespace Project4Aptech.Areas.Admin.Controllers
                     if (r.CheckEmailExist(customers.email))
                     {
                         customers.balance = 0;
+                        customers.Cs_status = "1";
+                        customers.acc_num = r.GenerateAccountNum(customers.Id);
                         db.Customers.Add(customers);
                         await db.SaveChangesAsync();
                         r.CreateAccount(customers.Id, customers.email, customers.Name);
@@ -137,10 +140,10 @@ namespace Project4Aptech.Areas.Admin.Controllers
             }
             Customers Send = null;
             double cash = Double.Parse(money);
-            Customers Reciver = db.Customers.Find(idReceiver);
+            Customers Reciver = db.Customers.Where(re=>re.acc_num == idReceiver).FirstOrDefault();
             string time="";
             if (idSend != "") {
-                Send = db.Customers.Find(idSend);
+                Send = db.Customers.Where(se=>se.acc_num==idSend).FirstOrDefault();
                 if (Send.Cs_status == "0") { 
                     ViewBag.idSend = idSend;
                     ViewBag.idReceiver = idReceiver;
@@ -166,17 +169,17 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.statusBalance = "So tien khong du";
                         return View();
                     }
-                    time = DateTime.Now.ToString();
+                    time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
-                    r.SendBalance(Reciver.email, Reciver.Id, "+" + money.ToString(), mess, time);
+                    r.SendBalance(Reciver.email, Reciver.acc_num, "+" + money.ToString(), mess, time);
                     Send.balance -= (cash + 20000);
                     db.Entry(Send).State = EntityState.Modified;
                     db.SaveChanges();
-                    r.SendBalance(Send.email, Send.Id, "-" + (cash + 20000).ToString("N"), mess, time);
+                    r.SendBalance(Send.email, Send.acc_num, "-" + (cash + 20000).ToString("N"), mess, time);
                     r.SaveHistory(cash, mess, "T", idSend, idReceiver, 20000,time);
-                    r.Logging(Send.Id, Reciver.Id, "Chuyển tiền",cash.ToString());
+                    r.Logging(Send.acc_num, Reciver.acc_num, "Chuyển tiền",cash.ToString());
                     return RedirectToAction("Index");
                 }
                 else {
@@ -192,18 +195,19 @@ namespace Project4Aptech.Areas.Admin.Controllers
                         ViewBag.idSend = idSend;
                         ViewBag.idReceiver = idReceiver;
                         ViewBag.Mess = mess;
-                        ViewBag.Error = "Tài khoản gửi đã bị khóa";
+                        ViewBag.Error1 = "Tài khoản nhận đã bị khóa";
                         return View();
                     }
-                    time = DateTime.Now.ToString();
+                    time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                     Reciver.balance += cash;
                     db.Entry(Reciver).State = EntityState.Modified;
                     db.SaveChanges();
-                    r.SendBalance(Reciver.email, Reciver.Id, "+" + cash.ToString("N"), mess, time);
+                    r.SendBalance(Reciver.email, Reciver.acc_num, "+" + cash.ToString("N"), mess, time);
                     r.SaveHistory(cash, mess, "T", "0", idReceiver, 20000, time);
-                    r.Logging("NH", Reciver.Id, "Chuyển tiền", cash.ToString());
+                    r.Logging("NH", Reciver.acc_num, "Chuyển tiền", cash.ToString());
                     return RedirectToAction("Index");
                 }
+                ViewBag.Error1 = "Người nhận không tồn tại";
                 ViewBag.idReceiver = idReceiver;
                 ViewBag.Mess = mess;
                 return View();
@@ -215,7 +219,7 @@ namespace Project4Aptech.Areas.Admin.Controllers
             string Name = "";
             try
             {
-                var Cus = db.Customers.Find(id);
+                var Cus = db.Customers.Where(cus=>cus.acc_num==id).FirstOrDefault();
                 if (Cus != null)
                 {
                     Name += Cus.Name;

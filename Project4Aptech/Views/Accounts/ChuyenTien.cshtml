@@ -7,7 +7,7 @@
 
 }
 
-<h2>Chuyển tiền</h2>
+<h2>MONEY TRANSFER</h2>
 
 
 @using (Html.BeginForm())
@@ -15,40 +15,41 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Account</h4>
         <hr />
         <input type="hidden" name="idSend" value="@id" class="form-control" />
         <div class="form-group">
-            <label class="control-label col-md-2"> Nhập số tiền cần chuyển </label>
+            <label class="control-label col-md-2"> Transfer amount (Unit of Currency:VND) </label>
+           
             <div class="col-md-10">
-               
+
                 <input type="text" name="money" class="form-control" min="10000" step="any" required id="money" autocomplete="off" />
                 <strong style="color:red;" id="error">@ViewBag.statusBalance</strong>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">  Nhập tài khoản nhận: </label>
+            <label class="control-label col-md-2">  Receiver account number </label>
             <div class="col-md-10">
                 <input type="text" name="idReceiver" class="form-control" id="Receive" autocomplete="off" required />
-                <span id="ReceiveName" style="color:grey;"></span>
+                <span id="ReceiveName" style="color:red;">@ViewBag.Re</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2"> Nhập nội dung: </label>
+            <label class="control-label col-md-2"> Message </label>
             <div class="col-md-10">
                 <input type="text" name="mess" class="form-control" autocomplete="off" value="@ViewBag.Mess" />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2"> Nhập OTP: </label>
+            <label class="control-label col-md-2">OTP (OTP will be sent to your email) </label>
+            
             <div class="col-md-10">
-                <input type="text" name="OTP" class="form-control" required /> <button type="button" id="ResendOTP">Gửi lại</button>
+                <input type="text" name="OTP" class="form-control" required /> <button type="button" class="btn btn-light" id="ResendOTP">Resend</button>
             </div>
             <strong style="color:red;">@ViewBag.statusOTP</strong>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="go" value="Chuyển Tiền" class="btn btn-default" />
+                <input type="submit" id="go" value="Go" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -87,7 +88,7 @@
         });
         $("#money").on('change', function () {
             var money = $(this).val() ;
-              var input = money.replaceAll(',','');
+            var input = money.replaceAll(',','');
              console.log(input);
             if (isNaN(input)) {
                   $("#error").empty();
@@ -100,7 +101,7 @@
                     $("#go").attr('disabled', 'true');
                     $("#error").append("Nhập tối thiểu 10,000 VND");
 
-                } else {
+                }else {
                    $(this).val(money.replaceAll(',','.'));
                     $("#go").removeAttr('disabled');
                     $("#error").empty();

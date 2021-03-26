@@ -10,7 +10,7 @@
     }
 
     .section {
-        height:600px;
+        height: 600px;
     }
 </style>
 
@@ -24,12 +24,12 @@
                     </div>
                     <form action="/WithDrawing/Index" method="post">
                         <div class="field">
-                            <input value="@ViewBag.amout" type="text" placeholder="Enter amount of cash you wish to withdraw" name="str_amount" />
+                            <input id="money" autocomplete="off" value="@ViewBag.amout" type="text" placeholder="Enter amount of cash you wish to withdraw" name="str_amount" />
 
                             <button>Confirm</button>
                         </div>
-                        
-                        
+
+
                         @ViewBag.err
                     </form>
                 </div>

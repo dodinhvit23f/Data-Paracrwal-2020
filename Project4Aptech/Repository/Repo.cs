@@ -8,6 +8,7 @@ using System.Web;
 using System.Runtime.Caching;
 using Project4Aptech.Models;
 using Serilog;
+using System.Globalization;
 
 namespace Project4Aptech.Repository
 {
@@ -45,8 +46,8 @@ namespace Project4Aptech.Repository
         }
         public DateTime stringToDate(string iDate)
         {
-            DateTime oDate = Convert.ToDateTime(iDate);
-            string sDate = oDate.ToString("yyyy MMMM");
+            DateTime oDate = DateTime.ParseExact(iDate, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+            //string sDate = oDate.ToString("yyyy MMMM");
             return oDate;
         }
         public void OTPGenerate(string mailAdress)
@@ -86,7 +87,7 @@ namespace Project4Aptech.Repository
             msg.IsBodyHtml = true;
             msg.To.Add(mailAdress);
             msg.Subject = "TP Bank 247";
-            msg.Body = "TPBank:" + time + "</br>" + "TK:" + idReceive + "|</br>GD:" + money + "VND|</br>SDC:" + db.Customers.Find(idReceive).balance + "VND|" + "</br>ND:" + message;
+            msg.Body = "TPBank:" + time + "</br>" + "TK:" + idReceive + "|</br>GD:" + money + "VND|</br>SDC:" + db.Customers.Where(cu=>cu.acc_num==idReceive).FirstOrDefault().balance + "VND|" + "</br>ND:" + message;
             smtpClient.Send(msg);
         }
         public void SendPass(string mailAdress, string pass)
@@ -161,6 +162,20 @@ namespace Project4Aptech.Repository
               .WriteTo.File(@"c:\log\log.txt")
               .CreateLogger();
             log.Information("Người dùng:"+idSend+"|đã thực hiện giáo dịch:"+type+"|Số tiền:"+cashflow+"|Người nhận:"+idReciver);
+        }
+        public string GenerateAccountNum(string id) {
+            var stringChars = new char[9];
+            string accnum = "150"; 
+            var random = new Random();
+            do
+            {
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = id[random.Next(id.Length)];
+                }
+                accnum += new String(stringChars);
+            } while (db.Customers.Where(cus => cus.acc_num == accnum) == null);
+            return accnum;
         }
     }
 }

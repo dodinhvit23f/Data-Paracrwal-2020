@@ -312,6 +312,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\AdminStyle\css\layout.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\pogo-slider.min.css" />
     <Content Include="Content\responsive.css" />
@@ -323,28 +324,7 @@
     <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\b1.png" />
-    <Content Include="Images\b3.png" />
-    <Content Include="Images\contact_bg.png" />
-    <Content Include="Images\footer_logo.png" />
-    <Content Include="Images\i5.png" />
-    <Content Include="Images\i6.png" />
-    <Content Include="Images\i7.png" />
-    <Content Include="Images\img1.png" />
-    <Content Include="Images\img2.png" />
-    <Content Include="Images\img3.png" />
-    <Content Include="Images\loader.gif" />
     <Content Include="Images\loading.gif" />
-    <Content Include="Images\logo.png" />
-    <Content Include="Images\mail_icon.png" />
-    <Content Include="Images\phone_icon.png" />
-    <Content Include="Images\s1.png" />
-    <Content Include="Images\s2.png" />
-    <Content Include="Images\s3.png" />
-    <Content Include="Images\s4.png" />
-    <Content Include="Images\search_icon.png" />
-    <Content Include="Images\slide_img.png" />
-    <Content Include="Images\slide_img_1.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -486,33 +466,18 @@
     <Content Include="Content\AdminStyle\fonts\Pe-icon-7-stroke.woff" />
     <Content Include="Areas\Admin\Views\Accounts\ResetPass.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\contact-form-script.js" />
-    <Content Include="Scripts\custom.js" />
-    <Content Include="Scripts\form-validator.min.js" />
-    <Content Include="Scripts\images-loded.min.js" />
-    <Content Include="Scripts\isotope.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.js" />
-    <Content Include="Scripts\jquery-1.12.4.js" />
-    <Content Include="Scripts\jquery.magnific-popup.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery.pogo-slider.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\responsiveslides.min.js" />
     <Content Include="Scripts\simple.money.format.js" />
-    <Content Include="Scripts\slider-index.js" />
-    <Content Include="Scripts\smoothscroll.js" />
-    <Content Include="Scripts\timeLine.min.js" />
     <Content Include="Scripts\User.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -531,10 +496,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Accounts\Create.cshtml" />
-    <Content Include="Views\Accounts\Delete.cshtml" />
     <Content Include="Views\Accounts\Details.cshtml" />
-    <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\ChuyenTien.cshtml" />
     <Content Include="Views\WithDrawing\Index.cshtml" />
     <Content Include="Views\WithDrawing\CheckOtp.cshtml" />
@@ -542,6 +504,9 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Start.cshtml" />
+    <Content Include="Views\Home\ChangePwd.cshtml" />
+    <Content Include="Views\TransactHis\Bankstatement_Option.cshtml" />
+    <Content Include="Views\TransactHis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

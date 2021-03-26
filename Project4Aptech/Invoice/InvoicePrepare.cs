@@ -36,6 +36,8 @@ namespace Project4Aptech.Invoice
             _table.AddCell(_PdfPCell);
             _PdfPCell = new PdfPCell(new Phrase("Debit/Credit", _fontStyle));
             _table.AddCell(_PdfPCell);
+            _PdfPCell = new PdfPCell(new Phrase("Receriver/Sender", _fontStyle));
+            _table.AddCell(_PdfPCell);
             _PdfPCell = new PdfPCell(new Phrase("Message", _fontStyle));
             _table.AddCell(_PdfPCell);
             _PdfPCell = new PdfPCell(new Phrase("Amount", _fontStyle));
@@ -49,14 +51,32 @@ namespace Project4Aptech.Invoice
                 _table.AddCell(_PdfPCell);
                 if (cus_id == item.SendAccount)
                 {
-                    _PdfPCell = new PdfPCell(new Phrase("Debit", _fontStyle));
-                    debitSum += (double)item.Amount;
-                }else if (cus_id == item.ReceiveAccount && cus_id != item.SendAccount)
+                    if (item.Code=="W")
+                    {
+                        _PdfPCell = new PdfPCell(new Phrase("WithDraw", _fontStyle));
+                        debitSum += (double)item.Amount;
+                        _table.AddCell(_PdfPCell);
+                        _PdfPCell = new PdfPCell(new Phrase("", _fontStyle));
+                        _table.AddCell(_PdfPCell);
+
+                    }
+                    else
+                    {
+                        _PdfPCell = new PdfPCell(new Phrase("Debit", _fontStyle));
+                        _table.AddCell(_PdfPCell);
+                        debitSum += (double)item.Amount;
+                        _PdfPCell = new PdfPCell(new Phrase(@item.ReceiveAccount, _fontStyle));
+                        _table.AddCell(_PdfPCell);
+                    }
+                }
+                else if (cus_id == item.ReceiveAccount && cus_id != item.SendAccount)
                 {
                     _PdfPCell = new PdfPCell(new Phrase("Credit", _fontStyle));
+                    _table.AddCell(_PdfPCell);
                     creditSum += (double)item.Amount;
+                    _PdfPCell = new PdfPCell(new Phrase(@item.SendAccount, _fontStyle));
+                    _table.AddCell(_PdfPCell);
                 }
-                _table.AddCell(_PdfPCell);
                 if (!string.IsNullOrEmpty(item.Message))
                 {
                     _PdfPCell = new PdfPCell(new Phrase(item.Message, _fontStyle));
