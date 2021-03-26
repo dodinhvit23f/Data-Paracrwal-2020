@@ -28,8 +28,6 @@
                             <strong style="color:red;" id="error"></strong>
                                 <button class="btn btn-light" id="go">Confirm</button>
                         </div>
-
-
                         @ViewBag.err
                     </form>
                 </div>
@@ -41,15 +39,8 @@
 <script>
     $("#money").on('input', function () {
         var value = $(this).val().replaceAll('.', '');
-        if (isNaN(value)) {
-            $("#error").empty();
-            $("#go").attr('disabled', 'true');
-            $("#error").append("Chỉ được nhập số");
-        } else {
-            var money = new Number(value).toLocaleString("vi-VN");
-            console.log(money);
-            $(this).val(money);
-        }
-        
+        var money = new Number(value).toLocaleString("vi-VN");
+        console.log(money);
+        $(this).val(money);            
     });
 </script>
