@@ -48,17 +48,20 @@ namespace Project4Aptech.Controllers
             if (account == null) {
                 ViewBag.Re = "Người nhận không tồn tại";
                 ViewBag.Mess = mess;
+                ViewBag.id = accountSend.Id;
                 return View();
             }
             if (idReceiver == accountSend.acc_num) {
                 ViewBag.Re = "Tài khoản nhận trùng với tài khoản gửi!!";
                 ViewBag.Mess = mess;
+                ViewBag.id = accountSend.Id;
                 return View();
             }
             if (OTP == null) {
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
-               r.OTPGenerate(accountSend.email);
+                ViewBag.id = accountSend.Id;
+                r.OTPGenerate(accountSend.email);
                 return View();
             }
             if (OTP == Key)
@@ -68,6 +71,7 @@ namespace Project4Aptech.Controllers
                 {
                     ViewBag.Mess = mess;
                     ViewBag.statusBalance = "So tien khong du";
+                    ViewBag.id = accountSend.Id;
                     return View();
                 }
                 string time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
@@ -89,6 +93,7 @@ namespace Project4Aptech.Controllers
                r.OTPGenerate(accountSend.email);
                 ViewBag.Mess = mess;
                 ViewBag.statusOTP = "OTP khong dung";
+                ViewBag.id = accountSend.Id;
                 return View();
             }
         }

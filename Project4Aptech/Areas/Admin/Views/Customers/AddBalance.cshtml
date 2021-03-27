@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="control-label col-md-2"> Nhập số tiền cần chuyển: </label>
             <div class="col-md-10">
-                <input type="text" name="money" class="form-control" min="1" step="any" required id="money" autocomplete="off" />
+                <input type="text" name="money" class="form-control" min="10000" step="any" required id="money" autocomplete="off" />
                 <strong style="color:red;" id="error">@ViewBag.statusBalance</strong>
             </div>
         </div>
@@ -51,10 +51,7 @@
 }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="~/Scripts/simple.money.format.js"></script>
-<script type="text/javascript">
-    $('#money').simpleMoneyFormat();
-</script>
+
 <script>
     $("#Receive").on('change', function () {
         var idRecive = $("#Receive").val()
@@ -71,9 +68,10 @@
             $("#SendName").append(data);
         });
     });
-      $("#money").on('change', function () {
+   
+   $("#money").on('input', function () {
             var money = $(this).val() ;
-              var input = money.replaceAll(',','');
+            var input = money.replaceAll('.','');
              console.log(input);
             if (isNaN(input)) {
                   $("#error").empty();
@@ -86,8 +84,8 @@
                     $("#go").attr('disabled', 'true');
                     $("#error").append("Nhập tối thiểu 10,000 VND");
 
-                } else {
-                   $(this).val(money.replaceAll(',','.'));
+                }else {
+                   $(this).val(new Number(input).toLocaleString("vi-VN"));
                     $("#go").removeAttr('disabled');
                     $("#error").empty();
                 }

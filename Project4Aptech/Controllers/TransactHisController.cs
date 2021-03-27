@@ -65,7 +65,7 @@ namespace Project4Aptech.Controllers
                 SendAccount = logged.Customers.acc_num,
                 ReceiveAccount = "013639335",
                 Amount = 20000,
-                tran_time = DateTime.Now.ToString(new CultureInfo("en-US")),
+                tran_time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"),
                 fee = 0,
                 Code = "T",
                 Status = "S",
