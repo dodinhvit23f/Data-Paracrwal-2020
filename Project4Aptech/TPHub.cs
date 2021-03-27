@@ -21,8 +21,7 @@ namespace Project4Aptech
      
             Customers cus = db.Customers.Where(c=>c.acc_num==Id).FirstOrDefault();
             var balance = cus.balance;
-            var acc = cus.acc_num;
-            Clients.All.Receive(balance,acc);
+            Clients.All.Receive(balance);
         }
     }
 }
