@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Tạo Mới</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,43 +12,43 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Users</h4>
+   
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off",required = true } })
-            <span style="color:red;">@ViewBag.ErrU</span>
-        </div>
+<div class="form-group">
+    <label class="control-label col-md-2">Nhập Tên đăng nhập</label>
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", required = true } })
+        <span style="color:red;">@ViewBag.ErrU</span>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password",id="pass",required = true } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2">Nhập Mật khẩu</label>
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "pass", required = true } })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
     </div>
-    <div class="form-group">
-        @Html.Label("Repassword",htmlAttributes: new { @class = "control-label col-md-2" });
-        <div class="col-md-10">
-            <input type="password" class="form-control" id="repass" required name="repass"/>
-            <span style="color:red;">@ViewBag.Err</span>
-        </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2">Nhập lại mật khẩu</label>
+    <div class="col-md-10">
+        <input type="password" class="form-control" id="repass" required name="repass" />
+        <span style="color:red;">@ViewBag.Err</span>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Roll_id, "Roll_id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Roll_id", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Roll_id, "", new { @class = "text-danger" })
-        </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2">Chọn chức vụ</label>
+    <div class="col-md-10">
+        @Html.DropDownList("Roll_id", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Roll_id, "", new { @class = "text-danger" })
     </div>
+</div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Tiến hành" class="btn btn-default" />
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@ namespace Project4Aptech
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }
