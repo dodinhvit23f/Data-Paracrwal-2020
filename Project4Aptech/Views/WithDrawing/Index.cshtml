@@ -47,6 +47,8 @@
             $("#error").append("Chỉ được nhập số");
         } else {
             var money = new Number(value).toLocaleString("vi-VN");
+            $("#error").empty();
+             $("#go").removeAttr('disabled');
             console.log(money);
             $(this).val(money);
         }
