@@ -58,20 +58,27 @@
             var userBalance = $.connection.TPHub;
             console.log("HEHE"+id);
             // Create a function that the hub can call back to display messages.
-            userBalance.client.Receive = function (balance) {
+            userBalance.client.Receive = function (balance,acc) {
                 // Add the message to the page.
-                $('#myInput').empty();
-                $('#myInput').append(balance);
+                console.log(balance);
+                console.log(acc);
+                    $('#myInput').empty();
+                    $('#myInput').append(balance);
+                
             };
 
             $.connection.hub.start().done(function () {
-
-                    // Call the Send method on the hub.
+              
                     userBalance.server.send(id);
 
+             
+                    // Call the Send method on the hub.
+                    
+               
 
             });
         });
+        
         // This optional function html-encodes messages for display in the page.
        function myFunction() {
         var x = document.getElementById("myInput");
