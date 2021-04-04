@@ -5,7 +5,7 @@
     
 }
 
-<h2>Create</h2>
+<h2>Tạo mới</h2>
 
 
 @using (Html.BeginForm()) 
@@ -13,39 +13,39 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Customers</h4>
+   
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        <span class="control-label col-md-2">Nhập CMTND</span>
+        <label class="control-label col-md-2">Nhập CMTND</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control",autocomplete="off" } })
             <span style="color:red;">@ViewBag.ErrorCMTND</span>
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Nhập Tên</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",autocomplete="off" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Nhập SĐT</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control",autocomplete="off" } })
             @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Nhập Địa chỉ</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control",autocomplete="off" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.DOF, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Nhập Ngày Tháng Năm Sinh</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.DOF, new { htmlAttributes = new { @class = "form-control",autocomplete="off" } })
             @Html.ValidationMessageFor(model => model.DOF, "", new { @class = "text-danger" })
@@ -53,7 +53,7 @@
     </div>
             @Html.EditorFor(model => model.balance, new { htmlAttributes = new { @class = "form-control",type="hidden" } }) 
     <div class="form-group">
-        @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">Nhập Email</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
             <span style="color:red;">@ViewBag.ErrorEmail</span>
@@ -61,7 +61,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Tiến hành" class="btn btn-default" />
         </div>
     </div>
 </div>

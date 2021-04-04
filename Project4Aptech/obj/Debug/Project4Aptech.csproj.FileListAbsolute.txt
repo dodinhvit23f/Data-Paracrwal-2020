@@ -284,3 +284,11 @@ D:\Aptech\Project4Aptech\obj\Debug\Project4Aptech.csproj.CopyComplete
 D:\Aptech\Project4Aptech\obj\Debug\Project4Aptech.dll
 D:\Aptech\Project4Aptech\obj\Debug\Project4Aptech.pdb
 D:\Aptech\Project4Aptech\obj\Debug\Project4Aptech.csprojAssemblyReference.cache
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\84932\Documents\Visual Studio 2019\Projects\Project4\Project4Aptech\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\Aptech\Eproject4\Project4Aptech\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\Aptech\Eproject4\Project4Aptech\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\Aptech\Eproject4\Project4Aptech\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\Aptech\Eproject4\Project4Aptech\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

@@ -7,6 +7,13 @@
     string cus_id = (string)ViewBag.cus_id;
 }
 
+<style>
+    @@media screen and (min-height: 300px) {
+        #myTable{
+            margin-bottom: 300px;
+        }
+    }
+</style>
 <div class="full paddding_left_15">
     <div class="heading_main text_align_left">
         <h2>Transaction History</h2>
@@ -101,10 +108,13 @@
         }
     </tbody>
 </table>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
-</script>
+@section scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
