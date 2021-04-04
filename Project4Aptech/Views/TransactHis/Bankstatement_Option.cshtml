@@ -10,51 +10,67 @@
     .opt{
         display:none;
     }
+
+    @@media screen and (min-height: 300px) {
+        #myDiv {
+            margin-bottom: 600px;
+        }
+    }
+
+    .contain {
+        margin: 100px auto;
+        width: 200px;
+    }
 </style>
-<p>Choose time range</p>
-<button onclick="myMonthly()">Monthly</button>
-<button onclick="myQuaterly()">Quaterly</button>
-<div class="opt" id="Monthly">
-    <form action="/TransactHis/ByMonth/">
-        <select name="month">
-            @for (int i = 1; i < 13; i++)
-            {
-                <option value="@i">
-                    @months[i - 1]
-                </option>
-            }
-        </select>
-        <select name="year">
-            @for (int i = 2000; i <= year; i++)
-            {
-                <option value="@i">
-                    @i
-                </option>
-            }
-        </select>
-        <button>Print</button>
-    </form>
-</div>
-<div class="opt" id="Quaterly">
-    <form action="/TransactHis/ByQuaterly/">
-        <select name="quater">
-            @for (int i = 1; i <= 4; i++)
-            {
-                <option value="@i">
-                    @i
-                </option>
-            }
-        </select>
-        <select name="year">
-            @for (int i = 2000; i <= year; i++)
-            {
-                <option value="@i">
-                    @i
-                </option>
-            }
-        </select>
-        <button>Print</button>
-    </form>
+
+<div id="myDiv">
+    <div class="contain">
+        <p>Choose time range</p>
+        <button onclick="myMonthly()">Monthly</button>
+        <button onclick="myQuaterly()">Quaterly</button>
+        <div class="opt" id="Monthly">
+            <form action="/TransactHis/ByMonth/">
+                <select name="month">
+                    @for (int i = 1; i < 13; i++)
+                    {
+                        <option value="@i">
+                            @months[i - 1]
+                        </option>
+                    }
+                </select>
+                <select name="year">
+                    @for (int i = 2000; i <= year; i++)
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                </select>
+                <button>Print</button>
+            </form>
+        </div>
+        <div class="opt" id="Quaterly">
+            <form action="/TransactHis/ByQuaterly/">
+                <select name="quater">
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                </select>
+                <select name="year">
+                    @for (int i = 2000; i <= year; i++)
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                </select>
+                <button>Print</button>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
     function myMonthly() {

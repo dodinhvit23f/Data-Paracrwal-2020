@@ -29,7 +29,6 @@ namespace Project4Aptech.Controllers
         {
             CultureInfo culture = new CultureInfo("vi-VN");
             double amount =  0;
-            ViewBag.amout = amount;
             var logged = (Account)Session["logged"];
             //rut toi da 5 cu?
             //moi ngay rut toi da 100 cu
@@ -42,13 +41,15 @@ namespace Project4Aptech.Controllers
                 {
                     amt += (double)item.Amount;
                 }
-            }           
-                 amount = Double.Parse(str_amount,culture);
+            }
             
+            amount = Double.Parse(str_amount,culture);
+            ViewBag.amout = amount;
+
             if (amount > 5000000)
             {
                 ViewBag.err = "You only can withdraw 5 million VND a time";
-            }else if (amount <0)
+            }else if (amount <=0)
             {
                 ViewBag.err = "Please enter a positive number";
             }
